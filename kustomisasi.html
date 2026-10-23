@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langkah 3: Kustomisasi, Upload Foto UMKM &amp; Checkout — Digitra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Sora"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* =====================================================================
+           MODERN WEB GUIDANCE:
+           - cross-document-transitions: @view-transition { navigation: auto; }
+           - validate-input-after-interaction: :user-valid & :user-invalid
+        ====================================================================== */
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+        body {
+            background-color: #0B1020;
+            color: #F5F7FF;
+        }
+        .text-gradient-digitra {
+            background: linear-gradient(90deg, #00E5FF 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-digitra {
+            background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
+        }
+
+        /* Input Validation (:user-valid / :user-invalid) */
+        .digitra-input {
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .digitra-input:user-valid {
+            border-color: #00E5FF !important;
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.14);
+        }
+        .digitra-input:user-invalid {
+            border-color: #f43f5e !important;
+            background-color: rgba(244, 63, 94, 0.08);
+            box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.18);
+        }
+        .error-msg {
+            display: none;
+        }
+        .digitra-input:user-invalid + .error-msg {
+            display: block;
+        }
+
+        @media print {
+            header, footer, .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+
+    <!-- =======================================================================
+         1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
+    ======================================================================== -->
+    <header class="sticky top-0 z-40 bg-[#05070F]/90 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-3">
+                <svg class="w-9 h-9 shrink-0" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="#00E5FF"/>
+                    <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="#8B5CF6"/>
+                </svg>
+                <div>
+                    <div class="font-display font-bold text-lg text-[#F5F7FF] leading-none">Digitra</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-slate-400 mt-0.5">Web &amp; AI Solutions</div>
+                </div>
+            </a>
+
+            <!-- 3-Step Progress Stepper -->
+            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-3 text-xs font-display font-bold">
+                <a href="pilih-desain.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
+                    ✓ ① Pilih Desain
+                </a>
+                <span class="text-slate-600">&rarr;</span>
+                <a id="stepBackPaketLink" href="pilih-paket.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
+                    ✓ ② Pilih Paket &amp; Cek Demo
+                </a>
+                <span class="text-slate-600">&rarr;</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow">
+                    ③ Kustomisasi &amp; Upload Foto
+                </span>
+            </nav>
+
+            <a id="topBackPaketBtn" href="pilih-paket.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300">
+                &larr; Kembali ke Paket
+            </a>
+        </div>
+    </header>
+
+    <!-- =======================================================================
+         2. MAIN CONTENT: PREFERENCES, UMKM PHOTO UPLOAD, COMPANY INFO & CHECKOUT
+    ======================================================================== -->
+    <main class="flex-1 py-10 sm:py-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+
+            <!-- Page Title -->
+            <div class="max-w-3xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Langkah 3 dari 3 &bull; Kustomisasi &amp; Materi Usaha</span>
+                <h1 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1.5">
+                    Lengkapi Preferensi, Upload Foto UMKM &amp; Informasi Bisnis
+                </h1>
+                <p class="text-sm text-slate-400 mt-1.5">
+                    Anda juga dapat menekan tombol <strong class="text-[#00E5FF]">"🪄 Simulasikan Foto &amp; Nama Usaha Saya di Website"</strong> setelah meng-upload foto untuk melihat langsung tampilan website dengan identitas usaha Anda!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- LEFT 7 COLS: STEP-BY-STEP CUSTOMIZATION & UPLOAD -->
+                <div class="lg:col-span-7 space-y-7">
+
+                    <!-- CARD A: RINGKASAN DESAIN & PREFERENSI TAMPILAN -->
+                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian A &bull; Preferensi Desain &amp; Warna</span>
+                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Kustomisasi Tampilan Website</h2>
+                            </div>
+                            <a href="pilih-desain.html" class="text-xs font-semibold text-purple-300 hover:underline">Ubah Template / Paket</a>
+                        </div>
+
+                        <!-- Mode Kustomisasi -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Pilih Tingkat Kustomisasi Desain:</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                <button type="button" onclick="customApp.setMode('ready')" data-mode="ready" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">1. Sesuai Template</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Hanya ganti teks, menu &amp; foto</div>
+                                </button>
+                                <button type="button" onclick="customApp.setMode('modify')" data-mode="modify" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">2. Kustom Warna &amp; Fitur</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Sesuaikan palet warna &amp; form</div>
+                                </button>
+                                <button type="button" onclick="customApp.setMode('scratch')" data-mode="scratch" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">3. Desain Baru dari Nol</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Arsitektur eksklusif (Rp 1,89jt)</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Palet Warna & Gaya Font -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="brandPaletteSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Skema Warna Brand:</label>
+                                <select id="brandPaletteSelect" onchange="customApp.palette = this.value; customApp.renderSummary()"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
+                                    <option value="Sesuai Warna Template Asli">✨ Sesuai Warna Template Asli</option>
+                                    <option value="Warm Espresso & Cream (#F5EFE6)">☕ Warm Espresso &amp; Cream</option>
+                                    <option value="Midnight Obsidian & Gold (#C59B6D)">👑 Midnight Obsidian &amp; Gold</option>
+                                    <option value="Emerald Nature & Alabaster">🌿 Emerald Nature &amp; Alabaster</option>
+                                    <option value="Terracotta & Heritage Parchment">🥾 Terracotta &amp; Parchment</option>
+                                    <option value="Custom Warna Brand Sendiri">🎨 Gunakan Kode Warna Logo Kami</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="fontStyleSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Karakter Tipografi (Font):</label>
+                                <select id="fontStyleSelect" onchange="customApp.fontStyle = this.value; customApp.renderSummary()"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
+                                    <option value="Rekomendasi Bawaan Template">✨ Rekomendasi Bawaan Template</option>
+                                    <option value="Editorial Klasik & Elegan (Serif)">📖 Editorial Klasik &amp; Elegan (Serif)</option>
+                                    <option value="Modern Bersih & Minimalis (Sans)">⚡ Modern Bersih &amp; Minimalis (Sans)</option>
+                                    <option value="Tegas & Maskulin (Condensed)">🔥 Tegas &amp; Maskulin (Condensed)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Add-on Checkboxes -->
+                        <div class="pt-2 border-t border-white/10">
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Fitur Tambahan (Opsional):</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                                <label class="flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer">
+                                    <input type="checkbox" onchange="customApp.toggleAddon('customPopup', 150000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
+                                    <span>
+                                        <strong class="block text-white">Kustom Field Pop-Up Pemesanan</strong>
+                                        <span class="text-[#00E5FF] font-semibold">+Rp 150.000</span>
+                                    </span>
+                                </label>
+                                <label class="flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer">
+                                    <input type="checkbox" onchange="customApp.toggleAddon('multiBranch', 200000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
+                                    <span>
+                                        <strong class="block text-white">Fitur Multi-Cabang &amp; Multi-Admin WA</strong>
+                                        <span class="text-purple-300 font-semibold">+Rp 200.000</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CARD B: UPLOAD FOTO-FOTO UMKM (LOGO, BANNER TEMPAT, & PRODUK) -->
+                    <section class="rounded-3xl bg-[#05070F] border-2 border-[#00E5FF]/40 p-6 space-y-5 shadow-xl">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian B &bull; Upload Materi Visual UMKM</span>
+                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Upload Foto Tempat &amp; Produk Usaha Anda</h2>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] text-[11px] font-bold">
+                                Bisa Disimulasikan Langsung!
+                            </span>
+                        </div>
+
+                        <!-- 1. Upload Logo & 2. Upload Banner Hero -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Upload Logo -->
+                            <div class="p-4 rounded-2xl bg-[#0B1020] border border-dashed border-white/20 hover:border-[#00E5FF] transition-all flex flex-col justify-between">
+                                <div>
+                                    <div class="text-xs font-bold text-white">1. Upload Logo Usaha (PNG/JPG)</div>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Ditampilkan di pojok kiri atas navbar website.</p>
+                                </div>
+                                <div class="my-3 flex items-center gap-3">
+                                    <div id="logoPreviewBox" class="w-14 h-14 rounded-xl bg-[#05070F] border border-white/15 flex items-center justify-center overflow-hidden text-xs text-slate-500 shrink-0">
+                                        Logo
+                                    </div>
+                                    <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold">
+                                        📁 Pilih File Logo
+                                        <input type="file" accept="image/*" class="hidden" onchange="customApp.handleLogoUpload(this)">
+                                    </label>
+                                </div>
+                                <div id="logoFileName" class="text-[11px] text-slate-400 truncate">Belum ada file dipilih (opsional)</div>
+                            </div>
+
+                            <!-- Upload Hero Banner / Tempat Usaha -->
+                            <div class="p-4 rounded-2xl bg-[#0B1020] border border-dashed border-white/20 hover:border-[#00E5FF] transition-all flex flex-col justify-between">
+                                <div>
+                                    <div class="text-xs font-bold text-white">2. Foto Banner / Tempat Usaha</div>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Ditampilkan sebagai latar utama (Hero) website.</p>
+                                </div>
+                                <div class="my-3 flex items-center gap-3">
+                                    <div id="bannerPreviewBox" class="w-20 h-14 rounded-xl bg-[#05070F] border border-white/15 flex items-center justify-center overflow-hidden text-xs text-slate-500 shrink-0">
+                                        Banner
+                                    </div>
+                                    <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold">
+                                        🖼️ Pilih Foto Tempat
+                                        <input type="file" accept="image/*" class="hidden" onchange="customApp.handleBannerUpload(this)">
+                                    </label>
+                                </div>
+                                <div id="bannerFileName" class="text-[11px] text-slate-400 truncate">Belum ada file dipilih (opsional)</div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Upload Foto Produk / Menu Unggulan -->
+                        <div class="p-4 rounded-2xl bg-[#0B1020] border border-white/10 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div>
+                                    <div class="text-xs font-bold text-white">3. Upload Sampel Foto Produk / Menu Unggulan (Maks 4 Sampel Awal)</div>
+                                    <p class="text-[11px] text-slate-400">Untuk produk ke-5 s/d 30+ nantinya dapat di-input mudah via Google Sheets / dikirim via WA.</p>
+                                </div>
+                                <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-[#00E5FF]/15 hover:bg-[#00E5FF]/25 text-[#00E5FF] border border-[#00E5FF]/30 text-xs font-bold shrink-0">
+                                    + Upload Foto Produk
+                                    <input type="file" accept="image/*" multiple class="hidden" onchange="customApp.handleProductPhotosUpload(this)">
+                                </label>
+                            </div>
+
+                            <!-- Uploaded Product Cards List -->
+                            <div id="uploadedProductsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1"></div>
+
+                            <!-- Optional Google Drive Link -->
+                            <div class="pt-2 border-t border-white/10">
+                                <label for="gdriveFolderInput" class="block text-[11px] font-semibold text-slate-300 mb-1">
+                                    Atau tempel Link Folder Google Drive Foto Produk Anda (Opsional):
+                                </label>
+                                <input id="gdriveFolderInput" type="url" oninput="customApp.gdriveUrl = this.value; customApp.renderSummary()"
+                                    placeholder="https://drive.google.com/drive/folders/..."
+                                    class="w-full px-3.5 py-2 rounded-xl bg-[#05070F] border border-white/15 text-white text-xs">
+                            </div>
+                        </div>
+
+                        <!-- LIVE PREVIEW WITH CLIENT PHOTOS BUTTON -->
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-[#0B1020] via-[#131C38] to-[#0B1020] border border-[#00E5FF]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="text-xs space-y-0.5">
+                                <div class="font-display font-bold text-white">🪄 Ingin Melihat Foto &amp; Nama Usaha Anda Terpasang di Website?</div>
+                                <p class="text-slate-300">Klik tombol di samping untuk membuka simulasi website dengan foto dan nama usaha yang baru Anda isi.</p>
+                            </div>
+                            <button type="button" onclick="customApp.openLiveCustomPreview()"
+                                class="shrink-0 px-4 py-3 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs shadow-lg hover:scale-[1.02] transition-all">
+                                🪄 Simulasikan di Website &nearr;
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- CARD C: INFORMASI PERUSAHAAN & KONTAK UMKM -->
+                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-4">
+                        <div class="pb-3 border-b border-white/10">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian C &bull; Data Perusahaan &amp; Lokasi</span>
+                            <h2 class="font-display font-bold text-lg text-white mt-0.5">Informasi yang Ditampilkan di Website Anda</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="clientBizName" class="block text-xs font-semibold text-white">Nama Usaha / Brand UMKM *</label>
+                                <!-- MANDATORY: Place format hints above the input so autocomplete popovers don't cover them during editing -->
+                                <span id="bizNameHint" class="block text-[11px] text-slate-400 mb-1">Minimal 3 karakter (contoh: Kopi Titik Temu)</span>
+                                <input
+                                    type="text"
+                                    id="clientBizName"
+                                    required
+                                    minlength="3"
+                                    value="Kopi Titik Temu"
+                                    aria-describedby="bizNameHint"
+                                    oninput="customApp.bizName = this.value; customApp.renderSummary()"
+                                    class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold"
+                                >
+                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1">❌ Mohon isi nama usaha minimal 3 karakter.</div>
+                            </div>
+
+                            <div>
+                                <label for="clientWaNumber" class="block text-xs font-semibold text-white">Nomor WhatsApp Admin Toko *</label>
+                                <!-- MANDATORY: Place format hints above the input so autocomplete popovers don't cover them during editing -->
+                                <span id="waHint" class="block text-[11px] text-slate-400 mb-1">Format: 08xx atau 628xx (10–14 angka)</span>
+                                <input
+                                    type="tel"
+                                    id="clientWaNumber"
+                                    required
+                                    pattern="^(08|628)[0-9]{8,12}$"
+                                    value="081234567890"
+                                    aria-describedby="waHint"
+                                    oninput="customApp.waPhone = this.value; customApp.renderSummary()"
+                                    class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold"
+                                >
+                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1">❌ Gunakan nomor WA valid diawali 08 atau 628.</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="clientSlogan" class="block text-xs font-semibold text-white mb-1">Slogan / Deskripsi Singkat Usaha (Tampil di Hero Website)</label>
+                            <input type="text" id="clientSlogan" value="Seduhan hangat biji kopi pilihan Nusantara untuk menemani produktivitas Anda setiap hari."
+                                oninput="customApp.slogan = this.value; customApp.renderSummary()"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="clientAddress" class="block text-xs font-semibold text-white mb-1">Alamat Lengkap / Titik Google Maps</label>
+                                <input type="text" id="clientAddress" value="Jl. Cipete Raya No. 42, Jakarta Selatan"
+                                    oninput="customApp.address = this.value; customApp.renderSummary()"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs">
+                            </div>
+                            <div>
+                                <label for="clientHours" class="block text-xs font-semibold text-white mb-1">Jam Operasional Usaha</label>
+                                <input type="text" id="clientHours" value="Setiap Hari: 08.00 – 22.00 WIB"
+                                    oninput="customApp.hours = this.value; customApp.renderSummary()"
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="clientExtraNotes" class="block text-xs font-semibold text-white mb-1">Catatan Tambahan untuk Tim Developer Digitra (Opsional)</label>
+                            <textarea id="clientExtraNotes" rows="2" oninput="customApp.extraNotes = this.value; customApp.renderSummary()"
+                                class="w-full px-3.5 py-2 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs"
+                                placeholder="Contoh: Tolong pasang QRIS toko kami dan aktifkan opsi pengiriman kurir...">Pasang fitur pop-up pemesanan QRIS dan hubungkan ke nomor WhatsApp admin kami.</textarea>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- RIGHT 5 COLS: STICKY SUMMARY, QRIS PAYMENT & SUBMIT BRIEF -->
+                <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
+                    <div class="rounded-3xl bg-[#05070F] border-2 border-[#00E5FF]/50 p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]">CHECKOUT PEMESANAN WEBSITE</span>
+                                <h3 class="font-display font-bold text-lg text-white">Ringkasan Proyek &amp; Biaya</h3>
+                            </div>
+                            <span id="summaryTierBadge" class="px-2.5 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] text-xs font-bold">
+                                👑 Pro Bespoke
+                            </span>
+                        </div>
+
+                        <div id="summaryBreakdown" class="space-y-2 text-xs"></div>
+
+                        <!-- Payment Option (DP 50% or Full) -->
+                        <div class="p-4 rounded-2xl bg-[#0B1020] border border-white/10 space-y-3 no-print">
+                            <div class="flex items-center justify-between text-xs font-semibold">
+                                <span class="text-slate-300">Termin Pembayaran:</span>
+                                <div class="flex gap-1.5">
+                                    <button type="button" onclick="customApp.setPayTerm('dp50')" id="btnDp50" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">DP 50%</button>
+                                    <button type="button" onclick="customApp.setPayTerm('full')" id="btnFull100" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">Lunas 100%</button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" onclick="customApp.setPayChannel('qris')" id="btnChanQris" class="py-2 px-3 rounded-xl text-xs font-bold border">📱 QRIS Digitra</button>
+                                <button type="button" onclick="customApp.setPayChannel('bank')" id="btnChanBank" class="py-2 px-3 rounded-xl text-xs font-bold border">🏦 Transfer BCA</button>
+                            </div>
+
+                            <div id="paymentSimulatorBox"></div>
+                        </div>
+
+                        <!-- WA Brief Preview -->
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-400">Preview Brief Otomatis ke Tim Digitra:</span>
+                                <span id="payNowHighlight" class="text-[#00E5FF] font-bold"></span>
+                            </div>
+                            <pre id="waBriefPreview" class="p-3 rounded-xl bg-[#0B1020] border border-white/10 text-cyan-300 text-[11px] font-mono whitespace-pre-wrap max-h-40 overflow-y-auto leading-relaxed"></pre>
+                        </div>
+
+                        <div class="space-y-2.5 pt-1 no-print">
+                            <button type="button" onclick="customApp.submitOrderWA()"
+                                class="w-full py-4 rounded-2xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs uppercase tracking-wider shadow-xl shadow-[#00E5FF]/20 hover:opacity-95 transition-all">
+                                🚀 Kirim Brief &amp; Pesan Website via WhatsApp &rarr;
+                            </button>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" onclick="customApp.openLiveCustomPreview()"
+                                    class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-[#00E5FF]">
+                                    🪄 Cek Simulasi Web &nearr;
+                                </button>
+                                <button type="button" onclick="window.print()"
+                                    class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-slate-300">
+                                    🖨️ Cetak PDF Brief
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- =======================================================================
+         3. FOOTER
+    ======================================================================== -->
+    <footer class="bg-[#05070F] border-t border-white/10 py-6 text-center text-xs text-slate-400">
+        Digitra — Web &amp; AI Solutions &bull; Langkah 3 dari 3: Kustomisasi, Upload Materi &amp; Checkout
+    </footer>
+
+    <script>
+        const DESIGN_NAMES = {
+            harth: { label: '☕ Harth Specialty Coffee (Cafe & Bakery)', folder: 'harth-coffee' },
+            hush: { label: '🍣 Hush Modern Izakaya (Resto & Kuliner)', folder: 'hush-resto' },
+            cedar: { label: '🥾 Cedar Heritage Footwear (Retail & Sepatu)', folder: 'cedar-shoes' },
+            barbearia: { label: '💈 Barbearia Gentlemen’s Club (Barbershop VIP)', folder: 'barbearia-club' }
+        };
+
+        class KustomisasiOrderApp {
+            constructor() {
+                const params = new URLSearchParams(window.location.search);
+                const dParam = params.get('design');
+                const tParam = params.get('tier');
+                const mParam = params.get('mode');
+
+                this.design = (dParam && DESIGN_NAMES[dParam]) ? dParam : 'harth';
+                this.tier = (tParam && ['starter', 'complete', 'pro'].includes(tParam)) ? tParam : 'pro';
+                this.mode = (mParam && ['ready', 'modify', 'scratch'].includes(mParam)) ? mParam : 'modify';
+
+                this.palette = 'Sesuai Warna Template Asli';
+                this.fontStyle = 'Rekomendasi Bawaan Template';
+                this.addons = { customPopup: 0, multiBranch: 0 };
+
+                // Uploaded Assets State
+                this.logoDataUrl = '';
+                this.logoName = '';
+                this.bannerDataUrl = '';
+                this.bannerName = '';
+                this.products = [
+                    { name: 'Menu / Produk Unggulan 1', price: 32000, desc: 'Produk favorit pelanggan kami', imgDataUrl: '' }
+                ];
+                this.gdriveUrl = '';
+
+                // Business Info State
+                this.bizName = 'Kopi Titik Temu';
+                this.waPhone = '081234567890';
+                this.slogan = 'Seduhan hangat biji kopi pilihan Nusantara untuk menemani produktivitas Anda setiap hari.';
+                this.address = 'Jl. Cipete Raya No. 42, Jakarta Selatan';
+                this.hours = 'Setiap Hari: 08.00 – 22.00 WIB';
+                this.extraNotes = 'Pasang fitur pop-up pemesanan QRIS dan hubungkan ke nomor WhatsApp admin kami.';
+
+                this.payTerm = 'dp50';
+                this.payChannel = 'qris';
+                this.payVerified = false;
+
+                this.init();
+            }
+
+            init() {
+                const backUrl = `pilih-paket.html?design=${this.design}&tier=${this.tier}`;
+                document.getElementById('stepBackPaketLink').href = backUrl;
+                document.getElementById('topBackPaketBtn').href = backUrl;
+
+                this.updateModeButtons();
+                this.renderProductsList();
+                this.renderSummary();
+                this.setupAriaValidationSync();
+            }
+
+            formatRp(n) {
+                return 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+            }
+
+            setupAriaValidationSync() {
+                const syncAria = (el) => {
+                    if (!el || !el.matches) return;
+                    el.setAttribute?.('aria-invalid', el.matches(':user-invalid') ? 'true' : 'false');
+                };
+                document.addEventListener('blur', (e) => syncAria(e.target), true);
+                document.addEventListener('input', (e) => {
+                    if (e.target && e.target.hasAttribute && e.target.hasAttribute('aria-invalid')) {
+                        syncAria(e.target);
+                    }
+                });
+            }
+
+            setMode(m) {
+                this.mode = m;
+                this.updateModeButtons();
+                this.renderSummary();
+            }
+
+            updateModeButtons() {
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    const act = btn.getAttribute('data-mode') === this.mode;
+                    btn.className = act
+                        ? 'mode-btn p-3 rounded-2xl border-2 border-[#00E5FF] bg-[#00E5FF]/10 text-left transition-all'
+                        : 'mode-btn p-3 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/25 text-left transition-all';
+                });
+            }
+
+            toggleAddon(key, price, checked) {
+                this.addons[key] = checked ? price : 0;
+                this.renderSummary();
+            }
+
+            /* =================================================================
+               INTERACTIVE UMKM PHOTO UPLOADS (FileReader -> DataURL + Preview)
+            ================================================================== */
+            handleLogoUpload(input) {
+                const file = input.files && input.files[0];
+                if (!file) return;
+                this.logoName = file.name;
+                document.getElementById('logoFileName').innerText = `✓ ${file.name}`;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.logoDataUrl = e.target.result;
+                    document.getElementById('logoPreviewBox').innerHTML = `<img src="${this.logoDataUrl}" alt="Logo Preview" class="w-full h-full object-cover">`;
+                    this.renderSummary();
+                };
+                reader.readAsDataURL(file);
+            }
+
+            handleBannerUpload(input) {
+                const file = input.files && input.files[0];
+                if (!file) return;
+                this.bannerName = file.name;
+                document.getElementById('bannerFileName').innerText = `✓ ${file.name}`;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.bannerDataUrl = e.target.result;
+                    document.getElementById('bannerPreviewBox').innerHTML = `<img src="${this.bannerDataUrl}" alt="Banner Preview" class="w-full h-full object-cover">`;
+                    this.renderSummary();
+                };
+                reader.readAsDataURL(file);
+            }
+
+            handleProductPhotosUpload(input) {
+                const files = Array.from(input.files || []).slice(0, 4);
+                if (!files.length) return;
+                this.products = [];
+                files.forEach((file, idx) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.products.push({
+                            name: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+                            price: 35000 + (idx * 5000),
+                            desc: 'Produk unggulan ' + this.bizName,
+                            imgDataUrl: e.target.result
+                        });
+                        this.renderProductsList();
+                        this.renderSummary();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            updateProductItem(idx, field, val) {
+                if (!this.products[idx]) return;
+                this.products[idx][field] = val;
+                this.renderSummary();
+            }
+
+            renderProductsList() {
+                const container = document.getElementById('uploadedProductsList');
+                container.innerHTML = this.products.map((p, idx) => `
+                    <div class="p-3 rounded-xl bg-[#05070F] border border-white/10 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-lg bg-[#0B1020] border border-white/10 overflow-hidden shrink-0 flex items-center justify-center text-[10px] text-slate-500">
+                            ${p.imgDataUrl ? `<img src="${p.imgDataUrl}" alt="${p.name}" class="w-full h-full object-cover">` : 'Foto #' + (idx + 1)}
+                        </div>
+                        <div class="flex-1 space-y-1">
+                            <input type="text" value="${p.name}" oninput="customApp.updateProductItem(${idx}, 'name', this.value)"
+                                placeholder="Nama Produk/Menu" class="w-full px-2 py-1 rounded bg-[#0B1020] border border-white/10 text-white text-xs font-semibold">
+                            <input type="number" value="${p.price}" oninput="customApp.updateProductItem(${idx}, 'price', this.value)"
+                                placeholder="Harga (Rp)" class="w-full px-2 py-1 rounded bg-[#0B1020] border border-white/10 text-[#00E5FF] text-xs font-bold">
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            /* =================================================================
+               SAVE TO LOCALSTORAGE & LAUNCH LIVE CUSTOM BRAND PREVIEW
+            ================================================================== */
+            saveCustomPreviewToStorage() {
+                const payload = {
+                    bizName: this.bizName,
+                    waPhone: this.waPhone,
+                    slogan: this.slogan,
+                    address: this.address,
+                    hours: this.hours,
+                    palette: this.palette,
+                    logoDataUrl: this.logoDataUrl,
+                    bannerDataUrl: this.bannerDataUrl,
+                    products: this.products
+                };
+                try {
+                    localStorage.setItem('digitra_custom_preview', JSON.stringify(payload));
+                } catch (e) {
+                    console.warn('Storage quota warning (large image), saving metadata only:', e);
+                }
+            }
+
+            openLiveCustomPreview() {
+                this.saveCustomPreviewToStorage();
+                const folder = DESIGN_NAMES[this.design].folder;
+                window.open(`demos/${folder}/index.html?tier=${this.tier}&custom=1`, '_blank', 'noopener');
+            }
+
+            /* =================================================================
+               SUMMARY, QRIS SIMULATOR & WHATSAPP ORDER SUBMISSION
+            ================================================================== */
+            setPayTerm(t) {
+                this.payTerm = t;
+                this.renderSummary();
+            }
+
+            setPayChannel(c) {
+                this.payChannel = c;
+                this.payVerified = false;
+                this.renderSummary();
+            }
+
+            simulatePay() {
+                this.payVerified = true;
+                this.renderSummary();
+            }
+
+            getTotals() {
+                const tierMap = { starter: 499000, complete: 899000, pro: 1490000 };
+                const base = this.mode === 'scratch' ? 1890000 : tierMap[this.tier];
+                const addon = Object.values(this.addons).reduce((a, b) => a + b, 0);
+                const total = base + addon;
+                const payNow = this.payTerm === 'dp50' ? Math.round(total * 0.5) : total;
+                return { base, addon, total, payNow };
+            }
+
+            renderSummary() {
+                const { base, addon, total, payNow } = this.getTotals();
+                const dMeta = DESIGN_NAMES[this.design];
+                const tierNames = {
+                    starter: 'Starter (Rp 499rb)',
+                    complete: 'Complete (Rp 899rb)',
+                    pro: '👑 Pro Bespoke (Rp 1,49jt)'
+                };
+                const modeNames = {
+                    ready: 'Sesuai Template Standar',
+                    modify: 'Template + Kustomisasi Brand',
+                    scratch: 'Desain Baru dari Nol (Custom)'
+                };
+
+                document.getElementById('summaryTierBadge').innerText = this.mode === 'scratch' ? '🎨 Full Custom' : tierNames[this.tier];
+
+                const uploadedCount = (this.logoDataUrl ? 1 : 0) + (this.bannerDataUrl ? 1 : 0) + this.products.filter(p => p.imgDataUrl).length;
+
+                document.getElementById('summaryBreakdown').innerHTML = `
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Basis Desain:</span>
+                        <span class="font-semibold text-white text-right">${dMeta.label}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Paket &amp; Mode:</span>
+                        <span class="font-semibold text-[#00E5FF] text-right">${this.mode === 'scratch' ? modeNames.scratch : tierNames[this.tier]}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Skema Warna:</span>
+                        <span class="font-semibold text-slate-200 text-right">${this.palette}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">File Foto Di-upload:</span>
+                        <span class="font-semibold text-purple-300 text-right">${uploadedCount} File Foto Siap Pakai</span>
+                    </div>
+                    ${addon > 0 ? `
+                        <div class="flex justify-between py-1.5 border-b border-white/10">
+                            <span class="text-slate-400">Fitur Tambahan:</span>
+                            <span class="font-semibold text-purple-300">+${this.formatRp(addon)}</span>
+                        </div>
+                    ` : ''}
+                    <div class="flex justify-between pt-2 text-sm">
+                        <span class="font-bold text-white">Total Biaya Website:</span>
+                        <span class="font-display font-bold text-lg text-[#00E5FF]">${this.formatRp(total)}</span>
+                    </div>
+                `;
+
+                document.getElementById('btnDp50').className = this.payTerm === 'dp50'
+                    ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#00E5FF] text-[#05070F]'
+                    : 'px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-400';
+                document.getElementById('btnFull100').className = this.payTerm === 'full'
+                    ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#00E5FF] text-[#05070F]'
+                    : 'px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-400';
+
+                document.getElementById('btnChanQris').className = this.payChannel === 'qris'
+                    ? 'py-2 px-3 rounded-xl text-xs font-bold bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]'
+                    : 'py-2 px-3 rounded-xl text-xs font-semibold bg-white/5 text-slate-400 border border-white/10';
+                document.getElementById('btnChanBank').className = this.payChannel === 'bank'
+                    ? 'py-2 px-3 rounded-xl text-xs font-bold bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]'
+                    : 'py-2 px-3 rounded-xl text-xs font-semibold bg-white/5 text-slate-400 border border-white/10';
+
+                document.getElementById('payNowHighlight').innerText = `${this.payTerm === 'dp50' ? 'DP 50%' : 'Lunas'}: ${this.formatRp(payNow)}`;
+
+                const simBox = document.getElementById('paymentSimulatorBox');
+                if (this.payChannel === 'qris') {
+                    simBox.innerHTML = `
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-[#05070F] border border-white/10">
+                            <div class="w-16 h-16 bg-white p-1.5 rounded-lg shrink-0 flex items-center justify-center">
+                                <svg viewBox="0 0 100 100" class="w-12 h-12" fill="#05070F">
+                                    <rect x="6" y="6" width="26" height="26" fill="none" stroke="#05070F" stroke-width="6"/><rect x="13" y="13" width="12" height="12"/>
+                                    <rect x="68" y="6" width="26" height="26" fill="none" stroke="#05070F" stroke-width="6"/><rect x="75" y="13" width="12" height="12"/>
+                                    <rect x="6" y="68" width="26" height="26" fill="none" stroke="#05070F" stroke-width="6"/><rect x="13" y="75" width="12" height="12"/>
+                                    <rect x="38" y="38" width="24" height="24" rx="3"/><rect x="68" y="44" width="20" height="8"/><rect x="42" y="70" width="14" height="22"/>
+                                </svg>
+                            </div>
+                            <div class="text-xs space-y-1">
+                                <div class="font-bold text-white">QRIS Resmi Digitra Studio</div>
+                                <div class="text-[#00E5FF] font-bold">${this.formatRp(payNow)}</div>
+                                <button type="button" onclick="customApp.simulatePay()" class="px-2.5 py-1 rounded bg-[#00E5FF] text-[#05070F] font-bold text-[11px]">
+                                    ${this.payVerified ? '✓ Pembayaran QRIS Terverifikasi' : '⚡ Simulasikan Sudah Bayar'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    simBox.innerHTML = `
+                        <div class="p-3 rounded-xl bg-[#05070F] border border-white/10 text-xs space-y-1.5">
+                            <div class="font-bold text-white">🏦 BCA 8720-9918-22 (PT Digitra Solutions)</div>
+                            <div class="text-[#00E5FF] font-bold">Nominal: ${this.formatRp(payNow)}</div>
+                            <button type="button" onclick="customApp.simulatePay()" class="w-full py-1.5 rounded bg-[#00E5FF] text-[#05070F] font-bold text-[11px]">
+                                ${this.payVerified ? '✓ Bukti Transfer Terlampir' : '⚡ Tandai Sudah Transfer'}
+                            </button>
+                        </div>
+                    `;
+                }
+
+                const briefLines = [
+                    `Halo Tim *Digitra — Web & AI Solutions*! 👋`,
+                    `Berikut Brief Pemesanan & Materi Website UMKM kami:`,
+                    `----------------------------------`,
+                    `🏢 *Nama Usaha:* ${this.bizName}`,
+                    `📱 *WA Admin:* ${this.waPhone}`,
+                    `💬 *Slogan Hero:* ${this.slogan}`,
+                    `📍 *Alamat Peta:* ${this.address}`,
+                    `🕒 *Jam Buka:* ${this.hours}`,
+                    `----------------------------------`,
+                    `🎯 *Basis Desain:* ${dMeta.label}`,
+                    `📦 *Paket & Mode:* ${this.mode === 'scratch' ? modeNames.scratch : tierNames[this.tier]} (${modeNames[this.mode]})`,
+                    `🎨 *Warna & Font:* ${this.palette} • ${this.fontStyle}`,
+                    `🖼️ *Materi Foto:* Logo (${this.logoName || 'Menyusul'}), Banner (${this.bannerName || 'Menyusul'}), ${this.products.length} Sampel Produk`,
+                    this.gdriveUrl ? `📂 *Link GDrive Foto:* ${this.gdriveUrl}` : null,
+                    `📝 *Catatan:* ${this.extraNotes || '-'}`,
+                    `----------------------------------`,
+                    `💰 *Total Biaya:* ${this.formatRp(total)}`,
+                    `💳 *Pembayaran (${this.payTerm === 'dp50' ? 'DP 50%' : 'Lunas'}):* ${this.payChannel.toUpperCase()} (${this.formatRp(payNow)}) — ${this.payVerified ? 'SUDAH DIBAYAR ✅' : 'Siap Diproses'}`
+                ].filter(Boolean).join('\n');
+
+                document.getElementById('waBriefPreview').innerText = briefLines;
+            }
+
+            submitOrderWA() {
+                const nameEl = document.getElementById('clientBizName');
+                const waEl = document.getElementById('clientWaNumber');
+                if (!nameEl.checkValidity() || !waEl.checkValidity()) {
+                    nameEl.reportValidity();
+                    waEl.reportValidity();
+                    return;
+                }
+                this.saveCustomPreviewToStorage();
+                const text = document.getElementById('waBriefPreview').innerText;
+                window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+            }
+        }
+
+        const customApp = new KustomisasiOrderApp();
+    </script>
+</body>
+</html>
+

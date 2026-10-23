@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langkah 1: Pilih Desain Website — Digitra Web &amp; AI Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Sora"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+        body {
+            background-color: #0B1020;
+            color: #F5F7FF;
+        }
+        .text-gradient-digitra {
+            background: linear-gradient(90deg, #00E5FF 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-digitra {
+            background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+
+    <!-- =======================================================================
+         1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
+    ======================================================================== -->
+    <header class="sticky top-0 z-40 bg-[#05070F]/90 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <svg class="w-9 h-9 shrink-0" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="#00E5FF"/>
+                    <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="#8B5CF6"/>
+                </svg>
+                <div>
+                    <div class="font-display font-bold text-lg text-[#F5F7FF] leading-none">Digitra</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-slate-400 mt-0.5">Web &amp; AI Solutions</div>
+                </div>
+            </a>
+
+            <!-- 3-Step Progress Stepper -->
+            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-3 text-xs font-display font-bold">
+                <span class="px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow">
+                    ① Pilih Desain
+                </span>
+                <span class="text-slate-600">&rarr;</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
+                    ② Pilih Paket &amp; Cek Demo
+                </span>
+                <span class="text-slate-600">&rarr;</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
+                    ③ Kustomisasi &amp; Upload Foto
+                </span>
+            </nav>
+
+            <a href="index.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300">
+                &larr; Beranda
+            </a>
+        </div>
+    </header>
+
+    <!-- =======================================================================
+         2. MAIN CONTENT: PILIH TEMPLATE SESUAI KATEGORI ATAU CUSTOM DARI NOL
+    ======================================================================== -->
+    <main class="flex-1 py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <!-- Header & Category Filter -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Langkah 1 dari 3 &bull; Pilih Basis Tampilan</span>
+                    <h1 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1.5">
+                        Pilih Desain Website Sesuai Kategori Bisnis Anda
+                    </h1>
+                    <p class="text-sm text-slate-400 mt-1.5 max-w-2xl">
+                        Setiap template di bawah ini nantinya dapat Anda gunakan langsung maupun dimodifikasi warna, logo, dan foto produknya pada langkah ke-3.
+                    </p>
+                </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-2xl border border-white/10 shrink-0 overflow-x-auto">
+                    <button type="button" onclick="filterDesigns('all')" data-cat="all" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] whitespace-nowrap">
+                        ✨ Semua (4)
+                    </button>
+                    <button type="button" onclick="filterDesigns('harth')" data-cat="harth" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                        ☕ Cafe &amp; Bakery
+                    </button>
+                    <button type="button" onclick="filterDesigns('hush')" data-cat="hush" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                        🍣 Resto &amp; Kuliner
+                    </button>
+                    <button type="button" onclick="filterDesigns('cedar')" data-cat="cedar" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                        🥾 Retail &amp; Sepatu
+                    </button>
+                    <button type="button" onclick="filterDesigns('barbearia')" data-cat="barbearia" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                        💈 Barbershop &amp; Jasa
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2x2 Clean Template Cards Grid -->
+            <div id="designCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-7"></div>
+
+            <!-- Option B: Custom Design from Scratch Card -->
+            <div class="mt-10 rounded-3xl bg-gradient-to-r from-[#05070F] via-[#131129] to-[#05070F] border-2 border-[#8B5CF6]/50 p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-2xl">
+                <div class="space-y-2 max-w-2xl">
+                    <span class="inline-block px-3 py-1 rounded-full bg-[#8B5CF6]/20 text-purple-300 border border-[#8B5CF6]/40 text-xs font-bold">
+                        🎨 Opsi Full Custom (Desain Baru dari Awal)
+                    </span>
+                    <h2 class="font-display font-bold text-xl sm:text-2xl text-white">
+                        Punya Referensi Desain Sendiri atau Kategori Usaha Unik?
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Jika Anda menginginkan tampilan website yang dirancang 100% baru dari nol (di luar template di atas), tim UI/UX Digitra siap merancangkannya khusus untuk perusahaan Anda.
+                    </p>
+                </div>
+                <div class="shrink-0">
+                    <a href="kustomisasi.html?design=harth&tier=pro&mode=scratch"
+                        class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#8B5CF6] hover:bg-[#7c4deb] text-white font-display font-bold text-xs shadow-xl transition-all">
+                        <span>Request Desain Baru dari Nol</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- =======================================================================
+         3. FOOTER
+    ======================================================================== -->
+    <footer class="bg-[#05070F] border-t border-white/10 py-6 text-center text-xs text-slate-400">
+        Digitra — Web &amp; AI Solutions &bull; Langkah 1 dari 3: Pemilihan Desain Website
+    </footer>
+
+    <script>
+        const DESIGNS = [
+            {
+                id: 'harth',
+                categoryBadge: '☕ Cafe, Roastery & Artisan Bakery',
+                title: 'Harth Specialty Coffee',
+                vibe: 'Warm Kinfolk Editorial & Animasi Uap Kopi',
+                desc: 'Cocok untuk coffee shop, toko roti, dan tempat nongkrong WFC. Dilengkapi struk pesanan meja barista dan indikator kursi/colokan.',
+                popupFeature: 'Pop-Up Struk Barista (Pilih Biji Kopi, Oat Milk, Takaran Gula & Es + QRIS)',
+                mapFeature: 'Peta Lokasi + Status Kursi WFC, Kecepatan Wi-Fi & Jam Fresh Roast',
+                demoUrl: 'demos/harth-coffee/index.html',
+                img: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=85'
+            },
+            {
+                id: 'hush',
+                categoryBadge: '🍣 Restoran, Sushi Bar & Kuliner',
+                title: 'Hush Modern Izakaya & Grill',
+                vibe: 'Dark Culinary & Efek Bara Api Panggangan',
+                desc: 'Cocok untuk restoran keluarga, sushi bar, steakhouse, maupun bisnis kuliner dengan layanan makan di tempat dan kurir instan.',
+                popupFeature: 'Pop-Up Tiket Dapur Chef (Pilih Saus/Torch, Urutan Keluar Makanan & Filter Alergi + QRIS)',
+                mapFeature: 'Peta Restoran + Info Valet VIP, Private Room & Radius Kurir Termal',
+                demoUrl: 'demos/hush-resto/index.html',
+                img: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=85'
+            },
+            {
+                id: 'cedar',
+                categoryBadge: '🥾 Retail Sepatu, Fashion & Kerajinan',
+                title: 'Cedar Heritage Footwear',
+                vibe: 'Stitched Leather Lookbook & Panduan Size CM',
+                desc: 'Cocok untuk brand sepatu lokal, pakaian, tas kulit, dan kerajinan tangan yang dikirim ke seluruh Indonesia.',
+                popupFeature: 'Pop-Up Lembar Pengrajin (Tabel Ukuran EU 40–44 ke CM + Ukir Nama Monogram + Ongkir Kurir)',
+                mapFeature: 'Peta Studio Fitting & Workshop + Info Ekspedisi JNE/J&T/SiCepat',
+                demoUrl: 'demos/cedar-shoes/index.html',
+                img: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1000&q=85'
+            },
+            {
+                id: 'barbearia',
+                categoryBadge: '💈 Barbershop, Salon, Klinik & Jasa VIP',
+                title: 'Barbearia Gentlemen’s Club',
+                vibe: 'Obsidian Gold Luxury & Sistem Booking Kursi',
+                desc: 'Khusus bisnis jasa yang menggunakan sistem jadwal jam kedatangan dan pemilihan kapster/terapis tanpa antre.',
+                popupFeature: 'Pop-Up VIP Appointment Pass (Pilih Master Barber, Jam Kedatangan & Welcome Drink)',
+                mapFeature: 'Peta Gentlemen Lounge + Info Parkir VIP & Slot Kursi Kosong Hari Ini',
+                demoUrl: 'demos/barbearia-club/index.html',
+                img: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=85'
+            }
+        ];
+
+        function renderDesigns(filter = 'all') {
+            const grid = document.getElementById('designCardsGrid');
+            const list = filter === 'all' ? DESIGNS : DESIGNS.filter(d => d.id === filter);
+
+            grid.innerHTML = list.map(d => `
+                <article class="rounded-3xl bg-[#05070F] border border-white/10 hover:border-[#00E5FF]/50 overflow-hidden shadow-2xl flex flex-col justify-between transition-all group">
+                    <div>
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="${d.img}" alt="${d.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-[#05070F]/25 to-transparent"></div>
+                            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#05070F]/90 border border-white/15 text-xs font-bold text-[#00E5FF]">
+                                ${d.categoryBadge}
+                            </span>
+                            <a href="${d.demoUrl}" target="_blank" rel="noopener"
+                                class="absolute bottom-3 right-3 px-3.5 py-1.5 rounded-xl bg-[#05070F]/90 hover:bg-black text-white border border-white/20 text-xs font-semibold">
+                                👁️ Lihat Live Demo &nearr;
+                            </a>
+                        </div>
+
+                        <div class="p-6 space-y-3">
+                            <div class="text-xs font-semibold text-purple-300">${d.vibe}</div>
+                            <h2 class="font-display font-bold text-2xl text-white">${d.title}</h2>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${d.desc}</p>
+
+                            <div class="pt-2 space-y-2 text-xs">
+                                <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
+                                    <strong class="text-[#00E5FF] block">✨ Pop-Up Pemesanan Khas:</strong>
+                                    <span class="text-slate-300">${d.popupFeature}</span>
+                                </div>
+                                <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
+                                    <strong class="text-purple-300 block">📍 Peta Lokasi Khas:</strong>
+                                    <span class="text-slate-300">${d.mapFeature}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6 pt-2 flex items-center gap-3">
+                        <a href="${d.demoUrl}" target="_blank" rel="noopener"
+                            class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-slate-200">
+                            Cek Demo &nearr;
+                        </a>
+                        <a href="pilih-paket.html?design=${d.id}"
+                            class="flex-1 py-3.5 px-5 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs text-center shadow-lg hover:opacity-95 transition-all">
+                            Pilih Desain Ini &amp; Lihat Paket &rarr;
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterDesigns(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const act = btn.getAttribute('data-cat') === cat;
+                btn.className = act
+                    ? 'filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] whitespace-nowrap'
+                    : 'filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap';
+            });
+            renderDesigns(cat);
+        }
+
+        renderDesigns('all');
+    </script>
+</body>
+</html>
+

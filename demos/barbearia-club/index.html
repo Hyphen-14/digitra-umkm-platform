@@ -1,0 +1,2641 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Gentlemen's Club — Digitra Live Demo</title><script>window.DEFAULT_DEMO_THEME = 'barbearia';</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                        display: ['Playfair Display', 'Georgia', 'serif'],
+                        condensed: ['Oswald', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* =====================================================================
+           MODERN WEB GUIDANCE: DIALOG, SCROLL-DRIVEN REVEALS & REDUCED MOTION
+        ====================================================================== */
+        @property --animation-reduced {
+            syntax: "*";
+            inherits: false;
+            initial-value: none;
+        }
+
+        /* Cross-Document View Transitions (modern-web-guidance: cross-document-transitions) */
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+
+        dialog:modal {
+            overscroll-behavior: contain;
+        }
+        dialog::backdrop {
+            overflow: hidden;
+            overscroll-behavior: contain;
+            background-color: rgba(10, 10, 12, 0.72);
+            backdrop-filter: blur(6px);
+        }
+
+        /* Scroll-Driven Entry Reveal Keyframes (Compositor-only: transform & opacity + clip-path) */
+        @keyframes editorialRevealUp {
+            from {
+                opacity: 0;
+                transform: translateY(42px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes curtainClipReveal {
+            from {
+                opacity: 0.2;
+                clip-path: inset(16% 6% 16% 6% round 16px);
+                transform: translateY(28px) scale(1.03);
+            }
+            to {
+                opacity: 1;
+                clip-path: inset(0% 0% 0% 0% round 16px);
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Native CSS Scroll-Driven Animation where supported (declared AFTER animation shorthand) */
+        @supports (animation-timeline: view()) and (animation-range: entry) {
+            .scroll-reveal {
+                animation: editorialRevealUp linear both;
+                animation-timeline: view(block);
+                animation-range: entry 5% cover 26%;
+                --animation-reduced: none;
+            }
+            .scroll-curtain {
+                animation: curtainClipReveal linear both;
+                animation-timeline: view(block);
+                animation-range: entry 5% cover 30%;
+                --animation-reduced: none;
+            }
+        }
+
+        /* Fallback classes for IntersectionObserver when view() timeline is unsupported */
+        .io-hidden {
+            opacity: 0;
+            transform: translateY(36px) scale(0.97);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .io-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Scan Laser Animation for QR Standee Demo */
+        @keyframes laserScan {
+            0%, 100% { transform: translateY(0px); opacity: 0.9; }
+            50% { transform: translateY(155px); opacity: 1; }
+        }
+        .laser-line {
+            animation: laserScan 2.2s ease-in-out infinite;
+            --animation-reduced: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: var(--animation-reduced) !important;
+                transition-duration: 0.05s !important;
+            }
+        }
+
+        /* Cedar Stitched Border Effect */
+        .stitched-box {
+            box-shadow: 0 0 0 6px #f4efe6, 0 12px 30px rgba(0, 0, 0, 0.18);
+            border: 1.5px dashed #b89f7d;
+        }
+
+        /* Dappled Window Sunlight Overlay for Harth Coffee */
+        .dappled-light {
+            background: radial-gradient(ellipse at 75% 20%, rgba(255, 238, 205, 0.22) 0%, transparent 55%),
+                        repeating-linear-gradient(125deg, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 38px, transparent 38px, transparent 82px);
+        }
+
+        /* Subtle Film Grain Texture */
+        .bg-noise {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-300 selection:text-stone-950 overflow-x-hidden">
+
+    <!-- =====================================================================
+         DYNAMIC VIEWPORT CONTAINER (100% CLEAN TOP NAVBAR — NO DOUBLE BARS!)
+    ====================================================================== -->
+    <div id="themeViewport" class="min-h-screen transition-opacity duration-300">
+        <!-- Populated dynamically by the 4 distinct architectural renderers -->
+    </div>
+
+    <!-- =====================================================================
+         FLOATING DIGITRA DOCK (BOTTOM-LEFT COLLAPSIBLE DEMO CONTROLLER)
+         - Styled in Official Digitra Midnight Navy (#0B1020) & Cyan-Purple (#00E5FF -> #8B5CF6)
+    ====================================================================== -->
+    <aside id="digitraFloatingDock" aria-label="Kontrol Demo Digitra" class="fixed bottom-4 left-4 z-50 text-xs font-sans">
+        <!-- Minimized Pill State -->
+        <button
+            type="button"
+            id="dockMinimizedBtn"
+            onclick="app.toggleDock(false)"
+            class="hidden items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-[#0B1020]/95 hover:bg-[#05070F] text-[#F5F7FF] border border-[#00E5FF]/40 shadow-[0_12px_32px_rgba(0,0,0,0.65)] backdrop-blur-xl transition-all"
+        >
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 40 40" fill="none">
+                <defs>
+                    <linearGradient id="digGradMin" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#00E5FF"/>
+                        <stop offset="100%" stop-color="#8B5CF6"/>
+                    </linearGradient>
+                </defs>
+                <path d="M6 6H20L34 20L20 34H6L18 22L12 16L6 22V6Z" fill="url(#digGradMin)"/>
+            </svg>
+            <span class="font-bold tracking-tight">Digitra Demo</span>
+            <span class="px-1.5 py-0.5 rounded bg-[#00E5FF]/15 text-[#00E5FF] text-[10px] font-extrabold">Buka Panel</span>
+        </button>
+
+        <!-- Expanded Dock Card -->
+        <div id="dockExpandedCard" class="w-[330px] sm:w-[360px] rounded-2xl bg-[#0B1020]/95 text-[#F5F7FF] border border-white/15 shadow-[0_20px_50px_rgba(5,7,15,0.85)] backdrop-blur-xl p-3.5 space-y-2.5">
+            <!-- Row 1: Back to Digitra + Brand Badge + Minimize -->
+            <div class="flex items-center justify-between gap-2 pb-2 border-b border-white/10">
+                <button
+                    type="button"
+                    onclick="app.goBackToDigitra()"
+                    class="inline-flex items-center gap-2 text-xs font-extrabold text-[#00E5FF] hover:text-white transition-colors"
+                >
+                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 40 40" fill="none">
+                        <defs>
+                            <linearGradient id="digGradDock" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#00E5FF"/>
+                                <stop offset="100%" stop-color="#8B5CF6"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M6 6H20L34 20L20 34H6L18 22L12 16L6 22V6Z" fill="url(#digGradDock)"/>
+                    </svg>
+                    <span>&larr; Kembali ke Digitra</span>
+                </button>
+
+                <div class="flex items-center gap-1">
+                    <button type="button" onclick="app.openQRStandeeModal()" id="qrDemoBtn" title="Simulasi QR Meja" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-[11px] font-bold text-[#F5F7FF]">
+                        🪪 <span id="qrBtnLabel">QR #07</span>
+                    </button>
+                    <button type="button" onclick="app.openSheetModal()" id="sheetDemoBtn" title="Simulasi Google Sheets" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-[11px] font-bold text-[#F5F7FF]">
+                        📊 Sheet
+                    </button>
+                    <button type="button" onclick="app.toggleLang()" id="langBtn" class="px-1.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-[11px] font-bold text-cyan-300">
+                        🇮🇩 ID
+                    </button>
+                    <button
+                        type="button"
+                        onclick="app.toggleDock(true)"
+                        title="Sembunyikan Panel Demo"
+                        class="w-6 h-6 rounded-lg bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white font-bold flex items-center justify-center"
+                    >&minus;</button>
+                </div>
+            </div>
+
+            <!-- Row 2: Quick Category Switcher -->
+            <div>
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Pilih Kategori Demo:</div>
+                <div class="grid grid-cols-4 gap-1 bg-[#05070F] p-1 rounded-xl border border-white/10">
+                    <button type="button" onclick="app.switchTheme('harth')" id="tab-harth" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        ☕ Cafe
+                    </button>
+                    <button type="button" onclick="app.switchTheme('hush')" id="tab-hush" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        🍣 Resto
+                    </button>
+                    <button type="button" onclick="app.switchTheme('cedar')" id="tab-cedar" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        🥾 Retail
+                    </button>
+                    <button type="button" onclick="app.switchTheme('barbearia')" id="tab-barbearia" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        💈 Barber
+                    </button>
+                </div>
+            </div>
+
+            <!-- Row 3: Quick Package Tier Switcher -->
+            <div>
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Bandingkan Kualitas Paket:</div>
+                <div class="grid grid-cols-3 gap-1 bg-[#05070F] p-1 rounded-xl border border-white/10">
+                    <button type="button" onclick="app.switchTier('starter')" id="tier-starter" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        Starter 499rb
+                    </button>
+                    <button type="button" onclick="app.switchTier('complete')" id="tier-complete" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        Complete 899rb
+                    </button>
+                    <button type="button" onclick="app.switchTier('pro')" id="tier-pro" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
+                        👑 Pro 1,49jt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Row 4: Direct CTA to Order This Design on Digitra -->
+            <button
+                type="button"
+                onclick="app.orderThisDesign()"
+                class="w-full py-2.5 px-4 rounded-xl font-extrabold text-xs text-[#05070F] shadow-lg transition-all flex items-center justify-center gap-1.5"
+                style="background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%); color: #FFFFFF;"
+            >
+                <span>✨ Pilih &amp; Pesan Desain Ini di Digitra</span>
+                <span>&rarr;</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- =====================================================================
+         FLOATING SMART WA CONCIERGE / CART BAR (BOTTOM-RIGHT SO IT NEVER COLLIDES WITH DOCK)
+    ====================================================================== -->
+    <div id="floatingCartWrapper" class="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] sm:w-[430px] pointer-events-none hidden">
+        <div class="pointer-events-auto">
+            <button
+                type="button"
+                onclick="app.openCheckoutModal()"
+                id="floatingCartBtn"
+                class="w-full p-3.5 sm:px-5 rounded-2xl shadow-2xl flex items-center justify-between transition-all transform hover:-translate-y-0.5 active:scale-[0.99] border"
+                style="background: #1a1412; color: #f5efe6; border-color: rgba(212, 163, 115, 0.45);"
+            >
+                <div class="flex items-center gap-3 text-left">
+                    <div id="floatingCartCount" class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm" style="background: #d4a373; color: #1a1412;">
+                        1
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-medium opacity-85 flex items-center gap-1.5">
+                            <span id="floatingCartModeText">🍽️ Pesan dari Meja #07</span>
+                            <span id="floatingCartPromoBadge" class="hidden px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500 text-stone-950">Voucher</span>
+                        </div>
+                        <div id="floatingCartTotalText" class="text-base font-extrabold tracking-tight">
+                            Rp 24.000
+                        </div>
+                    </div>
+                </div>
+                <div id="floatingCartCtaWrap" class="px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 shrink-0" style="background: #f5efe6; color: #1a1412;">
+                    <span id="floatingCartCta">Lihat Struk WA</span>
+                    <span>&rarr;</span>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         DIALOG 1: VISUAL STANDEE QR AKRILIK MEJA SIMULATOR (<dialog closedby="any">)
+    ====================================================================== -->
+    <dialog id="qrStandeeModal" closedby="any" aria-labelledby="qrStandeeTitle" class="w-full max-w-lg rounded-3xl p-0 bg-stone-950 text-stone-100 shadow-2xl border border-amber-500/30 m-auto">
+        <div class="p-6">
+            <div class="flex items-start justify-between gap-4 border-b border-stone-800 pb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Phygital Dine-In Experience</span>
+                    <h3 id="qrStandeeTitle" class="text-xl font-serif font-bold text-white mt-0.5">
+                        Simulasi Standee QR Akrilik Meja (Pesan dari Meja)
+                    </h3>
+                </div>
+                <button type="button" onclick="document.getElementById('qrStandeeModal').close()" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold flex items-center justify-center">&times;</button>
+            </div>
+
+            <!-- Realistic 3D Acrylic Table Standee Preview -->
+            <div class="my-5 relative rounded-2xl p-6 flex flex-col items-center justify-center overflow-hidden border border-stone-800" style="background: radial-gradient(circle at center, #2b211b 0%, #120d0a 100%);">
+                <div class="relative w-60 bg-white/95 text-stone-900 rounded-2xl p-4 shadow-2xl border-4 border-white/40 flex flex-col items-center text-center">
+                    <div class="text-xs font-extrabold tracking-widest uppercase text-amber-800" id="standeeStoreTitle">HARTH SPECIALTY COFFEE</div>
+                    <div class="text-xs text-stone-500 font-medium mt-0.5">SCAN UNTUK PESAN DARI MEJA</div>
+
+                    <div class="relative my-3 p-2.5 bg-white rounded-xl border-2 border-stone-900 w-44 h-44 flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 120 120" class="w-full h-full" fill="#111827">
+                            <rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="#111827" stroke-width="6"/>
+                            <rect x="16" y="16" width="16" height="16" rx="2"/>
+                            <rect x="80" y="8" width="32" height="32" rx="4" fill="none" stroke="#111827" stroke-width="6"/>
+                            <rect x="88" y="16" width="16" height="16" rx="2"/>
+                            <rect x="8" y="80" width="32" height="32" rx="4" fill="none" stroke="#111827" stroke-width="6"/>
+                            <rect x="16" y="88" width="16" height="16" rx="2"/>
+                            <rect x="48" y="12" width="8" height="8"/><rect x="60" y="12" width="8" height="16"/>
+                            <rect x="48" y="28" width="8" height="12"/><rect x="12" y="48" width="16" height="8"/>
+                            <rect x="36" y="48" width="24" height="8"/><rect x="68" y="48" width="12" height="16"/>
+                            <rect x="88" y="48" width="20" height="8"/><rect x="48" y="64" width="16" height="16"/>
+                            <rect x="16" y="64" width="16" height="8"/><rect x="76" y="72" width="16" height="8"/>
+                            <rect x="96" y="64" width="12" height="20"/><rect x="48" y="88" width="12" height="20"/>
+                            <rect x="68" y="88" width="16" height="8"/><rect x="68" y="100" width="24" height="10"/>
+                            <rect x="96" y="92" width="12" height="18"/>
+                        </svg>
+                        <div class="laser-line absolute top-2 inset-x-2 h-1 bg-gradient-to-r from-transparent via-rose-500 to-transparent shadow-[0_0_12px_#f43f5e]"></div>
+                    </div>
+
+                    <div class="w-full py-1.5 px-3 rounded-lg bg-stone-900 text-amber-300 font-extrabold text-sm tracking-wider" id="standeeTableBadge">
+                        MEJA NOMOR #07
+                    </div>
+                    <div class="text-xs text-stone-500 mt-1">Bebas Antre &bull; Tanpa Download Aplikasi</div>
+                </div>
+                <div class="w-72 h-5 rounded-b-xl bg-gradient-to-r from-amber-900 via-amber-700 to-amber-900 shadow-lg -mt-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-stone-900 p-4 rounded-2xl border border-stone-800">
+                <div>
+                    <label for="qrTableSelect" class="block text-xs font-bold text-stone-400 mb-1">Pilih Nomor Meja Pelanggan:</label>
+                    <select id="qrTableSelect" onchange="app.setTableNumber(this.value)" class="w-full px-3 py-2 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs font-bold">
+                        <option value="Meja #01 (Indoor Window)">Meja #01 (Indoor Window)</option>
+                        <option value="Meja #04 (Garden Terrace)">Meja #04 (Garden Terrace)</option>
+                        <option value="Meja #07 (VIP Lounge)" selected>Meja #07 (VIP Lounge)</option>
+                        <option value="Meja #12 (Bar Counter)">Meja #12 (Bar Counter)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="qrServingSelect" class="block text-xs font-bold text-stone-400 mb-1">Preferensi Penyajian Dapur:</label>
+                    <select id="qrServingSelect" onchange="app.setServingPref(this.value)" class="w-full px-3 py-2 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs font-bold">
+                        <option value="Sajikan Bersamaan">🍽️ Sajikan Bersamaan</option>
+                        <option value="Minuman / Appetizer Keluar Duluan">☕ Minuman / Appetizer Duluan</option>
+                        <option value="Bungkus Sebagian (Takeaway)">🛍️ Bungkus (Takeaway)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-5 flex flex-col sm:flex-row gap-2.5">
+                <button
+                    type="button"
+                    onclick="app.activateDineInFromQR()"
+                    class="flex-1 py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-extrabold text-xs sm:text-sm transition-all shadow-lg"
+                >
+                    📱 Simulasikan Scan QR &amp; Mulai Pesan dari Meja
+                </button>
+                <button
+                    type="button"
+                    onclick="app.callWaiterWA()"
+                    class="py-3 px-4 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold text-xs border border-stone-700 transition-all"
+                >
+                    🔔 Panggil Pelayan / Bill ke WA
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- =====================================================================
+         DIALOG 2: BESPOKE CATEGORY-SPECIFIC ITEM / BOOKING MODAL (<dialog closedby="any">)
+         (Renders 4 completely different visual & UX templates per category!)
+    ====================================================================== -->
+    <dialog id="itemModal" closedby="any" aria-labelledby="itemModalTitle" class="w-full max-w-lg rounded-3xl p-0 bg-transparent shadow-2xl border-0 m-auto">
+        <div id="itemModalBody"></div>
+    </dialog>
+
+    <!-- =====================================================================
+         DIALOG 3: BESPOKE CATEGORY CHECKOUT + QRIS & BANK TRANSFER SIMULATOR (<dialog closedby="any">)
+         (Each category has its own receipt/sheet/pass look + QRIS & Bank Transfer!)
+    ====================================================================== -->
+    <dialog id="checkoutModal" closedby="any" aria-labelledby="checkoutTitle" class="w-full max-w-xl rounded-3xl p-0 bg-transparent shadow-2xl border-0 m-auto max-h-[92vh]">
+        <div id="checkoutModalBody" class="overflow-y-auto max-h-[90vh]"></div>
+    </dialog>
+
+    <!-- =====================================================================
+         DIALOG 4: LIVE GOOGLE SHEETS CMS SIMULATOR (<dialog closedby="any">)
+    ====================================================================== -->
+    <dialog id="sheetModal" closedby="any" aria-labelledby="sheetModalHeading" class="w-full max-w-2xl rounded-3xl p-0 bg-stone-950 text-stone-100 shadow-2xl border border-stone-800 m-auto">
+        <div class="p-6 max-h-[88vh] overflow-y-auto">
+            <div class="flex items-start justify-between gap-4 border-b border-stone-800 pb-3">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Zero-Code Live Menu via Google Sheets</span>
+                    <h3 id="sheetModalHeading" class="text-xl font-serif font-bold text-white mt-0.5">
+                        Panel Simulasi Google Sheets Pemilik UMKM
+                    </h3>
+                    <p class="text-xs text-stone-400 mt-0.5">
+                        Ubah harga atau klik status <strong>Tersedia / Habis</strong> di bawah ini—tampilan kategori yang sedang aktif akan berubah secara instan tanpa koding!
+                    </p>
+                </div>
+                <button type="button" onclick="document.getElementById('sheetModal').close()" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold flex items-center justify-center">&times;</button>
+            </div>
+
+            <div class="mt-4 overflow-x-auto rounded-2xl border border-stone-800">
+                <table class="w-full text-xs text-left border-collapse">
+                    <thead>
+                        <tr class="bg-stone-900 text-stone-300 border-b border-stone-800">
+                            <th class="p-3">Nama Produk / Layanan</th>
+                            <th class="p-3">Harga Jual (Rp)</th>
+                            <th class="p-3 text-center">Status Ketersediaan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sheetTableBody" class="divide-y divide-stone-800"></tbody>
+                </table>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- =====================================================================
+         CORE ENGINE: 4 BESPOKE ARCHITECTURES + CANVAS PARTICLES + PARALLAX
+    ====================================================================== -->
+    <script>
+        // 1. Modern Web Guidance Mandatory Fallback for <dialog closedby="any">
+        document.querySelectorAll('dialog[closedby="any"]').forEach((dialog) => {
+            if (!('closedBy' in HTMLDialogElement.prototype)) {
+                dialog.addEventListener('click', (event) => {
+                    if (event.target !== dialog) return;
+                    const rect = dialog.getBoundingClientRect();
+                    const isDialogContent = (
+                        rect.top <= event.clientY &&
+                        event.clientY <= rect.top + rect.height &&
+                        rect.left <= event.clientX &&
+                        event.clientX <= rect.left + rect.width
+                    );
+                    if (isDialogContent) return;
+                    dialog.close();
+                });
+            }
+        });
+
+        // 2. Data Catalog for the 4 Distinct Architectures
+        const THEMES_DB = {
+            harth: {
+                storeTitle: "HARTH SPECIALTY COFFEE",
+                waPhone: "6282251309900",
+                variantLabel: "Barista Customizer (Shot / Milk / Sugar):",
+                variants: ["Normal Espresso • Oat Milk", "Double Shot • Fresh Milk", "Less Sugar • Iced", "Hot Ceramic Cup (Meja)"],
+                items: [
+                    { id: "h1", cat: "COFFEE", name: "Classic Latte", desc: "Rich, Smooth, Timeless.", price: 28000, available: true, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h2", cat: "COLD BREW", name: "Iced Vanilla", desc: "Cool, Creamy, Refreshing.", price: 32000, available: true, img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h3", cat: "ALL DAY", name: "Avocado Toast", desc: "Fresh, Wholesome, Delicious.", price: 48000, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h4", cat: "BAKERY", name: "Almond Croissant", desc: "Buttery, Flaky, Irresistible.", price: 34000, available: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" }
+                ]
+            },
+            hush: {
+                storeTitle: "HUSH MODERN RESTAURANT",
+                waPhone: "6282251309900",
+                variantLabel: "Pilih Tingkat Kematangan / Saus Meja:",
+                variants: ["Signature Aburi Torch", "Extra Truffle Ponzu", "Spicy Mayo Terpisah", "Kids Friendly (Tanpa Wasabi)"],
+                items: [
+                    { id: "u1", cat: "CHEF SPECIAL", name: "Salmon Aburi Mentai Platter", desc: "8 pcs seared Norwegian salmon belly, tobiko, truffle oil & house tare.", price: 68000, available: true, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u2", cat: "NIGIRI SELECTION", name: "Toro & Uni Gold Nigiri Set", desc: "Bluefin fatty tuna & Hokkaido sea urchin served on warm akazu shari.", price: 95000, available: true, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u3", cat: "HOT ROBATAYAKI", name: "Wagyu A5 Yakitori Skewers", desc: "Charcoal-grilled Miyazaki Wagyu glazed with smoked sweet soy & scallions.", price: 82000, available: true, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u4", cat: "ARTISAN ROLL", name: "Crispy Dragon Tempura Roll", desc: "Prawn tempura, unagi kabayaki, avocado crown, and roasted sesame.", price: 59000, available: true, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=700&q=80" }
+                ]
+            },
+            cedar: {
+                storeTitle: "CEDAR HANDMADE SHOE CO.",
+                waPhone: "6282251309900",
+                variantLabel: "Pilih Ukuran Sepatu (EU) & Warna Kulit:",
+                variants: ["Size 40 • Pull-Up Cognac", "Size 41 • Pull-Up Cognac", "Size 42 • Oxblood Vintage", "Size 43 • Matte Black"],
+                items: [
+                    { id: "c1", cat: "HERITAGE BOOTS", name: "Garrison Goodyear-Welt Boot", desc: "Full-grain crazy horse leather", price: 685000, available: true, img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c2", cat: "CHUKKA BOOTS", name: "ironwood Suede Chukka", desc: "Hand-stitched crepe outsole", price: 590000, available: true, img: "https://images.unsplash.com/photo-1542280756-74b2f55e73ab?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c3", cat: "DRESS SHOES", name: "Kensington Wingtip Brogue", desc: "Burnished chestnut calfskin", price: 640000, available: true, img: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c4", cat: "DESERT BOOTS", name: "Sahara Waxed Canvas Boot", desc: "Water-resistant beeswax finish", price: 520000, available: true, img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c5", cat: "DRESS OXFORD", name: "Savile Row Cap-Toe Oxford", desc: "Vegetable-tanned leather sole", price: 660000, available: true, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c6", cat: "LOAFERS", name: " Verona Penny Loafer", desc: "Unlined soft nubuck leather", price: 540000, available: true, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c7", cat: "WORK BOOTS", name: "Timberline Moc-Toe Boot", desc: "Triple-stitched Vibram lug", price: 720000, available: true, img: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c8", cat: "CHELSEA BOOTS", name: "Camden Jodphur Chelsea", desc: "Single-piece espresso hide", price: 650000, available: true, img: "https://images.unsplash.com/photo-1605812860427-4024433a70fd?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            barbearia: {
+                storeTitle: "BARBEARIA HERITAGE STUDIO",
+                waPhone: "6282251309900",
+                variantLabel: "Pilih Slot Jam & Master Barber:",
+                variants: ["11:00 WIB • Master Rafael", "14:30 WIB • Master Lucas", "17:00 WIB • Master Diego", "19:30 WIB • VIP Night Slot"],
+                items: [
+                    { id: "b1", cat: "CABELO / HAIR", name: "Corte Premium Visagista", desc: "Konsultasi anatomi wajah, potong presisi, keramas & pomade matte.", price: 65000, available: true },
+                    { id: "b2", cat: "CABELO / HAIR", name: "Acabamento & Selagem", desc: "Perapian kontur leher, jambang, dan nutrisi pelurusan rambut pria.", price: 55000, available: true },
+                    { id: "b3", cat: "BARBA / BEARD", name: "Barbaterapia Hot Towel", desc: "Ritual handuk panas aromaterapi, pisau cukur klasik & balm organik.", price: 50000, available: true },
+                    { id: "b4", cat: "BARBA / BEARD", name: "Design de Barba & Mustache", desc: "Sculpting garis jenggot simetris & perawatan minyak cedarwood.", price: 45000, available: true },
+                    { id: "b5", cat: "ESTÉTICA / SPA", name: "Skin Care Black Mask & Vapor", desc: "Detoks pori wajah dengan uap ozon hangat dan masker charcoal.", price: 60000, available: true },
+                    { id: "b6", cat: "ESTÉTICA / SPA", name: "Combo VIP: Corte + Barba + Spa", desc: "Paket transformasi penuh 90 menit + kopi espresso gratis.", price: 135000, available: true }
+                ]
+            }
+        };
+
+        class BespokeShowcaseApp {
+            constructor() {
+                this.theme = 'harth'; // 'harth' | 'hush' | 'cedar' | 'barbearia'
+                this.tier = 'pro'; // 'starter' | 'complete' | 'pro'
+                this.lang = 'id';
+                this.orderMode = 'dinein';
+                this.tableNumber = 'Meja #07 (VIP Lounge)';
+                this.servingPref = 'Sajikan Bersamaan';
+                this.cart = [];
+                this.voucher = null;
+                this.modalItem = null;
+                this.modalVariant = '';
+                this.modalExtra = '';
+                this.modalMonogram = 'Y.S';
+                this.modalQty = 1;
+                this.paymentMethod = 'qris'; // 'qris' | 'bank' | 'cashier'
+                this.selectedBank = 'BCA • 8720-4491-02 (a/n PT Digitra Mitra UMKM)';
+                this.paymentVerified = false;
+                this.courierName = 'JNE Reguler (Packing Kayu)';
+                this.courierFee = 22000;
+                this.customerName = 'Yasin (Pelanggan)';
+                this.particleAnimId = null;
+
+                this.init();
+            }
+
+            init() {
+                const params = new URLSearchParams(window.location.search);
+                const hash = (window.location.hash || '').replace('#', '').toLowerCase();
+                const qTheme = params.get('theme') || window.DEFAULT_DEMO_THEME || (THEMES_DB[hash] ? hash : null);
+                const qTier = params.get('tier');
+                if (qTheme && THEMES_DB[qTheme]) {
+                    this.theme = qTheme;
+                }
+                if (qTier && ['starter', 'complete', 'pro'].includes(qTier)) {
+                    this.tier = qTier;
+                }
+
+                // Hide Floating Dock if embedded inside pilih-paket.html (?embed=1)
+                if (params.get('embed') === '1') {
+                    const dock = document.getElementById('digitraFloatingDock');
+                    if (dock) dock.classList.add('hidden');
+                }
+
+                // Check if client triggered Live Custom Brand & Photo Preview (?custom=1)
+                this.customClientData = null;
+                if (params.get('custom') === '1') {
+                    try {
+                        const raw = localStorage.getItem('digitra_custom_preview');
+                        if (raw) {
+                            this.customClientData = JSON.parse(raw);
+                            const store = this.getStore();
+                            if (this.customClientData.bizName) {
+                                store.storeTitle = this.customClientData.bizName;
+                            }
+                            if (this.customClientData.waPhone) {
+                                store.waPhone = this.customClientData.waPhone.replace(/^0/, '62');
+                            }
+                            if (Array.isArray(this.customClientData.products) && this.customClientData.products.length > 0) {
+                                this.customClientData.products.forEach((cp, idx) => {
+                                    if (store.items[idx]) {
+                                        if (cp.name) store.items[idx].name = cp.name;
+                                        if (cp.price) store.items[idx].price = Number(cp.price);
+                                        if (cp.desc) store.items[idx].desc = cp.desc;
+                                        if (cp.imgDataUrl) store.items[idx].img = cp.imgDataUrl;
+                                    }
+                                });
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Custom preview parse warning:', e);
+                    }
+                }
+
+                this.syncHeaderButtons();
+
+                const first = this.getStore().items[0];
+                this.cart = [{ item: first, variant: this.getStore().variants[0], extra: this.getDefaultExtra(), note: '', qty: 1 }];
+                this.renderTheme();
+                this.setupScrollParallax();
+
+                if (params.get('modal') === 'qr' || hash === 'qr') {
+                    setTimeout(() => this.openQRStandeeModal(), 150);
+                } else if (params.get('modal') === 'item') {
+                    setTimeout(() => this.openItemModal(first.id), 150);
+                } else if (params.get('modal') === 'checkout') {
+                    setTimeout(() => this.openCheckoutModal(), 150);
+                }
+            }
+
+            getDefaultExtra() {
+                if (this.theme === 'harth') return 'Normal Sugar • Normal Ice';
+                if (this.theme === 'hush') return 'Sajikan Bersamaan • Tanpa Alergi';
+                if (this.theme === 'cedar') return 'Goodyear Welt • Monogram: Y.S';
+                return '20 Okt 2026 • Free Hot Espresso';
+            }
+
+            syncHeaderButtons() {
+                ['harth', 'hush', 'cedar', 'barbearia'].forEach(k => {
+                    const btn = document.getElementById(`tab-${k}`);
+                    if (btn) {
+                        btn.className = k === this.theme
+                            ? "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-[#00E5FF] text-[#05070F] shadow truncate"
+                            : "px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all text-slate-300 hover:text-white truncate";
+                    }
+                });
+                ['starter', 'complete', 'pro'].forEach(t => {
+                    const btn = document.getElementById(`tier-${t}`);
+                    if (!btn) return;
+                    if (t === this.tier) {
+                        btn.className = t === 'pro'
+                            ? "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow truncate"
+                            : "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-white text-[#05070F] shadow truncate";
+                    } else {
+                        btn.className = "px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all text-slate-400 hover:text-white truncate";
+                    }
+                });
+            }
+
+            toggleDock(minimize) {
+                const card = document.getElementById('dockExpandedCard');
+                const minBtn = document.getElementById('dockMinimizedBtn');
+                if (!card || !minBtn) return;
+                if (minimize) {
+                    card.classList.add('hidden');
+                    minBtn.classList.remove('hidden');
+                    minBtn.classList.add('inline-flex');
+                } else {
+                    card.classList.remove('hidden');
+                    minBtn.classList.add('hidden');
+                    minBtn.classList.remove('inline-flex');
+                }
+            }
+
+            goBackToDigitra() {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('/demos/') || path.includes('\\demos\\')) {
+                    window.location.href = `../../pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
+                } else if (path.includes('digitra_official_web')) {
+                    window.location.href = `pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
+                } else {
+                    window.location.href = `../Digitra_Official_Web/pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
+                }
+            }
+
+            orderThisDesign() {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('/demos/') || path.includes('\\demos\\')) {
+                    window.location.href = `../../kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
+                } else if (path.includes('digitra_official_web')) {
+                    window.location.href = `kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
+                } else {
+                    window.location.href = `../Digitra_Official_Web/kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
+                }
+            }
+
+            formatRp(n) {
+                return 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+            }
+
+            getStore() {
+                return THEMES_DB[this.theme];
+            }
+
+            switchTier(newTier) {
+                if (this.tier === newTier) return;
+                const applyTier = () => {
+                    this.tier = newTier;
+                    this.syncHeaderButtons();
+                    this.renderTheme();
+                };
+                if (document.startViewTransition) {
+                    document.startViewTransition(() => applyTier());
+                } else {
+                    applyTier();
+                }
+            }
+
+            switchTheme(newTheme) {
+                if (this.theme === newTheme) return;
+                const applySwitch = () => {
+                    this.theme = newTheme;
+                    const first = this.getStore().items[0];
+                    this.cart = [{ item: first, variant: this.getStore().variants[0], extra: this.getDefaultExtra(), note: '', qty: 1 }];
+                    this.paymentVerified = false;
+
+                    if (newTheme === 'cedar') {
+                        this.orderMode = 'delivery';
+                    } else if (newTheme === 'barbearia') {
+                        this.orderMode = 'pickup';
+                    } else {
+                        this.orderMode = 'dinein';
+                    }
+
+                    this.syncHeaderButtons();
+                    this.renderTheme();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+
+                if (document.startViewTransition) {
+                    document.startViewTransition(() => applySwitch());
+                } else {
+                    applySwitch();
+                }
+            }
+
+            toggleLang() {
+                this.lang = this.lang === 'id' ? 'en' : 'id';
+                document.getElementById('langBtn').innerText = this.lang === 'id' ? '🇮🇩 ID' : '🇬🇧 EN';
+                this.renderTheme();
+            }
+
+            applyCustomClientDOMOverrides() {
+                if (!this.customClientData) return;
+                const cd = this.customClientData;
+                const vp = document.getElementById('themeViewport');
+                if (!vp) return;
+
+                // Replace Hero Banner Image if uploaded by client
+                if (cd.bannerDataUrl) {
+                    const heroImgs = vp.querySelectorAll('section img');
+                    if (heroImgs[0]) heroImgs[0].src = cd.bannerDataUrl;
+                }
+                // Replace Main Store Headline & Brand Nav with Client's Business Name
+                if (cd.bizName) {
+                    const h1 = vp.querySelector('h1');
+                    if (h1) h1.innerHTML = cd.bizName;
+                    const navBrand = vp.querySelector('nav div, .font-script');
+                    if (navBrand && cd.logoDataUrl) {
+                        navBrand.innerHTML = `<span class="inline-flex items-center gap-2.5"><img src="${cd.logoDataUrl}" alt="${cd.bizName}" class="w-9 h-9 rounded-lg object-cover border border-white/30"><span>${cd.bizName}</span></span>`;
+                    } else if (navBrand) {
+                        navBrand.innerText = cd.bizName;
+                    }
+                }
+                if (cd.slogan) {
+                    const pHero = vp.querySelector('section p');
+                    if (pHero) pHero.innerText = cd.slogan;
+                }
+            }
+
+            renderTheme() {
+                if (this.particleAnimId) {
+                    cancelAnimationFrame(this.particleAnimId);
+                    this.particleAnimId = null;
+                }
+
+                const vp = document.getElementById('themeViewport');
+
+                const customBanner = this.customClientData ? `
+                    <div class="bg-gradient-to-r from-[#05070F] via-[#0B1020] to-[#05070F] border-b border-[#00E5FF]/50 text-[#F5F7FF] px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2 z-50 relative">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded bg-[#00E5FF] text-[#05070F] font-extrabold">🪄 SIMULASI BRAND ANDA AKTIF</span>
+                            <span>Menampilkan website dengan identitas <strong>${this.customClientData.bizName || 'UMKM Anda'}</strong> beserta foto yang Anda upload.</span>
+                        </div>
+                        <button type="button" onclick="app.orderThisDesign()" class="px-3 py-1 rounded-lg bg-[#8B5CF6] hover:bg-[#7c4deb] text-white font-bold">
+                            &larr; Kembali ke Halaman Kustomisasi &amp; Checkout
+                        </button>
+                    </div>
+                ` : '';
+
+                // If Starter Tier (Rp 499.000) is selected, render the Basic Catalog Starter Layout
+                // to create a stark visual & functional contrast against Complete (Rp 899rb) & Pro Bespoke (Rp 1,49jt)!
+                if (this.tier === 'starter') {
+                    vp.innerHTML = customBanner + this.buildStarterEditionHTML();
+                    this.applyCustomClientDOMOverrides();
+                    this.updateFloatingCart();
+                    return;
+                }
+
+                const tierBanner = this.tier === 'complete' ? `
+                    <div class="bg-amber-950/95 border-b border-amber-500/40 text-amber-100 px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <span class="px-2 py-0.5 rounded bg-amber-400 text-stone-950 font-extrabold mr-2">MODE PAKET COMPLETE (Rp 899.000)</span>
+                            <span>Pop-up Kustom + QRIS &amp; Peta Lokasi Aktif. (Efek Partikel Asap/Uap Canvas, Standee QR Meja Akrilik &amp; Live Google Sheets dikhususkan untuk <strong>Paket Pro Rp 1,49jt</strong>).</span>
+                        </div>
+                        <button type="button" onclick="app.switchTier('pro')" class="px-3 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 font-extrabold">
+                            👑 Aktifkan Efek Pro Bespoke &rarr;
+                        </button>
+                    </div>
+                ` : '';
+
+                if (this.theme === 'harth') {
+                    vp.innerHTML = customBanner + tierBanner + this.buildHarthHTML();
+                    if (this.tier === 'pro') this.startCanvasParticles('steam');
+                } else if (this.theme === 'hush') {
+                    vp.innerHTML = customBanner + tierBanner + this.buildHushHTML();
+                    if (this.tier === 'pro') this.startCanvasParticles('smoke');
+                } else if (this.theme === 'cedar') {
+                    vp.innerHTML = customBanner + tierBanner + this.buildCedarHTML();
+                } else {
+                    vp.innerHTML = customBanner + tierBanner + this.buildBarbeariaHTML();
+                }
+
+                this.applyCustomClientDOMOverrides();
+                this.initScrollRevealFallback();
+                this.updateFloatingCart();
+            }
+
+            /* =================================================================
+               STARTER EDITION RENDERER (Rp 499.000) — CLEAR DECOY COMPARISON
+            ================================================================== */
+            buildStarterEditionHTML() {
+                const store = this.getStore();
+                return `
+                <div class="min-h-screen bg-slate-100 text-slate-800 font-sans pb-24">
+                    <!-- Upsell Comparison Banner -->
+                    <div class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white px-6 py-4 border-b border-amber-500/30">
+                        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="text-xs">
+                                <span class="px-2.5 py-0.5 rounded-full bg-stone-700 text-stone-200 font-extrabold uppercase tracking-wider">Tampilan Paket Starter — Rp 499.000</span>
+                                <p class="text-stone-300 mt-1">
+                                    Hanya menampilkan katalog 1 halaman standar &amp; tombol chat WA manual (Tanpa Desain Bespoke, Tanpa Pop-Up Kustom + QRIS, Tanpa Peta Interaktif, &amp; Tanpa Animasi Partikel).
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button type="button" onclick="app.switchTier('complete')" class="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 text-xs font-bold">
+                                    Lihat Complete (899rb)
+                                </button>
+                                <button type="button" onclick="app.switchTier('pro')" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-extrabold shadow-lg">
+                                    👑 Upgrade ke Pro Bespoke (1,49jt) &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Basic Starter Header -->
+                    <div class="bg-white border-b border-slate-200 py-8 px-6 text-center">
+                        <h1 class="text-2xl font-bold text-slate-900">${store.storeTitle}</h1>
+                        <p class="text-xs text-slate-500 mt-1">Katalog Produk &amp; Layanan Standar (Paket Starter)</p>
+                    </div>
+
+                    <!-- Simple Flat Grid -->
+                    <div class="max-w-4xl mx-auto px-6 py-10">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            ${store.items.map(item => `
+                                <div class="bg-white rounded-lg border border-slate-200 p-4 flex items-center justify-between gap-4">
+                                    <div>
+                                        <span class="text-[10px] font-bold uppercase text-slate-400">${item.cat}</span>
+                                        <h3 class="font-bold text-sm text-slate-800">${item.name}</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5">${item.desc}</p>
+                                        <div class="text-sm font-bold text-slate-900 mt-2">${this.formatRp(item.price)}</div>
+                                    </div>
+                                    <a href="https://wa.me/${store.waPhone}?text=${encodeURIComponent('Halo ' + store.storeTitle + ', saya ingin tanya produk ' + item.name)}" target="_blank" rel="noopener" class="px-3 py-2 rounded bg-emerald-600 text-white text-xs font-bold shrink-0">
+                                        Chat WA
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Locked Features Comparison Card -->
+                        <div class="mt-10 p-6 rounded-2xl bg-white border-2 border-dashed border-amber-500/50 text-center space-y-3 shadow-sm">
+                            <div class="text-xs font-extrabold uppercase tracking-widest text-amber-700">🔒 Fitur Premium Terkunci di Paket Starter</div>
+                            <h3 class="text-lg font-bold text-slate-900">Ingin Website Usaha Anda Tampil Berkelas Seperti Brand Nasional?</h3>
+                            <p class="text-xs text-slate-600 max-w-xl mx-auto">
+                                Di <strong>Paket Complete (Rp 899rb)</strong> &amp; <strong>Paket Pro Bespoke (Rp 1,49jt)</strong>, Anda mendapatkan Desain Kustom Anti-Kaku, Efek Partikel Uap/Asap Dinamis, Pop-Up Pemesanan Spesifik Kategori + QRIS, Peta Lokasi Interaktif, dan Standee QR Meja Akrilik!
+                            </p>
+                            <div class="pt-2 flex justify-center gap-3">
+                                <button type="button" onclick="app.switchTier('pro')" class="px-6 py-3 rounded-xl bg-stone-950 text-amber-300 text-xs font-extrabold shadow-lg hover:bg-stone-800">
+                                    👑 Lihat Perbandingan Paket Pro Bespoke Sekarang &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            /* =================================================================
+               ARCHITECTURE 1: HARTH SPECIALTY COFFEE (Ref Image 4)
+            ================================================================== */
+            buildHarthHTML() {
+                const store = THEMES_DB.harth;
+                const isEn = this.lang === 'en';
+                return `
+                <div class="bg-[#F5EFE6] text-[#1D1612] font-sans">
+                    <!-- HERO SECTION (Full-Bleed Warm Sunlit Cafe + Steam Canvas) -->
+                    <section class="relative min-h-[600px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1800&q=85" alt="Harth Coffee Interior" class="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#F5EFE6] via-[#F5EFE6]/85 to-stone-950/45"></div>
+                        <div class="absolute inset-0 dappled-light pointer-events-none"></div>
+
+                        <!-- Interactive Rising Coffee Steam Canvas -->
+                        <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+                        <!-- Harth Editorial Top Nav -->
+                        <nav class="relative z-20 max-w-7xl w-full mx-auto px-6 lg:px-12 pt-7 flex items-center justify-between">
+                            <div class="font-serif font-bold text-2xl tracking-[0.22em] uppercase text-[#1D1612]">
+                                HARTH<span class="block text-xs tracking-[0.35em] font-sans font-normal -mt-1 opacity-75">COFFEE</span>
+                            </div>
+                            <div class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-stone-800">
+                                <a href="#harth-menu" class="hover:text-amber-800">Menu</a>
+                                <a href="#harth-story" class="hover:text-amber-800">Our Story</a>
+                                <button type="button" onclick="app.openQRStandeeModal()" class="text-amber-900 underline font-extrabold">Pesan dari Meja (${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]})</button>
+                            </div>
+                            <button type="button" onclick="app.openQRStandeeModal()" class="px-5 py-2.5 rounded-full bg-[#FAF6F0] text-[#1D1612] text-xs font-bold shadow-md hover:bg-white transition-all flex items-center gap-2">
+                                <span>🪪</span> <span>${isEn ? 'Table QR Concierge' : 'Scan QR Meja #07'}</span>
+                            </button>
+                        </nav>
+
+                        <!-- Hero Center Split -->
+                        <div class="relative z-20 max-w-7xl w-full mx-auto px-6 lg:px-12 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                            <div class="lg:col-span-7 space-y-5">
+                                <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase text-stone-700">
+                                    <span>SPECIALTY COFFEE &bull; A WARMER TODAY</span>
+                                    <span class="px-2.5 py-0.5 rounded-full bg-amber-800/15 text-amber-950 font-extrabold">🍽️ ${this.tableNumber}</span>
+                                </div>
+
+                                <h1 class="font-serif text-6xl sm:text-7xl lg:text-[84px] leading-[0.94] tracking-tight text-[#1D1612]">
+                                    More<br>than just<br><span class="italic font-normal text-[#7C4D2B]">coffee.</span>
+                                </h1>
+
+                                <p class="text-sm sm:text-base text-stone-700 max-w-md leading-relaxed">
+                                    ${isEn
+                                        ? 'Thoughtfully sourced beans, seasonal flavours and a cozy space to slow down. Order directly from your table via QR.'
+                                        : 'Biji kopi pilihan yang disangrai hangat setiap hari. Duduk santai di meja Anda, pilih menu, dan pesanan langsung diantar barista kami.'}
+                                </p>
+
+                                <div class="pt-2 flex flex-wrap items-center gap-4">
+                                    <a href="#harth-menu" class="px-6 py-3.5 rounded-full bg-[#1D1612] text-[#F5EFE6] text-xs font-bold tracking-wider uppercase hover:bg-stone-800 transition-all shadow-lg">
+                                        Explore Our Menu &rarr;
+                                    </a>
+                                    <button type="button" onclick="app.openQRStandeeModal()" class="inline-flex items-center gap-2.5 text-xs font-bold text-[#1D1612] hover:opacity-75">
+                                        <span class="w-10 h-10 rounded-full border border-stone-400 bg-white/80 flex items-center justify-center shadow-sm">&#9654;</span>
+                                        <span>Simulasi Scan QR Meja</span>
+                                    </button>
+                                </div>
+
+                                <!-- Metrics Strip (Exact match to Harth Ref) -->
+                                <div class="pt-6 flex items-center gap-8 border-t border-stone-400/40 max-w-md">
+                                    <div>
+                                        <div class="text-xl font-extrabold text-[#1D1612]">10K+</div>
+                                        <div class="text-xs text-stone-600">Happy Customers</div>
+                                    </div>
+                                    <div class="h-8 w-px bg-stone-400/40"></div>
+                                    <div>
+                                        <div class="text-xl font-extrabold text-[#1D1612]">4.8 &#9733;</div>
+                                        <div class="text-xs text-stone-600">Average Rating</div>
+                                    </div>
+                                    <div class="h-8 w-px bg-stone-400/40"></div>
+                                    <div>
+                                        <div class="text-xl font-extrabold text-[#1D1612]">0%</div>
+                                        <div class="text-xs text-stone-600">Komisi Ojol</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Handwritten Script Accent on Bottom Right of Hero -->
+                            <div class="lg:col-span-5 flex justify-end items-end">
+                                <div class="font-script text-4xl sm:text-5xl text-[#F5EFE6] drop-shadow-lg -rotate-6 select-none pr-4">
+                                    Good Coffee<br>Brighter Days
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: SEASONAL FAVOURITES (Frameless Portrait Cards) -->
+                    <section id="harth-menu" class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 scroll-reveal">
+                            <div>
+                                <div class="text-xs font-bold tracking-[0.2em] uppercase text-stone-500">OUR MENU &bull; DINE-IN &amp; TAKEAWAY</div>
+                                <h2 class="font-serif text-4xl sm:text-5xl text-[#1D1612] mt-1">Seasonal favourites.</h2>
+                            </div>
+                            <p class="text-xs sm:text-sm text-stone-600 max-w-sm leading-relaxed">
+                                Crafted with care, using the finest ingredients. Klik tombol <strong>+</strong> pada kartu untuk memesan langsung dari <strong>${this.tableNumber}</strong>.
+                            </p>
+                            <button type="button" onclick="app.applyVoucher('HEMAT20')" class="self-start md:self-auto px-5 py-2.5 rounded-full border border-stone-400 text-xs font-bold hover:bg-[#1D1612] hover:text-white transition-all">
+                                🎟️ Klaim Voucher HEMAT20 &rarr;
+                            </button>
+                        </div>
+
+                        <!-- 4 Frameless Full-Bleed Portrait Cards (Exact Harth Coffee Card Layout) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${store.items.map(item => `
+                                <article class="scroll-curtain group relative h-[410px] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="app.openItemModal('${item.id}')">
+                                    <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#1a120b]/95 via-[#1a120b]/25 to-transparent"></div>
+
+                                    ${!item.available ? `
+                                        <div class="absolute inset-0 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center">
+                                            <span class="px-4 py-1.5 rounded-full bg-rose-600 text-white text-xs font-bold uppercase tracking-widest">Sold Out</span>
+                                        </div>
+                                    ` : ''}
+
+                                    <div class="absolute bottom-0 inset-x-0 p-5 flex items-end justify-between text-[#F5EFE6]">
+                                        <div>
+                                            <div class="text-xs font-bold tracking-[0.18em] uppercase text-amber-300/90">${item.cat}</div>
+                                            <h3 class="font-serif text-2xl font-semibold mt-0.5">${item.name}</h3>
+                                            <p class="text-xs text-stone-300 mt-0.5">${item.desc}</p>
+                                            <div class="text-sm font-bold mt-2 text-amber-200">${this.formatRp(item.price)}</div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            aria-label="Tambah ${item.name}"
+                                            class="w-10 h-10 rounded-full bg-[#F5EFE6] text-[#1D1612] font-bold text-lg flex items-center justify-center shadow-lg group-hover:bg-amber-400 group-hover:scale-110 transition-all"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: 3-COLUMN ASYMMETRIC EDITORIAL STORY ("A space for good people.") -->
+                    <section id="harth-story" class="max-w-7xl mx-auto px-6 lg:px-12 pb-16 scroll-reveal">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 rounded-3xl overflow-hidden shadow-xl">
+                            <!-- Left Dark Espresso Block -->
+                            <div class="lg:col-span-4 bg-[#1F1713] text-[#F5EFE6] p-10 lg:p-12 flex flex-col justify-between">
+                                <div class="space-y-4">
+                                    <span class="text-xs tracking-[0.22em] uppercase text-amber-400/80 font-semibold">OUR STORY</span>
+                                    <h3 class="font-serif text-4xl leading-tight">
+                                        A space<br>for good people.
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-stone-300 leading-relaxed pt-2">
+                                        Harth Coffee berawal dari ide sederhana: kopi yang baik mempertemukan orang-orang baik. Kini dilengkapi sistem <strong>Pesan dari Meja (Smart QR Table Concierge)</strong> agar Anda bebas menikmati obrolan hangat tanpa perlu antre di kasir.
+                                    </p>
+                                </div>
+                                <div class="pt-8">
+                                    <button type="button" onclick="app.openQRStandeeModal()" class="px-5 py-2.5 rounded-full border border-stone-500 text-xs font-bold hover:bg-[#F5EFE6] hover:text-[#1F1713] transition-all">
+                                        Coba Fitur Meja #07 &rarr;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Middle Lifestyle Photography -->
+                            <div class="lg:col-span-5 h-80 lg:h-auto relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" alt="Coffee on Kinfolk Book" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Right Minimalist Typography with Dappled Shadow -->
+                            <div class="lg:col-span-3 bg-[#E9E0D2] text-[#1D1612] p-10 flex flex-col justify-between dappled-light relative">
+                                <div class="text-xs font-bold tracking-[0.28em] uppercase leading-loose text-stone-700">
+                                    G O O D<br>P E O P L E<br>G O O D<br>C O F F E E
+                                </div>
+                                <div class="font-serif italic text-lg text-stone-700 pt-12">
+                                    Always<br>A Warmer<br>Tomorrow.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 Value Pillars Strip -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-12 px-2">
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">🌱</span>
+                                <div>
+                                    <div class="text-xs font-extrabold uppercase tracking-wider">Sustainably Sourced</div>
+                                    <div class="text-xs text-stone-600 mt-0.5">Biji Arabika petani lokal Jawa Barat.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">🔥</span>
+                                <div>
+                                    <div class="text-xs font-extrabold uppercase tracking-wider">Locally Roasted</div>
+                                    <div class="text-xs text-stone-600 mt-0.5">Disangrai segar setiap pekan.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">🍽️</span>
+                                <div>
+                                    <div class="text-xs font-extrabold uppercase tracking-wider">Order from Table</div>
+                                    <div class="text-xs text-stone-600 mt-0.5">Scan QR akrilik di meja, langsung diantar.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">☕</span>
+                                <div>
+                                    <div class="text-xs font-extrabold uppercase tracking-wider">Specialty Drinks</div>
+                                    <div class="text-xs text-stone-600 mt-0.5">Kreasi musiman bebas komisi aplikasi.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: HARTH ROASTERY & WORK-FRIENDLY SPACE LOCATOR MAP -->
+                    <section id="harth-map" class="max-w-7xl mx-auto px-6 lg:px-12 pb-20 scroll-reveal">
+                        <div class="bg-[#EFE7DA] border border-[#D8CBB8] rounded-3xl p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-lg">
+                            <div class="lg:col-span-5 space-y-4">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/15 text-emerald-900 text-xs font-extrabold">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+                                    <span>LIVE SPACE STATUS: QUIET &bull; NYAMAN WFC</span>
+                                </div>
+                                <h3 class="font-serif text-3xl sm:text-4xl text-[#1D1612] leading-tight">
+                                    Visit Our Flagship<br><span class="italic font-normal text-[#7C4D2B]">Roastery &amp; WFC Space.</span>
+                                </h3>
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                                    Jl. Cipete Raya No. 42, Jakarta Selatan. Ruang tenang berlimpah cahaya alami dengan mesin sangrai Probat dan koneksi internet berkecepatan tinggi.
+                                </p>
+                                <!-- Cafe WFC & Roastery Live Indicators -->
+                                <div class="grid grid-cols-2 gap-3 pt-1">
+                                    <div class="bg-[#F8F4EC] p-3 rounded-2xl border border-[#DFD3C3]">
+                                        <div class="text-[11px] font-bold uppercase text-stone-500">Kecepatan Wi-Fi</div>
+                                        <div class="text-sm font-extrabold text-[#1D1612] mt-0.5">⚡ 165 Mbps Fiber</div>
+                                    </div>
+                                    <div class="bg-[#F8F4EC] p-3 rounded-2xl border border-[#DFD3C3]">
+                                        <div class="text-[11px] font-bold uppercase text-stone-500">Stopkontak Meja</div>
+                                        <div class="text-sm font-extrabold text-[#1D1612] mt-0.5">🔌 14/18 Meja Tersedia</div>
+                                    </div>
+                                    <div class="bg-[#F8F4EC] p-3 rounded-2xl border border-[#DFD3C3]">
+                                        <div class="text-[11px] font-bold uppercase text-stone-500">Jadwal Sangrai Biji</div>
+                                        <div class="text-sm font-extrabold text-[#1D1612] mt-0.5">🔥 Pukul 15:00 WIB</div>
+                                    </div>
+                                    <div class="bg-[#F8F4EC] p-3 rounded-2xl border border-[#DFD3C3]">
+                                        <div class="text-[11px] font-bold uppercase text-stone-500">Area Parkir</div>
+                                        <div class="text-sm font-extrabold text-[#1D1612] mt-0.5">🚗 Luas &amp; Rak Sepeda</div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 flex flex-wrap gap-3">
+                                    <a href="https://maps.google.com/?q=Cipete+Raya+Jakarta+Selatan" target="_blank" rel="noopener" class="px-5 py-3 rounded-full bg-[#1D1612] text-[#F5EFE6] text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition-all">
+                                        📍 Buka Rute di Google Maps &rarr;
+                                    </a>
+                                    <button type="button" onclick="app.openQRStandeeModal()" class="px-4 py-3 rounded-full border border-stone-400 text-xs font-bold text-[#1D1612] hover:bg-white transition-all">
+                                        🪪 Booking Meja WFC
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-7 h-80 sm:h-96 rounded-2xl overflow-hidden border-4 border-[#FAF6F0] shadow-xl relative">
+                                <iframe
+                                    title="Peta Lokasi Harth Specialty Coffee"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15863.66446503179!2d106.7973!3d-6.2746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1940b62478d%3A0x6d9078e416885b2c!2sCipete%20Selatan%2C%20Cilandak%2C%20Jakarta%20Selatan!5e0!3m2!1sid!2sid!4v1700000000000"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0; filter: sepia(18%) contrast(98%);"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DARK ESPRESSO FOOTER -->
+                    <footer class="bg-[#1B1410] text-[#F5EFE6] py-12 px-6 lg:px-12">
+                        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+                            <div class="font-serif font-bold text-2xl tracking-[0.22em]">HARTH COFFEE</div>
+                            <div class="text-xs text-stone-400">Powered by Digitra Hybrid Storefront &bull; Cloudflare Pages + Google Sheets Live Sync</div>
+                        </div>
+                    </footer>
+                </div>
+                `;
+            }
+
+            /* =================================================================
+               ARCHITECTURE 2: HUSH MODERN RESTAURANT (Ref Image 2 + Table Order)
+            ================================================================== */
+            buildHushHTML() {
+                const store = THEMES_DB.hush;
+                return `
+                <div class="bg-white text-slate-900 font-sans">
+                    <!-- DARK CHALKBOARD HERO WITH RISING GRILL SMOKE CANVAS -->
+                    <section class="relative bg-[#12161B] text-white pt-8 pb-24 overflow-hidden bg-noise">
+                        <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+                        <!-- Top Nav -->
+                        <nav class="relative z-20 max-w-6xl mx-auto px-6 flex items-center justify-between mb-12">
+                            <div class="flex items-center gap-2 font-display font-bold text-xl">
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#E85D3F] inline-block"></span>
+                                <span>Hush.</span>
+                            </div>
+                            <div class="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-300">
+                                <a href="#hush-popular" class="hover:text-white">Menu Meja</a>
+                                <a href="#hush-bento" class="hover:text-white">Chef Craft</a>
+                                <a href="#hush-map" class="hover:text-white">Lokasi &amp; Delivery</a>
+                            </div>
+                            <button type="button" onclick="app.openQRStandeeModal()" class="px-4 py-2 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold shadow-lg transition-all">
+                                🍽️ Pesan dari ${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]}
+                            </button>
+                        </nav>
+
+                        <!-- Hero Grid -->
+                        <div class="relative z-20 max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                            <div class="lg:col-span-6 space-y-5">
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-[#FF8A70]">
+                                    <span>🔥 DINE-IN TABLE ORDER AKTIF &bull; ${this.tableNumber}</span>
+                                </div>
+                                <h1 class="font-display text-5xl sm:text-6xl font-bold leading-[1.08]">
+                                    Hush Modern<br>Restaurant
+                                </h1>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md">
+                                    Nikmati hidangan aburi sushi &amp; robatayaki hangat langsung di meja Anda. Pilih menu dari HP, atur urutan keluar makanan, dan pesanan langsung masuk ke WhatsApp dapur kami!
+                                </p>
+                                <div class="pt-2 flex flex-wrap gap-3">
+                                    <a href="#hush-popular" class="px-6 py-3 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold tracking-wider uppercase shadow-lg shadow-[#E85D3F]/30 transition-all">
+                                        Pesan ke Meja Sekarang
+                                    </a>
+                                    <button type="button" onclick="app.openQRStandeeModal()" class="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 transition-all">
+                                        🪪 Lihat QR Akrilik Meja
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Right Top-Down Plated Sushi Platter -->
+                            <div class="lg:col-span-6 relative flex justify-center">
+                                <div class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-3xl rotate-3 overflow-hidden shadow-2xl border-4 border-white/10">
+                                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=85" alt="Sushi Platter" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TORN BRUSH-STROKE ORGANIC DIVIDER (Exact match to Hush Ref) -->
+                        <svg class="absolute bottom-0 left-0 w-full h-14 text-white fill-current z-20" viewBox="0 0 1440 80" preserveAspectRatio="none">
+                            <path d="M0,42 C180,78 340,8 540,38 C740,68 920,14 1140,44 C1280,62 1380,28 1440,36 L1440,80 L0,80 Z"></path>
+                        </svg>
+                    </section>
+
+                    <!-- SECTION 2: WHITE CLEAN MENU SHOWCASE -->
+                    <section id="hush-popular" class="max-w-6xl mx-auto px-6 py-16">
+                        <div class="text-center max-w-xl mx-auto mb-12 scroll-reveal">
+                            <span class="text-xs font-extrabold uppercase tracking-widest text-[#E85D3F]">DIRECT KITCHEN TICKET</span>
+                            <h2 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 mt-1">Hidangan Favorit Meja</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 mt-2">Klik tombol tambah untuk memasukkan hidangan ke tiket pesanan <strong>${this.tableNumber}</strong>.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${store.items.map(item => `
+                                <article class="scroll-reveal bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+                                    <div>
+                                        <div class="relative h-44 overflow-hidden">
+                                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/85 text-white text-xs font-bold">${item.cat}</span>
+                                        </div>
+                                        <div class="p-4">
+                                            <h3 class="font-display font-bold text-base text-slate-900">${item.name}</h3>
+                                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">${item.desc}</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-4 pb-4 pt-2 flex items-center justify-between border-t border-slate-100">
+                                        <span class="font-extrabold text-sm text-[#E85D3F]">${this.formatRp(item.price)}</span>
+                                        <button type="button" onclick="app.openItemModal('${item.id}')" class="px-3.5 py-1.5 rounded-full bg-[#12161B] hover:bg-[#E85D3F] text-white text-xs font-bold transition-colors">
+                                            + Pesan Meja
+                                        </button>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: DARK ASYMMETRIC BENTO GRID ("Our Culinary Craft") -->
+                    <section id="hush-bento" class="bg-[#12161B] text-white py-20 px-6 relative bg-noise">
+                        <div class="max-w-6xl mx-auto">
+                            <h2 class="font-display text-3xl font-bold text-center mb-12 scroll-reveal">Our Culinary &amp; Table Experience</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 items-stretch scroll-reveal">
+                                <div class="bg-white text-slate-900 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                                    <span class="w-9 h-9 rounded-lg bg-orange-100 text-[#E85D3F] flex items-center justify-center font-bold">01</span>
+                                    <div class="mt-6">
+                                        <h3 class="font-bold text-base">Scan QR di Meja</h3>
+                                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Tanpa perlu panggil pelayan berkali-kali saat jam sibuk, langsung pilih dari meja Anda.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white text-slate-900 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                                    <span class="w-9 h-9 rounded-lg bg-orange-100 text-[#E85D3F] flex items-center justify-center font-bold">02</span>
+                                    <div class="mt-6">
+                                        <h3 class="font-bold text-base">Atur Urutan Saji</h3>
+                                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Pilih apakah minuman/appetizer keluar duluan atau seluruh hidangan disajikan bersamaan.</p>
+                                    </div>
+                                </div>
+                                <div class="rounded-2xl overflow-hidden shadow-2xl md:row-span-1 h-64 md:h-auto">
+                                    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" alt="Fresh Salmon Nigiri" class="w-full h-full object-cover">
+                                </div>
+                                <div class="bg-white text-slate-900 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                                    <span class="w-9 h-9 rounded-lg bg-orange-100 text-[#E85D3F] flex items-center justify-center font-bold">03</span>
+                                    <div class="mt-6">
+                                        <h3 class="font-bold text-base">0% Biaya Aplikasi</h3>
+                                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Harga jujur sesuai buku menu ditambah kode voucher promo langsung di struk WA.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: MAKE TO YOUR LIKING (Rotating Plated Dish on Scroll) -->
+                    <section id="hush-custom" class="bg-[#181D24] text-white py-20 px-6 border-t border-white/10">
+                        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                            <div class="lg:col-span-6 space-y-4 scroll-reveal">
+                                <span class="text-xs font-bold uppercase tracking-widest text-[#E85D3F]">TABLE CONCIERGE CONTROL</span>
+                                <h2 class="font-display text-4xl font-bold leading-tight">
+                                    Make to Your Liking<br>Directly From Your Table
+                                </h2>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md">
+                                    Sedang makan bersama teman atau keluarga di meja? Pilih preferensi penyajian meja Anda di bawah ini sebelum mengirim pesanan ke dapur:
+                                </p>
+                                <div class="flex flex-wrap gap-2.5 pt-2">
+                                    <button type="button" onclick="app.setServingPref('Sajikan Bersamaan')" class="px-4 py-2 rounded-full bg-[#E85D3F] text-white text-xs font-bold">🍽️ Sajikan Bersamaan</button>
+                                    <button type="button" onclick="app.setServingPref('Appetizer & Minuman Duluan')" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold">🍵 Appetizer Duluan</button>
+                                    <button type="button" onclick="app.callWaiterWA()" class="px-4 py-2 rounded-full border border-amber-400/50 text-amber-300 text-xs font-bold">🔔 Panggil Pelayan ke Meja</button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-6 flex justify-center">
+                                <div class="parallax-plate w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden border-8 border-white/10 shadow-2xl transition-transform duration-300">
+                                    <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=800&q=80" alt="Plated Sushi Circle" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: HUSH DARK CULINARY SANCTUARY & DELIVERY RADIUS MAP -->
+                    <section id="hush-map" class="bg-[#12161B] text-white py-20 px-6 border-t border-white/10">
+                        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-5 space-y-4">
+                                <span class="text-xs font-bold uppercase tracking-widest text-[#E85D3F]">VALET &amp; THERMAL DELIVERY ZONE</span>
+                                <h3 class="font-display text-3xl sm:text-4xl font-bold">Lokasi Restoran &amp; Zona Kurir Instan</h3>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    SCBD Lot 14, Jakarta Selatan. Tersedia layanan <strong>Valet Drop-off VIP</strong> di Lobby Timur serta pengantaran <strong>Thermal Ice-Pack Box</strong> agar kesegaran Sashimi terjaga hingga ke rumah Anda.
+                                </p>
+                                <div class="bg-[#1A2027] p-4 rounded-2xl border border-white/10 space-y-2.5 text-xs">
+                                    <div class="font-bold text-amber-300">🛵 Cek Estimasi Kurir Instan (GoSend / GrabExpress):</div>
+                                    <div class="grid grid-cols-3 gap-2">
+                                        <div class="p-2.5 rounded-xl bg-black/40 border border-emerald-500/40 text-center">
+                                            <div class="font-extrabold text-emerald-400">&lt; 4 KM</div>
+                                            <div class="text-[11px] text-slate-300 mt-0.5">20 Mnt &bull; Free Dry Ice</div>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-black/40 border border-white/10 text-center">
+                                            <div class="font-extrabold text-white">4 – 8 KM</div>
+                                            <div class="text-[11px] text-slate-300 mt-0.5">35 Mnt &bull; Thermal Bag</div>
+                                        </div>
+                                        <div class="p-2.5 rounded-xl bg-black/40 border border-white/10 text-center">
+                                            <div class="font-extrabold text-amber-300">VIP Room</div>
+                                            <div class="text-[11px] text-slate-300 mt-0.5">Min. 6 Pax</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-1 flex flex-wrap gap-3">
+                                    <a href="https://maps.google.com/?q=SCBD+Jakarta+Selatan" target="_blank" rel="noopener" class="px-5 py-3 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold uppercase tracking-wider transition-all">
+                                        📍 Navigasi ke Lobby Valet &rarr;
+                                    </a>
+                                    <button type="button" onclick="app.openCheckoutModal()" class="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 transition-all">
+                                        🍣 Reservasi / Delivery
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-7 h-80 sm:h-96 rounded-2xl overflow-hidden border-2 border-[#E85D3F]/40 shadow-2xl relative">
+                                <iframe
+                                    title="Peta Lokasi Hush Modern Restaurant"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15865.176462211!2d106.8060!3d-6.2246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1505c76d775%3A0xe856f15a4b50c7a!2sSCBD%2C%20Senayan%2C%20Jakarta%20Selatan!5e0!3m2!1sid!2sid!4v1700000000000"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0; filter: invert(90%) hue-rotate(180deg) contrast(95%);"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                `;
+            }
+
+            /* =================================================================
+               ARCHITECTURE 3: CEDAR HANDMADE SHOE CO. (Ref Image 3 — Retail)
+            ================================================================== */
+            buildCedarHTML() {
+                const store = THEMES_DB.cedar;
+                return `
+                <div class="bg-[#F7F4EE] text-[#2B2118] font-sans">
+                    <!-- STITCHED LEATHER HEADER (Exact match to Cedar Ref) -->
+                    <div class="bg-[#FAF7F2] border-b-2 border-dashed border-[#C7B299] sticky top-0 z-30 shadow-sm">
+                        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-amber-800">&bull;</span>
+                                <span class="font-script text-4xl text-[#3A2618]">Cedar</span>
+                                <span class="text-amber-800">&bull;</span>
+                                <span class="text-xs font-condensed tracking-[0.25em] uppercase text-stone-500 ml-1">SHOE CO.</span>
+                            </div>
+                            <div class="hidden md:flex items-center gap-6 font-condensed text-xs tracking-[0.18em] uppercase text-stone-600">
+                                <a href="#cedar-products" class="hover:text-[#8C3B2B]">BOOTS</a>
+                                <a href="#cedar-products" class="hover:text-[#8C3B2B]">DRESS SHOES</a>
+                                <a href="#cedar-map" class="hover:text-[#8C3B2B]">WORKSHOP &amp; SHIPPING</a>
+                            </div>
+                            <button type="button" onclick="app.openCheckoutModal()" class="px-3.5 py-1.5 rounded bg-[#E8E0D2] border border-[#C7B299] text-xs font-condensed tracking-wider uppercase font-bold text-[#3A2618]">
+                                MY ORDER SHEET (${this.cart.reduce((s, c) => s + c.qty, 0)} PAIRS)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- HERO WORKSHOP WITH GIANT CONDENSED "HANDMADE" -->
+                    <section class="relative h-[470px] flex items-center justify-center text-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1800&q=85" alt="Handmade Leather Boots Workshop" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-stone-950/50"></div>
+
+                        <div class="relative z-10 px-4 max-w-2xl mx-auto text-[#FAF7F2]">
+                            <h1 class="font-condensed text-7xl sm:text-8xl font-bold tracking-[0.08em] uppercase drop-shadow-lg">
+                                HANDMADE
+                            </h1>
+                            <p class="font-serif italic text-xl sm:text-2xl tracking-wide text-amber-100 -mt-1">
+                                QUALITY BOOTS &amp; DRESS SHOES
+                            </p>
+                            <a href="#cedar-products" class="mt-5 inline-block px-7 py-2.5 bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed text-xs tracking-[0.22em] uppercase font-bold shadow-lg transition-all">
+                                BROWSE THE SHOP
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- OVERLAPPING STITCHED PARCHMENT CARD ("About our Company") -->
+                    <section class="max-w-4xl mx-auto px-6 -mt-14 relative z-20 scroll-reveal">
+                        <div class="bg-[#F3ECE0] stitched-box p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-3 border-b md:border-b-0 md:border-r border-[#D3C2AA] pb-4 md:pb-0 md:pr-6 text-center md:text-left">
+                                <div class="font-script text-3xl text-[#8C3B2B] leading-none">About our<br>Company</div>
+                                <button type="button" onclick="app.applyVoucher('HEMAT20')" class="mt-3 inline-block text-xs font-condensed tracking-[0.2em] uppercase font-bold text-[#3A2618] border-b border-[#3A2618]">
+                                    CLAIM 20% VOUCHER
+                                </button>
+                            </div>
+                            <div class="md:col-span-9 text-xs text-stone-700 leading-relaxed columns-1 sm:columns-2 gap-6">
+                                Setiap pasang sepatu Cedar dikerjakan secara handmade oleh pengrajin sepatu kulit berpengalaman menggunakan konstruksi Goodyear-Welt yang tahan puluhan tahun. Pilih ukuran kaki Anda (EU 39–44), ukir inisial monogram Anda, dan pesan langsung via WhatsApp dengan garansi tukar ukuran gratis.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: ISOLATED FLOATING PRODUCT GRID (NO BOXY CARDS) -->
+                    <section id="cedar-products" class="max-w-6xl mx-auto px-6 py-20 text-center">
+                        <h2 class="font-condensed text-2xl tracking-[0.18em] uppercase text-[#8C3B2B] font-bold mb-14 scroll-reveal">
+                            OUR FEATURED PRODUCTS
+                        </h2>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-14">
+                            ${store.items.map(item => `
+                                <article class="scroll-reveal group cursor-pointer flex flex-col items-center" onclick="app.openItemModal('${item.id}')">
+                                    <!-- Clean Isolated Product Photography with Hover Levitation -->
+                                    <div class="relative w-full h-44 flex items-center justify-center p-2">
+                                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover rounded-xl shadow-md group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-500">
+                                        ${!item.available ? `<span class="absolute top-2 right-2 px-2.5 py-0.5 bg-rose-700 text-white text-xs font-condensed uppercase">SOLD OUT</span>` : ''}
+                                    </div>
+                                    <h3 class="font-condensed text-sm tracking-[0.14em] uppercase font-bold text-[#2B2118] mt-4 group-hover:text-[#8C3B2B] transition-colors">
+                                        ${item.name}
+                                    </h3>
+                                    <p class="text-xs text-stone-500 mt-0.5">${item.desc}</p>
+                                    <div class="text-xs font-serif italic text-[#8C3B2B] font-bold mt-1">
+                                        our price ${this.formatRp(item.price)}
+                                    </div>
+                                    <span class="mt-2 px-3 py-1 rounded border border-[#C7B299] text-xs font-condensed uppercase tracking-wider text-stone-700 group-hover:bg-[#9E3B2E] group-hover:text-white group-hover:border-[#9E3B2E] transition-all">
+                                        Custom Size &amp; Monogram
+                                    </span>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: ARTISAN LEATHER WORKSHOP & SHIPPING ORIGIN MAP -->
+                    <section id="cedar-map" class="max-w-6xl mx-auto px-6 pb-12 scroll-reveal">
+                        <div class="bg-[#F3ECE0] stitched-box p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-5 space-y-4">
+                                <div class="font-condensed text-xs tracking-[0.25em] uppercase text-[#8C3B2B] font-bold">
+                                    BESPOKE FITTING STUDIO &amp; NATIONAL SHIPPING ORIGIN
+                                </div>
+                                <h3 class="font-condensed text-3xl sm:text-4xl uppercase font-bold text-[#2B2118] leading-none">
+                                    BANDUNG HERITAGE LEATHER WORKSHOP
+                                </h3>
+                                <p class="text-xs text-stone-700 leading-relaxed">
+                                    Jl. Braga Heritage No. 28, Bandung. Kunjungi bengkel sepatu kami untuk <strong>Ukur Kaki Presisi 3D (Bespoke Fitting)</strong> atau pesan secara online—dikirim setiap hari dengan kotak kayu cedar eksklusif ke seluruh Indonesia.
+                                </p>
+                                <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                                    <div class="bg-[#FAF7F2] p-2.5 border border-dashed border-[#C7B299]">
+                                        <div class="font-condensed text-xs font-bold text-[#8C3B2B]">JNE REG / YES</div>
+                                        <div class="text-[11px] text-stone-600">1–2 Hari (Jawa)</div>
+                                    </div>
+                                    <div class="bg-[#FAF7F2] p-2.5 border border-dashed border-[#C7B299]">
+                                        <div class="font-condensed text-xs font-bold text-[#8C3B2B]">J&amp;T EXPRESS</div>
+                                        <div class="text-[11px] text-stone-600">Packing Kayu Aman</div>
+                                    </div>
+                                    <div class="bg-[#FAF7F2] p-2.5 border border-dashed border-[#C7B299]">
+                                        <div class="font-condensed text-xs font-bold text-[#8C3B2B]">GARANSI TUKAR</div>
+                                        <div class="text-[11px] text-stone-600">Bebas Tukar Size</div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 flex flex-wrap gap-3">
+                                    <a href="https://maps.google.com/?q=Jalan+Braga+Bandung" target="_blank" rel="noopener" class="px-5 py-2.5 bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed text-xs tracking-[0.2em] uppercase font-bold shadow">
+                                        📍 RUTE KE BENGKEL BRAGA
+                                    </a>
+                                    <button type="button" onclick="app.openCheckoutModal()" class="px-5 py-2.5 bg-[#2B2118] text-[#F3ECE0] font-condensed text-xs tracking-[0.2em] uppercase font-bold">
+                                        📦 CEK ONGKIR &amp; ORDER
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-7 h-72 sm:h-80 overflow-hidden border-2 border-[#C7B299] shadow-lg">
+                                <iframe
+                                    title="Peta Lokasi Cedar Shoe Workshop Bandung"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.758962452951!2d107.6070!3d-6.9175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e625b91a1589%3A0x1d1b1e7b8e1c8e0!2sJl.%20Braga%2C%20Bandung!5e0!3m2!1sid!2sid!4v1700000000000"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0; filter: sepia(35%) contrast(95%);"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- LAYERED MOUNTAIN & PINE FOREST HORIZON FOOTER (Exact match to Cedar Ref) -->
+                    <footer class="relative pt-36 pb-16 bg-[#24221F] text-[#E6DFD3] overflow-hidden mt-8">
+                        <!-- Multi-Layer Mountain & Pine Trees SVG Horizon at Top of Footer -->
+                        <svg class="absolute top-0 left-0 w-full h-36" viewBox="0 0 1440 160" preserveAspectRatio="none">
+                            <rect width="1440" height="160" fill="#F7F4EE"/>
+                            <!-- Far Mountains -->
+                            <polygon points="0,160 0,95 190,32 390,105 610,24 850,98 1120,38 1310,88 1440,50 1440,160" fill="#6E6A63"/>
+                            <!-- Mid Mountains -->
+                            <polygon points="0,160 120,72 310,118 520,54 760,115 990,48 1240,108 1440,68 1440,160" fill="#46433E"/>
+                            <!-- Foreground Pine Forest Ridge -->
+                            <polygon points="0,160 0,120 80,95 140,125 230,82 310,128 430,88 530,130 660,75 770,126 890,84 1010,128 1140,78 1260,125 1370,90 1440,120 1440,160" fill="#24221F"/>
+                        </svg>
+
+                        <div class="relative z-10 max-w-6xl mx-auto px-6 pt-8 grid grid-cols-1 md:grid-cols-12 gap-8">
+                            <div class="md:col-span-6 space-y-3">
+                                <div class="font-condensed text-lg tracking-[0.15em] uppercase text-amber-200">WANT TO RECEIVE SPECIAL OFFERS?</div>
+                                <p class="text-xs text-stone-300">Klaim voucher diskon pelanggan baru atau konsultasi ukuran sepatu kulit langsung via WhatsApp CS kami.</p>
+                                <div class="flex gap-2 max-w-sm pt-1">
+                                    <button type="button" onclick="app.applyVoucher('HEMAT20')" class="px-4 py-2 bg-[#9E3B2E] text-white font-condensed text-xs tracking-widest uppercase font-bold">
+                                        APPLY VOUCHER HEMAT20
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="md:col-span-6 grid grid-cols-2 gap-6 text-xs">
+                                <div>
+                                    <div class="font-condensed uppercase tracking-widest text-amber-200 font-bold mb-2">WORKSHOP &amp; STORE</div>
+                                    <p class="text-stone-400 leading-relaxed">Jl. Braga Heritage No. 28<br>Bandung, Indonesia<br>WA: 0822-5130-9900</p>
+                                </div>
+                                <div>
+                                    <div class="font-condensed uppercase tracking-widest text-amber-200 font-bold mb-2">CUSTOMER CARE</div>
+                                    <p class="text-stone-400 leading-relaxed">Garansi Sol 2 Tahun<br>Tukar Ukuran Gratis<br>Pengiriman Seluruh Indonesia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                `;
+            }
+
+            /* =================================================================
+               ARCHITECTURE 4: BARBEARIA HERITAGE (Ref Image 1 — Jasa & Booking)
+            ================================================================== */
+            buildBarbeariaHTML() {
+                const store = THEMES_DB.barbearia;
+                const col1 = store.items.slice(0, 2);
+                const col2 = store.items.slice(2, 4);
+                const col3 = store.items.slice(4, 6);
+
+                return `
+                <div class="bg-[#11100F] text-[#F5EFE6] font-sans">
+                    <!-- DARK LUXURY BARBEARIA HERO (Exact match to Image 1) -->
+                    <section class="relative min-h-[540px] flex flex-col justify-between overflow-hidden border-b border-[#C59B6D]/25">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1800&q=85" alt="Barbearia Classic Chair" class="absolute inset-0 w-full h-full object-cover opacity-40">
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-[#11100F]"></div>
+
+                        <div class="relative z-10 max-w-5xl mx-auto px-6 pt-20 pb-12 text-center space-y-4">
+                            <div class="inline-flex items-center justify-center w-12 h-14 rounded-full border border-[#C59B6D] text-[#C59B6D] text-xl mb-1">
+                                &#9986;
+                            </div>
+                            <h1 class="font-serif text-5xl sm:text-6xl tracking-[0.18em] uppercase text-[#C59B6D]">
+                                BARBEARIA
+                            </h1>
+                            <p class="text-xs sm:text-sm text-stone-300 max-w-md mx-auto leading-relaxed">
+                                Di Barbearia, tradisi dan ketampanan maskulin tidak pernah lekang oleh waktu. Pilih paket perawatan &amp; kunci jam kedatangan Anda tanpa antre.
+                            </p>
+                            <div class="pt-3">
+                                <a href="#barber-services" class="inline-block px-8 py-3 bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-lg">
+                                    AGENDAR HORÁRIO / BOOKING JADWAL
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 3-Column Info Footer inside Hero (Address | Phone | Hours) -->
+                        <div class="relative z-10 max-w-5xl w-full mx-auto px-6 py-5 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-xs">
+                            <div>
+                                <div class="text-stone-400 uppercase tracking-widest">ENDEREÇO / LOKASI</div>
+                                <div class="font-semibold text-stone-200 mt-0.5">Jl. Senopati Heritage No. 88, Jakarta</div>
+                            </div>
+                            <div>
+                                <div class="text-stone-400 uppercase tracking-widest">RESERVASI WHATSAPP</div>
+                                <div class="font-bold text-[#C59B6D] text-sm mt-0.5">(0822) 5130-9900</div>
+                            </div>
+                            <div>
+                                <div class="text-stone-400 uppercase tracking-widest">JAM OPERASIONAL</div>
+                                <div class="font-semibold text-stone-200 mt-0.5">Senin – Sabtu: 10:00 s/d 22:00</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: WARM ALABASTER ASYMMETRIC COLLAGE ("O CAMINHO PARA SUA MELHOR VERSÃO") -->
+                    <section class="bg-[#FAF7F2] text-[#231F1D] py-20 px-6">
+                        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center scroll-reveal">
+                            <!-- Left Asymmetric 4-Photo Collage + Scissors Emblem -->
+                            <div class="lg:col-span-6 grid grid-cols-12 gap-3 items-stretch">
+                                <div class="col-span-4 flex flex-col gap-3">
+                                    <div class="h-28 border border-[#C59B6D] rounded-lg flex items-center justify-center text-3xl text-[#C59B6D] bg-white shadow-sm">
+                                        &#9986;
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80" alt="Barber Tool" class="h-36 w-full object-cover rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=400&q=80" alt="Razor Kit" class="h-32 w-full object-cover rounded-lg">
+                                </div>
+                                <div class="col-span-8 flex flex-col gap-3">
+                                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&q=80" alt="Barber Styling" class="h-28 w-full object-cover rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=700&q=80" alt="Master Barber in Action" class="h-68 flex-1 w-full object-cover rounded-lg shadow-md">
+                                </div>
+                            </div>
+
+                            <!-- Right Editorial Text + Schedule Table -->
+                            <div class="lg:col-span-6 space-y-4">
+                                <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-wide uppercase leading-tight text-[#231F1D]">
+                                    O CAMINHO PARA SUA<br><span class="text-[#B38654]">MELHOR VERSÃO.</span>
+                                </h2>
+
+                                <!-- Schedule Grid (SEG-SEX | SÁB | DOM) -->
+                                <div class="grid grid-cols-3 gap-4 py-3 border-y border-stone-300 text-xs">
+                                    <div>
+                                        <div class="font-extrabold text-[#B38654] uppercase">SEN – JUM</div>
+                                        <div class="text-stone-600 font-semibold">10:00 - 22:00</div>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-[#B38654] uppercase">SABTU</div>
+                                        <div class="text-stone-600 font-semibold">10:00 - 22:00</div>
+                                    </div>
+                                    <div>
+                                        <div class="font-extrabold text-[#B38654] uppercase">MINGGU</div>
+                                        <div class="text-stone-500">TUTUP / VIP</div>
+                                    </div>
+                                </div>
+
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                                    Lebih dari sekadar pangkas rambut, Barbearia adalah ruang perawatan diri, relaksasi handuk hangat, dan konsultasi visagisme untuk menampilkan versi terbaik Anda.
+                                </p>
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                                    Klik layanan di bawah untuk memilih kapster favorit dan mengunci slot jam kedatangan Anda langsung ke WhatsApp resepsionis kami.
+                                </p>
+
+                                <div class="pt-2">
+                                    <a href="#barber-services" class="inline-block px-7 py-3 bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] font-bold text-xs tracking-[0.18em] uppercase transition-all">
+                                        PILIH PAKET &amp; JAM BOOKING
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: LISTA DE SERVIÇOS + FLOATING 3D PARALLAX RAZOR & BRUSH PROPS -->
+                    <section id="barber-services" class="relative bg-[#141210] py-24 px-6 border-y border-[#C59B6D]/30">
+                        <!-- Floating 3D Metallic Safety Razor Prop (Top-Right Section Edge) -->
+                        <div class="parallax-prop-fast hidden md:block absolute -top-14 right-8 lg:right-16 z-30 pointer-events-none drop-shadow-[0_20px_25px_rgba(0,0,0,0.85)]">
+                            <svg width="145" height="175" viewBox="0 0 140 170" fill="none" class="rotate-[-18deg]">
+                                <rect x="40" y="12" width="60" height="22" rx="5" fill="#D6D3CD" stroke="#8C857B" stroke-width="2"/>
+                                <rect x="48" y="6" width="44" height="8" rx="3" fill="#E7E5E0"/>
+                                <path d="M56 34H84L76 48H64L56 34Z" fill="#A8A29E"/>
+                                <rect x="65" y="48" width="10" height="102" rx="4" fill="#C59B6D" stroke="#F5EFE6" stroke-width="1.5"/>
+                                <rect x="62" y="146" width="16" height="12" rx="3" fill="#D6D3CD"/>
+                            </svg>
+                        </div>
+
+                        <!-- Floating 3D Shaving Brush Prop (Bottom-Left Section Edge) -->
+                        <div class="parallax-prop-slow hidden md:block absolute -bottom-12 left-6 lg:left-14 z-30 pointer-events-none drop-shadow-[0_20px_25px_rgba(0,0,0,0.85)]">
+                            <svg width="120" height="150" viewBox="0 0 120 150" fill="none" class="rotate-[14deg]">
+                                <path d="M28 55C22 25 42 10 60 10C78 10 98 25 92 55L78 75H42L28 55Z" fill="#EDE4D3" stroke="#C59B6D" stroke-width="2"/>
+                                <rect x="40" y="73" width="40" height="10" rx="3" fill="#D4AF37"/>
+                                <path d="M42 83H78L84 128C84 136 73 142 60 142C47 142 36 136 36 128L42 83Z" fill="#8B5A2B" stroke="#C59B6D" stroke-width="2"/>
+                            </svg>
+                        </div>
+
+                        <div class="max-w-5xl mx-auto relative z-20">
+                            <div class="text-center max-w-lg mx-auto mb-14 scroll-reveal">
+                                <h2 class="font-serif text-3xl sm:text-4xl tracking-[0.14em] uppercase text-[#F5EFE6]">
+                                    LISTA DE <span class="text-[#C59B6D]">SERVIÇOS</span>
+                                </h2>
+                                <p class="text-xs text-stone-400 mt-2">
+                                    Klik pada layanan di dalam bingkai emas untuk memilih jadwal jam kedatangan &amp; kapster Anda.
+                                </p>
+                            </div>
+
+                            <!-- 3 Gold-Framed Service Columns (Exact match to Image 1) -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                ${[
+                                    { title: "CABELO & VISAGISMO", list: col1 },
+                                    { title: "BARBATERAPIA RITUAL", list: col2 },
+                                    { title: "ESTÉTICA & VIP COMBO", list: col3 }
+                                ].map(group => `
+                                    <div class="scroll-curtain border border-[#C59B6D]/65 rounded-xl p-6 bg-[#181512]/90 flex flex-col justify-between hover:border-[#C59B6D] transition-all">
+                                        <div>
+                                            <!-- Minimalist Gentleman Silhouette Icon -->
+                                            <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-[#C59B6D]/40 bg-[#C59B6D]/10 flex items-center justify-center text-[#C59B6D]">
+                                                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M12 2C9.24 2 7 4.24 7 7c0 1.38.56 2.63 1.46 3.54C6.55 11.68 5 13.68 5 16v2h14v-2c0-2.32-1.55-4.32-3.46-5.46C16.44 9.63 17 8.38 17 7c0-2.76-2.24-5-5-5zm0 18c-2.67 0-5.18-.67-7-2v2c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-2c-1.82 1.33-4.33 2-7 2z"/>
+                                                </svg>
+                                            </div>
+                                            <h3 class="text-center font-serif text-sm tracking-[0.2em] uppercase text-[#C59B6D] font-bold mb-5">
+                                                ${group.title}
+                                            </h3>
+
+                                            <div class="space-y-4">
+                                                ${group.list.map(item => `
+                                                    <div onclick="app.openItemModal('${item.id}')" class="p-3 rounded-lg bg-black/40 border border-white/5 hover:border-[#C59B6D]/60 cursor-pointer transition-all group">
+                                                        <div class="flex items-center justify-between gap-2">
+                                                            <span class="text-xs font-bold text-white group-hover:text-[#C59B6D]">&#9986; ${item.name}</span>
+                                                            <span class="text-xs font-extrabold text-[#C59B6D]">${this.formatRp(item.price)}</span>
+                                                        </div>
+                                                        <p class="text-xs text-stone-400 mt-1 leading-relaxed">${item.desc}</p>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+
+                                        <button type="button" onclick="app.openItemModal('${group.list[0].id}')" class="mt-6 w-full py-2.5 border border-[#C59B6D] text-[#C59B6D] hover:bg-[#C59B6D] hover:text-[#11100F] text-xs font-bold tracking-[0.18em] uppercase transition-all rounded">
+                                            PILIH JADWAL &amp; BARBER
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: INSPIRAÇÕES DE ESTILO (5-Column Edge-to-Edge Strip) -->
+                    <section class="bg-[#FAF7F2] text-[#231F1D] pt-16">
+                        <h3 class="text-center font-serif text-2xl tracking-[0.16em] uppercase font-bold mb-10">
+                            INSPIRAÇÕES DE <span class="text-[#B38654]">ESTILO</span>
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-5">
+                            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=500&q=80" alt="Style 1" class="h-52 w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=500&q=80" alt="Style 2" class="h-52 w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=500&q=80" alt="Style 3" class="h-52 w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=500&q=80" alt="Style 4" class="h-52 w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=500&q=80" alt="Style 5" class="h-52 w-full object-cover col-span-2 sm:col-span-1">
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: BARBEARIA GENTLEMEN'S LOUNGE LOCATOR MAP -->
+                    <section id="barbearia-map" class="bg-[#11100F] text-[#F5EFE6] py-20 px-6 border-t border-[#C59B6D]/30">
+                        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-5 space-y-4">
+                                <span class="text-xs font-bold uppercase tracking-[0.22em] text-[#C59B6D]">LOCALIZAÇÃO &amp; VIP LOUNGE</span>
+                                <h3 class="font-serif text-3xl sm:text-4xl tracking-wider uppercase text-white">
+                                    SENOPATI HERITAGE <span class="text-[#C59B6D]">CLUB</span>
+                                </h3>
+                                <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                                    Jl. Senopati Heritage No. 88, Kebayoran Baru, Jakarta Selatan. Dilengkapi area tunggu <strong>Complimentary Espresso &amp; Cold Brew Bar</strong> serta parkir VIP khusus tamu reservasi.
+                                </p>
+                                <div class="grid grid-cols-2 gap-3 text-xs">
+                                    <div class="p-3 rounded-xl bg-[#181512] border border-[#C59B6D]/40">
+                                        <div class="text-[#C59B6D] font-bold uppercase">Parkir VIP</div>
+                                        <div class="text-stone-300 mt-0.5">Valet Gratis Depan Lobby</div>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-[#181512] border border-[#C59B6D]/40">
+                                        <div class="text-[#C59B6D] font-bold uppercase">Welcome Drink</div>
+                                        <div class="text-stone-300 mt-0.5">Free Espresso / Cold Brew</div>
+                                    </div>
+                                </div>
+                                <div class="pt-2 flex flex-wrap gap-3">
+                                    <a href="https://maps.google.com/?q=Senopati+Jakarta+Selatan" target="_blank" rel="noopener" class="px-6 py-3 bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] font-bold text-xs tracking-[0.18em] uppercase transition-all">
+                                        📍 BUKA RUTE GOOGLE MAPS
+                                    </a>
+                                    <button type="button" onclick="app.openCheckoutModal()" class="px-5 py-3 border border-[#C59B6D] text-[#C59B6D] hover:bg-[#C59B6D] hover:text-[#11100F] font-bold text-xs tracking-[0.16em] uppercase transition-all">
+                                        💈 LIHAT PASS RESERVASI
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-7 h-80 rounded-xl overflow-hidden border-2 border-[#C59B6D]/60 shadow-2xl">
+                                <iframe
+                                    title="Peta Lokasi Barbearia Heritage Senopati"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15864.912641512!2d106.8085!3d-6.2312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f145491b720f%3A0x6a0c21763d12c6a!2sSenopati%2C%20Kebayoran%20Baru%2C%20Jakarta%20Selatan!5e0!3m2!1sid!2sid!4v1700000000000"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0; filter: invert(92%) hue-rotate(180deg) sepia(22%) contrast(95%);"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                `;
+            }
+
+            /* =================================================================
+               SENSORY CANVAS ENGINE (RISING COFFEE STEAM & GRILL SMOKE/EMBERS)
+            ================================================================== */
+            startCanvasParticles(mode) {
+                const canvas = document.getElementById('heroParticleCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+
+                const resize = () => {
+                    const rect = canvas.parentElement.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                };
+                resize();
+
+                const particles = Array.from({ length: 42 }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: mode === 'steam' ? (18 + Math.random() * 34) : (12 + Math.random() * 26),
+                    vy: -(0.35 + Math.random() * 0.65),
+                    vx: (Math.random() - 0.5) * 0.4,
+                    life: Math.random() * 140,
+                    maxLife: 130 + Math.random() * 90,
+                    isEmber: mode === 'smoke' && Math.random() < 0.25
+                }));
+
+                const loop = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (const p of particles) {
+                        p.life++;
+                        p.x += p.vx + Math.sin(p.life * 0.03) * 0.3;
+                        p.y += p.vy;
+                        if (p.life >= p.maxLife || p.y < -40) {
+                            p.x = canvas.width * (0.25 + Math.random() * 0.65);
+                            p.y = canvas.height + 20;
+                            p.life = 0;
+                        }
+                        const ratio = p.life / p.maxLife;
+                        const alpha = ratio < 0.3 ? (ratio / 0.3) * 0.16 : (1 - (ratio - 0.3) / 0.7) * 0.16;
+
+                        if (p.isEmber) {
+                            ctx.fillStyle = `rgba(232, 93, 63, ${alpha * 2.4})`;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else {
+                            const grad = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.r);
+                            grad.addColorStop(0, `rgba(245, 239, 230, ${alpha})`);
+                            grad.addColorStop(1, 'rgba(245, 239, 230, 0)');
+                            ctx.fillStyle = grad;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                    this.particleAnimId = requestAnimationFrame(loop);
+                };
+                loop();
+            }
+
+            /* =================================================================
+               SCROLL REVEAL FALLBACK & FLOATING PROP PARALLAX
+            ================================================================== */
+            initScrollRevealFallback() {
+                if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
+                    const els = document.querySelectorAll('.scroll-reveal, .scroll-curtain');
+                    const obs = new IntersectionObserver((entries) => {
+                        entries.forEach(e => {
+                            if (e.isIntersecting) {
+                                e.target.classList.add('io-visible');
+                            }
+                        });
+                    }, { threshold: 0.12 });
+                    els.forEach(el => {
+                        el.classList.add('io-hidden');
+                        obs.observe(el);
+                    });
+                }
+            }
+
+            setupScrollParallax() {
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    document.querySelectorAll('.parallax-plate').forEach(el => {
+                        el.style.transform = `rotate(${(y * 0.04) % 360}deg)`;
+                    });
+                    document.querySelectorAll('.parallax-prop-fast').forEach(el => {
+                        el.style.transform = `translateY(${Math.sin(y * 0.005) * -18}px)`;
+                    });
+                    document.querySelectorAll('.parallax-prop-slow').forEach(el => {
+                        el.style.transform = `translateY(${Math.cos(y * 0.005) * 16}px)`;
+                    });
+                }, { passive: true });
+            }
+
+            /* =================================================================
+               QR TABLE STANDEE & SMART WA CHECKOUT LOGIC
+            ================================================================== */
+            openQRStandeeModal() {
+                const store = this.getStore();
+                document.getElementById('standeeStoreTitle').innerText = store.storeTitle;
+                document.getElementById('standeeTableBadge').innerText = this.tableNumber.toUpperCase();
+                document.getElementById('qrStandeeModal').showModal();
+            }
+
+            setTableNumber(val) {
+                this.tableNumber = val;
+                document.getElementById('standeeTableBadge').innerText = val.toUpperCase();
+                document.getElementById('qrBtnLabel').innerText = `QR ${val.split(' ')[0]} ${val.split(' ')[1]}`;
+                document.getElementById('chkTableOrSlot').value = val;
+                this.renderTheme();
+            }
+
+            setServingPref(val) {
+                this.servingPref = val;
+                document.getElementById('chkServingOrAddr').value = `${val} (Pesan dari ${this.tableNumber})`;
+                this.updateFloatingCart();
+            }
+
+            activateDineInFromQR() {
+                this.orderMode = 'dinein';
+                document.getElementById('qrStandeeModal').close();
+                this.renderTheme();
+            }
+
+            callWaiterWA() {
+                const store = this.getStore();
+                const msg = `Halo Tim *${store.storeTitle}*, saya pelanggan di *${this.tableNumber}* membutuhkan bantuan pelayan / minta bill ke meja. Terima kasih!`;
+                window.open(`https://wa.me/${store.waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+            }
+
+            /* =================================================================
+               4 BESPOKE CATEGORY-SPECIFIC ITEM / BOOKING POP-UPS
+            ================================================================== */
+            openItemModal(itemId) {
+                const store = this.getStore();
+                const item = store.items.find(i => i.id === itemId);
+                if (!item || !item.available) return;
+
+                this.modalItem = item;
+                this.modalVariant = store.variants[0];
+                this.modalExtra = this.getDefaultExtra();
+                this.modalQty = 1;
+                this.renderItemModalContent();
+                document.getElementById('itemModal').showModal();
+            }
+
+            selectVariant(v) {
+                this.modalVariant = v;
+                this.renderItemModalContent();
+            }
+
+            selectExtra(e) {
+                this.modalExtra = e;
+                this.renderItemModalContent();
+            }
+
+            adjustModalQty(d) {
+                this.modalQty = Math.max(1, this.modalQty + d);
+                const el = document.getElementById('modalQtyDisplay');
+                if (el) el.innerText = String(this.modalQty);
+            }
+
+            renderItemModalContent() {
+                const item = this.modalItem;
+                const store = this.getStore();
+                const body = document.getElementById('itemModalBody');
+                if (!item || !body) return;
+
+                // 1. HARTH COFFEE: Kinfolk Cream Tear-Off Barista Slip
+                if (this.theme === 'harth') {
+                    const extras = ['Normal Sugar • Normal Ice', 'Less Sugar • Less Ice', 'No Sugar • Extra Shot', 'Hot Ceramic Cup (Meja)'];
+                    body.innerHTML = `
+                        <div class="bg-[#F5EFE6] text-[#1D1612] rounded-3xl p-6 border-2 border-[#D5C7B4] shadow-2xl font-sans relative overflow-hidden">
+                            <div class="text-[10px] font-mono tracking-[0.25em] uppercase text-stone-500 border-b border-dashed border-stone-400 pb-2 mb-4 flex justify-between">
+                                <span>☕ HARTH BARISTA CUSTOMIZER SLIP</span>
+                                <span>${this.tableNumber}</span>
+                            </div>
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex items-center gap-3.5">
+                                    <img src="${item.img}" alt="${item.name}" class="w-16 h-16 rounded-2xl object-cover border border-stone-300 shadow-sm">
+                                    <div>
+                                        <span class="text-[11px] font-bold uppercase tracking-widest text-[#7C4D2B]">${item.cat}</span>
+                                        <h3 id="itemModalTitle" class="text-2xl font-serif font-bold text-[#1D1612]">${item.name}</h3>
+                                        <p class="text-sm font-extrabold text-[#7C4D2B]">${this.formatRp(item.price)}</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="document.getElementById('itemModal').close()" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold">&times;</button>
+                            </div>
+
+                            <div class="mt-5 space-y-4">
+                                <div>
+                                    <label class="block text-xs font-extrabold uppercase tracking-wider text-stone-600 mb-2">1. Pilih Biji Kopi &amp; Susu (Beans &amp; Milk):</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${store.variants.map(v => `
+                                            <button type="button" onclick="app.selectVariant('${v.replace(/'/g, "\\'")}')" class="p-2.5 rounded-xl text-xs font-bold text-left border transition-all ${this.modalVariant === v ? 'bg-[#1D1612] text-[#F5EFE6] border-[#1D1612] shadow' : 'bg-[#FAF6F0] text-stone-700 border-[#D8CBB8] hover:border-stone-500'}">
+                                                ${v}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-extrabold uppercase tracking-wider text-stone-600 mb-2">2. Takaran Gula &amp; Es (Sweetness &amp; Ice):</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${extras.map(ex => `
+                                            <button type="button" onclick="app.selectExtra('${ex}')" class="p-2 rounded-xl text-xs font-semibold text-left border transition-all ${this.modalExtra === ex ? 'bg-[#7C4D2B] text-white border-[#7C4D2B]' : 'bg-[#FAF6F0] text-stone-700 border-[#D8CBB8]'}">
+                                                ${ex}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center pt-1">
+                                    <div class="sm:col-span-2">
+                                        <input type="text" id="modalCustomNote" placeholder="Catatan Barista (misal: latte art daun / oat ekstra)..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D8CBB8] text-[#1D1612] text-xs">
+                                    </div>
+                                    <div class="flex items-center justify-between bg-[#FAF6F0] px-3 py-2 rounded-xl border border-[#D8CBB8]">
+                                        <button type="button" onclick="app.adjustModalQty(-1)" class="w-7 h-7 rounded-lg bg-stone-200 font-bold">-</button>
+                                        <span id="modalQtyDisplay" class="font-extrabold text-sm">${this.modalQty}</span>
+                                        <button type="button" onclick="app.adjustModalQty(1)" class="w-7 h-7 rounded-lg bg-[#1D1612] text-white font-bold">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="app.confirmModalAdd()" class="mt-5 w-full py-3.5 rounded-full bg-[#1D1612] hover:bg-stone-800 text-[#F5EFE6] font-extrabold text-xs uppercase tracking-widest shadow-lg transition-all">
+                                + Masukkan ke Tiket Meja Barista &rarr;
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 2. HUSH RESTAURANT: Dark Slate Chef's Course & Allergy Concierge
+                if (this.theme === 'hush') {
+                    const courses = ['Sajikan Bersamaan (Meja)', 'Appetizer Keluar Duluan', 'Tanpa MSG / Kids Safe', 'Alergi Kacang / Pedas Pisah'];
+                    body.innerHTML = `
+                        <div class="bg-[#12161B] text-white rounded-3xl p-6 border-2 border-[#E85D3F]/60 shadow-2xl font-sans">
+                            <div class="flex items-start justify-between gap-3 border-b border-white/10 pb-4">
+                                <div class="flex items-center gap-3.5">
+                                    <img src="${item.img}" alt="${item.name}" class="w-16 h-16 rounded-2xl object-cover border border-[#E85D3F]/50">
+                                    <div>
+                                        <span class="text-[11px] font-bold uppercase tracking-widest text-[#E85D3F]">🍣 CHEF'S TABLE TICKET &bull; ${item.cat}</span>
+                                        <h3 id="itemModalTitle" class="text-xl font-display font-bold text-white mt-0.5">${item.name}</h3>
+                                        <p class="text-sm font-extrabold text-amber-300">${this.formatRp(item.price)}</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="document.getElementById('itemModal').close()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold">&times;</button>
+                            </div>
+
+                            <div class="mt-4 space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">1. Pilih Teknik Saji / Saus Chef:</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${store.variants.map(v => `
+                                            <button type="button" onclick="app.selectVariant('${v.replace(/'/g, "\\'")}')" class="p-2.5 rounded-xl text-xs font-bold text-left border transition-all ${this.modalVariant === v ? 'bg-[#E85D3F] text-white border-[#E85D3F]' : 'bg-[#1A2028] text-slate-300 border-white/10 hover:border-white/30'}">
+                                                ${v}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">2. Urutan Keluar Hidangan &amp; Filter Alergi:</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${courses.map(c => `
+                                            <button type="button" onclick="app.selectExtra('${c}')" class="p-2 rounded-xl text-xs font-semibold text-left border transition-all ${this.modalExtra === c ? 'bg-amber-400 text-stone-950 border-amber-300 font-bold' : 'bg-[#1A2028] text-slate-300 border-white/10'}">
+                                                ${c}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center">
+                                    <div class="sm:col-span-2">
+                                        <input type="text" id="modalCustomNote" placeholder="Instruksi Chef (misal: matang sempurna, jahe ekstra)..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1A2028] border border-white/15 text-white text-xs">
+                                    </div>
+                                    <div class="flex items-center justify-between bg-[#1A2028] px-3 py-2 rounded-xl border border-white/15">
+                                        <button type="button" onclick="app.adjustModalQty(-1)" class="w-7 h-7 rounded-lg bg-white/10 font-bold">-</button>
+                                        <span id="modalQtyDisplay" class="font-extrabold text-sm">${this.modalQty}</span>
+                                        <button type="button" onclick="app.adjustModalQty(1)" class="w-7 h-7 rounded-lg bg-[#E85D3F] text-white font-bold">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="app.confirmModalAdd()" class="mt-5 w-full py-3.5 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white font-extrabold text-xs uppercase tracking-widest shadow-lg transition-all">
+                                🔥 Tambahkan ke Order Dapur (${this.tableNumber})
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 3. CEDAR SHOE CO.: Stitched Parchment Bespoke Craft Sheet + EU/CM Size Chart + Monogram
+                if (this.theme === 'cedar') {
+                    const soles = ['Goodyear Welt Leather Sole', 'Vibram Commando Lug Sole', 'Crepe Plantation Outsole', 'Double-Stitch Storm Welt'];
+                    body.innerHTML = `
+                        <div class="bg-[#F3ECE0] text-[#2B2118] rounded-2xl p-6 stitched-box font-sans">
+                            <div class="flex items-start justify-between gap-3 border-b-2 border-dashed border-[#C7B299] pb-3">
+                                <div class="flex items-center gap-3.5">
+                                    <img src="${item.img}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover border border-[#C7B299]">
+                                    <div>
+                                        <span class="font-condensed text-xs tracking-[0.2em] uppercase text-[#8C3B2B] font-bold">🥾 BESPOKE CRAFT SPECIFICATION</span>
+                                        <h3 id="itemModalTitle" class="font-condensed text-2xl uppercase font-bold text-[#2B2118]">${item.name}</h3>
+                                        <p class="text-sm font-serif italic font-bold text-[#8C3B2B]">${this.formatRp(item.price)}</p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="document.getElementById('itemModal').close()" class="w-8 h-8 rounded bg-[#E5DEC9] text-[#2B2118] font-bold">&times;</button>
+                            </div>
+
+                            <div class="mt-4 space-y-3.5">
+                                <!-- Interactive EU to CM Foot Size Chart -->
+                                <div class="bg-[#FAF7F2] p-3 rounded-xl border border-[#D3C2AA]">
+                                    <div class="flex items-center justify-between text-[11px] font-condensed uppercase tracking-wider text-[#8C3B2B] font-bold mb-1.5">
+                                        <span>📏 Panduan Panjang Kaki (EU &rarr; CM):</span>
+                                        <span>Garansi Tukar Size Gratis</span>
+                                    </div>
+                                    <div class="grid grid-cols-5 gap-1 text-center text-[11px]">
+                                        <div class="p-1 bg-[#EFE8DA] rounded"><strong>EU 40</strong><br>25.0 cm</div>
+                                        <div class="p-1 bg-[#EFE8DA] rounded"><strong>EU 41</strong><br>26.0 cm</div>
+                                        <div class="p-1 bg-[#EFE8DA] rounded"><strong>EU 42</strong><br>26.8 cm</div>
+                                        <div class="p-1 bg-[#EFE8DA] rounded"><strong>EU 43</strong><br>27.5 cm</div>
+                                        <div class="p-1 bg-[#EFE8DA] rounded"><strong>EU 44</strong><br>28.3 cm</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block font-condensed text-xs uppercase tracking-widest text-[#2B2118] font-bold mb-1.5">1. Pilih Ukuran Sepatu &amp; Warna Kulit:</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${store.variants.map(v => `
+                                            <button type="button" onclick="app.selectVariant('${v.replace(/'/g, "\\'")}')" class="p-2 rounded text-xs font-condensed uppercase tracking-wider font-bold text-left border transition-all ${this.modalVariant === v ? 'bg-[#9E3B2E] text-white border-[#9E3B2E]' : 'bg-[#FAF7F2] text-[#2B2118] border-[#C7B299]'}">
+                                                ${v}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block font-condensed text-xs uppercase tracking-widest text-[#2B2118] font-bold mb-1.5">2. Konstruksi Sol (Outsole Welt):</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        ${soles.map(s => `
+                                            <button type="button" onclick="app.selectExtra('${s}')" class="p-2 rounded text-xs font-semibold text-left border transition-all ${this.modalExtra === s ? 'bg-[#2B2118] text-[#F3ECE0] border-[#2B2118]' : 'bg-[#FAF7F2] text-stone-700 border-[#C7B299]'}">
+                                                ${s}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-[11px] font-condensed uppercase tracking-wider text-[#8C3B2B] font-bold mb-1">🔥 Gratis Ukir Inisial Nama di Kulit (Maks 3 Huruf):</label>
+                                        <input type="text" id="modalCustomNote" maxlength="18" value="Monogram: Y.S" class="w-full px-3 py-2 rounded bg-[#FAF7F2] border border-[#C7B299] text-[#2B2118] text-xs font-bold">
+                                    </div>
+                                    <div class="flex items-center justify-between bg-[#FAF7F2] px-3 py-2 rounded border border-[#C7B299] mt-4">
+                                        <button type="button" onclick="app.adjustModalQty(-1)" class="w-7 h-7 bg-[#E5DEC9] font-bold">-</button>
+                                        <span id="modalQtyDisplay" class="font-extrabold text-sm">${this.modalQty}</span>
+                                        <button type="button" onclick="app.adjustModalQty(1)" class="w-7 h-7 bg-[#9E3B2E] text-white font-bold">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="app.confirmModalAdd()" class="mt-5 w-full py-3 bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed text-sm tracking-[0.22em] uppercase font-bold shadow-lg transition-all">
+                                + SIMPAN KE LEMBAR PESANAN PENGRAJIN &rarr;
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 4. BARBEARIA HERITAGE: VIP Gentlemen's Appointment Pass (NO SHOPPING CART!)
+                const drinks = ['☕ Free Hot Espresso', '🧊 Iced Cold Brew', '🥃 Sparkling Water', '🍵 Warm Mint Tea'];
+                body.innerHTML = `
+                    <div class="bg-[#11100F] text-[#F5EFE6] rounded-2xl p-6 border-2 border-[#C59B6D] shadow-2xl font-sans">
+                        <div class="flex items-start justify-between gap-3 border-b border-[#C59B6D]/30 pb-3">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-[#C59B6D]">💈 VIP GENTLEMEN'S APPOINTMENT PASS</span>
+                                <h3 id="itemModalTitle" class="text-2xl font-serif font-bold text-white mt-0.5">&#9986; ${item.name}</h3>
+                                <p class="text-sm font-extrabold text-[#C59B6D]">${this.formatRp(item.price)} &bull; Durasi ~45 Menit</p>
+                            </div>
+                            <button type="button" onclick="document.getElementById('itemModal').close()" class="w-8 h-8 rounded-full border border-[#C59B6D]/50 text-[#C59B6D] font-bold">&times;</button>
+                        </div>
+
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <label class="block text-xs font-serif uppercase tracking-[0.16em] text-[#C59B6D] mb-2">1. Pilih Slot Jam &amp; Master Barber:</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    ${store.variants.map(v => `
+                                        <button type="button" onclick="app.selectVariant('${v.replace(/'/g, "\\'")}')" class="p-2.5 rounded-lg text-xs font-bold text-left border transition-all ${this.modalVariant === v ? 'bg-[#C59B6D] text-[#11100F] border-[#C59B6D]' : 'bg-[#181512] text-stone-300 border-[#C59B6D]/30 hover:border-[#C59B6D]'}">
+                                            ${v}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-serif uppercase tracking-[0.16em] text-[#C59B6D] mb-2">2. Complimentary Welcome Drink di Lounge:</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    ${drinks.map(d => `
+                                        <button type="button" onclick="app.selectExtra('${d}')" class="p-2 rounded-lg text-xs font-semibold text-left border transition-all ${this.modalExtra === d ? 'bg-white text-[#11100F] border-white font-bold' : 'bg-[#181512] text-stone-300 border-white/10'}">
+                                            ${d}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center">
+                                <div class="sm:col-span-2">
+                                    <input type="text" id="modalCustomNote" placeholder="Request gaya (misal: Mid Fade / rapi natural)..." class="w-full px-3.5 py-2.5 rounded-lg bg-[#181512] border border-[#C59B6D]/40 text-white text-xs">
+                                </div>
+                                <div class="flex items-center justify-between bg-[#181512] px-3 py-2 rounded-lg border border-[#C59B6D]/40">
+                                    <span class="text-[11px] text-stone-400">Tamu:</span>
+                                    <button type="button" onclick="app.adjustModalQty(-1)" class="w-6 h-6 rounded bg-stone-800 font-bold">-</button>
+                                    <span id="modalQtyDisplay" class="font-extrabold text-sm text-[#C59B6D]">${this.modalQty}</span>
+                                    <button type="button" onclick="app.adjustModalQty(1)" class="w-6 h-6 rounded bg-[#C59B6D] text-[#11100F] font-bold">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="app.confirmModalAdd()" class="mt-5 w-full py-3.5 rounded bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] font-extrabold text-xs uppercase tracking-[0.2em] shadow-lg transition-all">
+                            💈 KUNCI JADWAL &amp; BUKA PASS RESERVASI &rarr;
+                        </button>
+                    </div>
+                `;
+            }
+
+            confirmModalAdd() {
+                if (!this.modalItem) return;
+                const noteEl = document.getElementById('modalCustomNote');
+                const note = (noteEl ? noteEl.value : '').trim();
+                const found = this.cart.find(c => c.item.id === this.modalItem.id && c.variant === this.modalVariant && c.extra === this.modalExtra && c.note === note);
+                if (found) {
+                    found.qty += this.modalQty;
+                } else {
+                    this.cart.push({ item: this.modalItem, variant: this.modalVariant, extra: this.modalExtra, note, qty: this.modalQty });
+                }
+                document.getElementById('itemModal').close();
+                this.updateFloatingCart();
+            }
+
+            getTotals() {
+                const sub = this.cart.reduce((s, c) => s + c.item.price * c.qty, 0);
+                const qty = this.cart.reduce((s, c) => s + c.qty, 0);
+                let disc = 0;
+                if (this.voucher === 'HEMAT20') disc = Math.round(sub * 0.2);
+                if (this.voucher === 'JUMATBERKAH') disc = 15000;
+                const shipping = this.theme === 'cedar' ? this.courierFee : 0;
+                return { sub, qty, disc: Math.min(sub, disc), shipping, total: Math.max(0, sub - disc + shipping) };
+            }
+
+            applyVoucher(code) {
+                this.voucher = code;
+                this.updateFloatingCart();
+                if (document.getElementById('checkoutModal').open) {
+                    this.renderCheckoutModalContent();
+                }
+            }
+
+            updateFloatingCart() {
+                const wrap = document.getElementById('floatingCartWrapper');
+                const { qty, disc, total } = this.getTotals();
+                if (qty === 0 || this.tier === 'starter') {
+                    wrap.classList.add('hidden');
+                    return;
+                }
+                wrap.classList.remove('hidden');
+
+                document.getElementById('floatingCartCount').innerText = String(qty);
+                document.getElementById('floatingCartTotalText').innerText = this.formatRp(total);
+
+                const btn = document.getElementById('floatingCartBtn');
+                const cta = document.getElementById('floatingCartCta');
+                if (this.theme === 'harth') {
+                    btn.style.background = '#F5EFE6';
+                    btn.style.color = '#1D1612';
+                    btn.style.borderColor = '#C7B299';
+                    cta.innerText = 'Struk Barista & QRIS';
+                } else if (this.theme === 'hush') {
+                    btn.style.background = '#12161B';
+                    btn.style.color = '#FFFFFF';
+                    btn.style.borderColor = '#E85D3F';
+                    cta.innerText = 'Tiket Dapur & QRIS';
+                } else if (this.theme === 'cedar') {
+                    btn.style.background = '#2B2118';
+                    btn.style.color = '#F3ECE0';
+                    btn.style.borderColor = '#9E3B2E';
+                    cta.innerText = 'Order Sheet & Ongkir';
+                } else {
+                    btn.style.background = '#11100F';
+                    btn.style.color = '#C59B6D';
+                    btn.style.borderColor = '#C59B6D';
+                    cta.innerText = 'Pass Reservasi VIP';
+                }
+
+                const modeMap = {
+                    harth: `☕ Struk Meja ${this.tableNumber} • QRIS / Kasir`,
+                    hush: `🍣 Tiket Dapur ${this.tableNumber} • ${this.servingPref}`,
+                    cedar: `🥾 Order Sepatu Handmade (+Ongkir Kurir)`,
+                    barbearia: `💈 VIP Appointment Pass Barbearia`
+                };
+                document.getElementById('floatingCartModeText').innerText = modeMap[this.theme];
+
+                const badge = document.getElementById('floatingCartPromoBadge');
+                if (disc > 0) {
+                    badge.classList.remove('hidden');
+                    badge.innerText = `Hemat ${this.formatRp(disc)}`;
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
+            /* =================================================================
+               4 BESPOKE CATEGORY CHECKOUT MODALS + QRIS & BANK SIMULATOR
+            ================================================================== */
+            openCheckoutModal() {
+                this.renderCheckoutModalContent();
+                document.getElementById('checkoutModal').showModal();
+            }
+
+            setPaymentMethod(m) {
+                this.paymentMethod = m;
+                this.paymentVerified = false;
+                this.renderCheckoutModalContent();
+            }
+
+            setBankChoice(val) {
+                this.selectedBank = val;
+                this.renderCheckoutModalContent();
+            }
+
+            setCourier(name, fee) {
+                this.courierName = name;
+                this.courierFee = fee;
+                this.updateFloatingCart();
+                this.renderCheckoutModalContent();
+            }
+
+            copyBankRek() {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText('8720449102');
+                }
+                const btn = document.getElementById('copyRekBtn');
+                if (btn) btn.innerText = '✅ Tersalin!';
+            }
+
+            simulatePaymentSuccess() {
+                this.paymentVerified = true;
+                this.renderCheckoutModalContent();
+            }
+
+            removeCartItem(idx) {
+                this.cart.splice(idx, 1);
+                this.updateFloatingCart();
+                if (this.cart.length === 0) {
+                    document.getElementById('checkoutModal').close();
+                } else {
+                    this.renderCheckoutModalContent();
+                }
+            }
+
+            buildPaymentWidgetHTML(isLight) {
+                const { total } = this.getTotals();
+                const boxBg = isLight ? 'bg-white border-[#D5C7B4] text-[#1D1612]' : 'bg-black/50 border-white/15 text-white';
+                const tabActive = isLight ? 'bg-[#1D1612] text-[#F5EFE6]' : 'bg-amber-400 text-stone-950';
+                const tabIdle = isLight ? 'bg-stone-200/80 text-stone-700' : 'bg-stone-800 text-stone-300';
+
+                return `
+                    <div class="mt-4 p-4 rounded-2xl border ${boxBg}">
+                        <div class="flex items-center justify-between mb-2.5">
+                            <span class="text-xs font-extrabold uppercase tracking-wider">💳 Pilih Metode Pembayaran:</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${this.paymentVerified ? 'bg-emerald-500 text-stone-950' : 'bg-amber-500/20 text-amber-600'}">
+                                ${this.paymentVerified ? '✅ SIMULASI LUNAS TERVERIFIKASI' : '⏳ Menunggu Pembayaran'}
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-1.5 mb-3">
+                            <button type="button" onclick="app.setPaymentMethod('qris')" class="py-2 px-2 rounded-xl text-xs font-bold transition-all ${this.paymentMethod === 'qris' ? tabActive : tabIdle}">
+                                📱 QRIS Instan
+                            </button>
+                            <button type="button" onclick="app.setPaymentMethod('bank')" class="py-2 px-2 rounded-xl text-xs font-bold transition-all ${this.paymentMethod === 'bank' ? tabActive : tabIdle}">
+                                🏦 Transfer Bank
+                            </button>
+                            <button type="button" onclick="app.setPaymentMethod('cashier')" class="py-2 px-2 rounded-xl text-xs font-bold transition-all ${this.paymentMethod === 'cashier' ? tabActive : tabIdle}">
+                                🛎️ ${this.theme === 'barbearia' ? 'Bayar di Lounge' : (this.theme === 'cedar' ? 'DP 50% PO' : 'Bayar di Kasir')}
+                            </button>
+                        </div>
+
+                        ${this.paymentMethod === 'qris' ? `
+                            <div class="flex flex-col sm:flex-row items-center gap-4 p-3 rounded-xl ${isLight ? 'bg-[#FAF6F0] border border-stone-300' : 'bg-stone-900 border border-stone-800'}">
+                                <div class="w-28 h-28 bg-white p-2 rounded-xl border-2 border-stone-900 shrink-0 flex flex-col items-center justify-center">
+                                    <div class="text-[9px] font-extrabold text-rose-600 tracking-widest mb-0.5">QRIS GPN</div>
+                                    <svg viewBox="0 0 100 100" class="w-20 h-20" fill="#111827">
+                                        <rect x="6" y="6" width="26" height="26" fill="none" stroke="#111827" stroke-width="6"/><rect x="13" y="13" width="12" height="12"/>
+                                        <rect x="68" y="6" width="26" height="26" fill="none" stroke="#111827" stroke-width="6"/><rect x="75" y="13" width="12" height="12"/>
+                                        <rect x="6" y="68" width="26" height="26" fill="none" stroke="#111827" stroke-width="6"/><rect x="13" y="75" width="12" height="12"/>
+                                        <rect x="40" y="10" width="8" height="16"/><rect x="52" y="18" width="10" height="8"/><rect x="12" y="42" width="18" height="8"/>
+                                        <rect x="38" y="38" width="24" height="24" rx="3"/><rect x="68" y="44" width="20" height="8"/><rect x="42" y="70" width="14" height="22"/>
+                                        <rect x="64" y="72" width="26" height="10"/><rect x="74" y="86" width="16" height="8"/>
+                                    </svg>
+                                </div>
+                                <div class="text-xs space-y-1.5 flex-1">
+                                    <div class="font-bold">Scan QRIS (GoPay, OVO, Dana, BCA Mobile, Mandiri Livin)</div>
+                                    <div class="text-sm font-extrabold text-emerald-600">Nominal Otomatis: ${this.formatRp(total)}</div>
+                                    <button type="button" onclick="app.simulatePaymentSuccess()" class="mt-1 px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs shadow">
+                                        ${this.paymentVerified ? '✅ Pembayaran QRIS Terkonfirmasi' : '⚡ Simulasikan "Sudah Scan & Bayar"'}
+                                    </button>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        ${this.paymentMethod === 'bank' ? `
+                            <div class="p-3 rounded-xl space-y-2.5 text-xs ${isLight ? 'bg-[#FAF6F0] border border-stone-300' : 'bg-stone-900 border border-stone-800'}">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                                    ${[
+                                        'BCA • 8720-4491-02',
+                                        'Mandiri • 137-00-99821-0',
+                                        'BRI • 0341-01-00291-30'
+                                    ].map(b => `
+                                        <button type="button" onclick="app.setBankChoice('${b}')" class="p-2 rounded-lg font-bold border text-left ${this.selectedBank.startsWith(b.split(' ')[0]) ? 'border-emerald-500 bg-emerald-500/15' : 'border-stone-500/30'}">
+                                            🏦 ${b}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                                <div class="flex items-center justify-between pt-1">
+                                    <span>Rekening Tujuan: <strong>${this.selectedBank}</strong></span>
+                                    <button type="button" id="copyRekBtn" onclick="app.copyBankRek()" class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-600 font-bold">📋 Salin Rek</button>
+                                </div>
+                                <button type="button" onclick="app.simulatePaymentSuccess()" class="w-full py-2 rounded-lg bg-emerald-500 text-stone-950 font-extrabold text-xs">
+                                    ${this.paymentVerified ? '✅ Bukti Transfer Terlampir ke Struk WA' : '⚡ Tandai Sudah Transfer Bank'}
+                                </button>
+                            </div>
+                        ` : ''}
+
+                        ${this.paymentMethod === 'cashier' ? `
+                            <div class="p-3 rounded-xl text-xs ${isLight ? 'bg-[#FAF6F0] border border-stone-300' : 'bg-stone-900 border border-stone-800'}">
+                                Pesanan akan langsung diproses dan pembayaran sebesar <strong>${this.formatRp(total)}</strong> dilakukan langsung di kasir / setelah layanan selesai.
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            renderCheckoutModalContent() {
+                const body = document.getElementById('checkoutModalBody');
+                if (!body) return;
+                const { sub, disc, shipping, total } = this.getTotals();
+                const isLight = this.theme === 'harth' || this.theme === 'cedar';
+
+                const themeShell = {
+                    harth: {
+                        wrap: 'bg-[#F5EFE6] text-[#1D1612] border-2 border-[#C7B299] rounded-3xl p-6 font-sans',
+                        badge: '☕ HARTH BARISTA TEAR-OFF RECEIPT',
+                        title: 'Struk Pesanan Meja & Pickup',
+                        itemBox: 'bg-[#FAF6F0] border-[#D8CBB8] text-[#1D1612]',
+                        btn: 'bg-[#1D1612] hover:bg-stone-800 text-[#F5EFE6]'
+                    },
+                    hush: {
+                        wrap: 'bg-[#12161B] text-white border-2 border-[#E85D3F]/60 rounded-3xl p-6 font-sans',
+                        badge: '🍣 HUSH CHEF TABLE & DELIVERY CONCIERGE',
+                        title: 'Tiket Pesanan Dapur & QRIS Resto',
+                        itemBox: 'bg-[#1A2028] border-white/10 text-white',
+                        btn: 'bg-[#E85D3F] hover:bg-[#d44d30] text-white'
+                    },
+                    cedar: {
+                        wrap: 'bg-[#F3ECE0] text-[#2B2118] stitched-box rounded-2xl p-6 font-sans',
+                        badge: '🥾 CEDAR BESPOKE WORKSHOP ORDER SHEET',
+                        title: 'Lembar Pengiriman Sepatu & Kalkulator Kurir',
+                        itemBox: 'bg-[#FAF7F2] border-[#C7B299] text-[#2B2118]',
+                        btn: 'bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed tracking-widest uppercase'
+                    },
+                    barbearia: {
+                        wrap: 'bg-[#11100F] text-[#F5EFE6] border-2 border-[#C59B6D] rounded-2xl p-6 font-sans',
+                        badge: '💈 BARBEARIA VIP APPOINTMENT BOARDING PASS',
+                        title: 'Tiket Reservasi Kursi & Master Barber',
+                        itemBox: 'bg-[#181512] border-[#C59B6D]/40 text-white',
+                        btn: 'bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] tracking-widest uppercase'
+                    }
+                }[this.theme];
+
+                body.innerHTML = `
+                    <div class="${themeShell.wrap}">
+                        <div class="flex items-start justify-between gap-3 border-b ${isLight ? 'border-stone-300' : 'border-white/15'} pb-3">
+                            <div>
+                                <span class="text-[11px] font-extrabold uppercase tracking-widest ${this.theme === 'cedar' ? 'text-[#8C3B2B]' : (this.theme === 'barbearia' ? 'text-[#C59B6D]' : 'text-amber-500')}">${themeShell.badge}</span>
+                                <h3 id="checkoutTitle" class="text-xl font-serif font-bold mt-0.5">${themeShell.title}</h3>
+                            </div>
+                            <button type="button" onclick="document.getElementById('checkoutModal').close()" class="w-8 h-8 rounded-full ${isLight ? 'bg-stone-200 text-stone-800' : 'bg-stone-800 text-white'} font-bold">&times;</button>
+                        </div>
+
+                        <!-- Category-Specific Items / Booking List -->
+                        <div class="mt-4 space-y-2 max-h-40 overflow-y-auto pr-1">
+                            ${this.cart.map((c, idx) => `
+                                <div class="flex items-center justify-between gap-3 p-3 rounded-xl border ${themeShell.itemBox}">
+                                    <div class="text-xs">
+                                        <div class="font-extrabold">${c.qty}x ${c.item.name}</div>
+                                        <div class="opacity-80">${c.variant} &bull; ${c.extra || ''}${c.note ? ` (${c.note})` : ''}</div>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <span class="text-xs font-extrabold">${this.formatRp(c.item.price * c.qty)}</span>
+                                        <button type="button" onclick="app.removeCartItem(${idx})" class="text-rose-500 font-bold text-sm px-1">&times;</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Category-Specific Context Block (Courier for Cedar / Table for F&B / Barber Date for Barbearia) -->
+                        ${this.theme === 'cedar' ? `
+                            <div class="mt-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#C7B299] text-xs space-y-2">
+                                <div class="font-condensed uppercase tracking-wider font-bold text-[#8C3B2B]">📦 Pilih Ekspedisi Pengiriman dari Workshop Bandung:</div>
+                                <div class="grid grid-cols-3 gap-1.5">
+                                    ${[
+                                        { n: 'JNE Reguler (Packing Kayu)', f: 22000 },
+                                        { n: 'J&T Express VIP', f: 25000 },
+                                        { n: 'SiCepat Kargo', f: 18000 }
+                                    ].map(cr => `
+                                        <button type="button" onclick="app.setCourier('${cr.n}', ${cr.f})" class="p-2 rounded border text-left font-bold ${this.courierName === cr.n ? 'bg-[#9E3B2E] text-white border-[#9E3B2E]' : 'bg-white text-[#2B2118] border-[#C7B299]'}">
+                                            <div>${cr.n.split(' ')[0]} ${cr.n.split(' ')[1]}</div>
+                                            <div class="text-[11px] opacity-85">+${this.formatRp(cr.f)}</div>
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Customer Input & Promo Row -->
+                        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase opacity-75 mb-1">Nama Pemesan / Tamu *</label>
+                                <input type="text" id="chkCustName" value="${this.customerName}" oninput="app.customerName=this.value; app.updateWATicketText()" class="w-full px-3 py-2 rounded-xl border text-xs font-bold ${isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-stone-900 border-stone-700 text-white'}">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase opacity-75 mb-1">
+                                    ${this.theme === 'cedar' ? 'Alamat Lengkap Pengiriman *' : (this.theme === 'barbearia' ? 'Tanggal Kedatangan & Cabang *' : 'Nomor Meja / Opsi Saji *')}
+                                </label>
+                                <input type="text" id="chkTableOrSlot" value="${this.theme === 'cedar' ? 'Jl. Sudirman No. 19, Jakarta (Kode Pos 12190)' : (this.theme === 'barbearia' ? 'Sabtu, 24 Okt • Cabang Senopati VIP' : `${this.tableNumber} • ${this.servingPref}`)}" oninput="app.updateWATicketText()" class="w-full px-3 py-2 rounded-xl border text-xs font-bold ${isLight ? 'bg-white border-stone-300 text-stone-900' : 'bg-stone-900 border-stone-700 text-amber-300'}">
+                            </div>
+                        </div>
+
+                        <!-- Voucher Buttons -->
+                        <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <span class="font-bold">🎟️ Klaim Kode Voucher:</span>
+                            <div class="flex gap-1.5">
+                                <button type="button" onclick="app.applyVoucher('HEMAT20')" class="px-2.5 py-1 rounded-lg font-bold border ${this.voucher === 'HEMAT20' ? 'bg-emerald-500 text-stone-950 border-emerald-400' : 'border-amber-500/40 text-amber-600'}">HEMAT20 (-20%)</button>
+                                <button type="button" onclick="app.applyVoucher('JUMATBERKAH')" class="px-2.5 py-1 rounded-lg font-bold border ${this.voucher === 'JUMATBERKAH' ? 'bg-emerald-500 text-stone-950 border-emerald-400' : 'border-amber-500/40 text-amber-600'}">JUMATBERKAH (-15rb)</button>
+                            </div>
+                        </div>
+
+                        <!-- Simulated QRIS & Bank Transfer Payment Widget -->
+                        ${this.buildPaymentWidgetHTML(isLight)}
+
+                        <!-- Live WA Ticket Preview -->
+                        <div class="mt-3">
+                            <div class="flex items-center justify-between text-xs font-bold mb-1">
+                                <span>Preview Format Struk Otomatis ke WhatsApp:</span>
+                                <span class="text-sm font-extrabold">${this.formatRp(total)}</span>
+                            </div>
+                            <pre id="waTicketPreview" class="p-3 rounded-xl text-[11px] font-mono whitespace-pre-wrap leading-relaxed max-h-32 overflow-y-auto border ${isLight ? 'bg-stone-900 text-emerald-300 border-stone-800' : 'bg-black/70 text-emerald-300 border-white/10'}">${this.buildWAText()}</pre>
+                        </div>
+
+                        <button type="button" onclick="app.sendWhatsAppOrder()" class="mt-4 w-full py-3.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-lg transition-all flex items-center justify-center gap-2 ${themeShell.btn}">
+                            <span>🚀 Kirim ${this.theme === 'barbearia' ? 'Pass Reservasi' : 'Struk Pesanan & Bukti Bayar'} ke WhatsApp</span>
+                        </button>
+                    </div>
+                `;
+            }
+
+            updateWATicketText() {
+                const pre = document.getElementById('waTicketPreview');
+                if (pre) pre.innerText = this.buildWAText();
+            }
+
+            buildWAText() {
+                const store = this.getStore();
+                const { sub, disc, shipping, total } = this.getTotals();
+                const nameEl = document.getElementById('chkCustName');
+                const slotEl = document.getElementById('chkTableOrSlot');
+                const name = (nameEl ? nameEl.value : this.customerName) || 'Pelanggan';
+                const slotOrTable = (slotEl ? slotEl.value : this.tableNumber) || this.tableNumber;
+
+                const headerMap = {
+                    harth: '[STRUK BARISTA HARTH COFFEE - DINE IN / PICKUP]',
+                    hush: '[TIKET DAPUR HUSH MODERN RESTAURANT]',
+                    cedar: '[LEMBAR PESANAN SEPATU HANDMADE CEDAR CO.]',
+                    barbearia: '[VIP APPOINTMENT PASS - BARBEARIA HERITAGE]'
+                };
+
+                const payMap = {
+                    qris: `QRIS Instan (${this.paymentVerified ? 'LUNAS TERVERIFIKASI' : 'Menunggu Scan'})`,
+                    bank: `Transfer Bank ${this.selectedBank} (${this.paymentVerified ? 'SUDAH TRANSFER' : 'Menunggu Transfer'})`,
+                    cashier: this.theme === 'barbearia' ? 'Bayar di Lounge VIP' : (this.theme === 'cedar' ? 'DP Pre-Order 50%' : 'Bayar di Kasir')
+                };
+
+                const itemsText = this.cart.map((c, i) =>
+                    `${i + 1}. *${c.qty}x ${c.item.name}* (${this.formatRp(c.item.price * c.qty)})\n   └ _${c.variant} | ${c.extra || ''}${c.note ? ` | Note: ${c.note}` : ''}_`
+                ).join('\n');
+
+                return (
+                    `*${headerMap[this.theme]}*\n` +
+                    `👤 Pemesan: *${name}*\n` +
+                    `📍 Info Meja/Alamat/Jadwal: *${slotOrTable}*\n` +
+                    `💳 Pembayaran: *${payMap[this.paymentMethod]}*\n` +
+                    `----------------------------------\n` +
+                    `${itemsText}\n` +
+                    `----------------------------------\n` +
+                    `Subtotal: ${this.formatRp(sub)}\n` +
+                    (shipping > 0 ? `📦 Ongkir (${this.courierName}): +${this.formatRp(shipping)}\n` : '') +
+                    (disc > 0 ? `🎟️ Voucher (${this.voucher}): -${this.formatRp(disc)}\n` : '') +
+                    `*TOTAL AKHIR: ${this.formatRp(total)}*`
+                );
+            }
+
+            sendWhatsAppOrder() {
+                const store = this.getStore();
+                const text = this.buildWAText();
+                window.open(`https://wa.me/${store.waPhone}?text=${encodeURIComponent(text)}`, '_blank');
+            }
+
+            /* =================================================================
+               LIVE GOOGLE SHEETS CMS SIMULATOR
+            ================================================================== */
+            openSheetModal() {
+                this.renderSheetRows();
+                document.getElementById('sheetModal').showModal();
+            }
+
+            renderSheetRows() {
+                const store = this.getStore();
+                const tbody = document.getElementById('sheetTableBody');
+                tbody.innerHTML = store.items.map((item, i) => `
+                    <tr class="hover:bg-stone-900/60">
+                        <td class="p-3 font-bold text-white">${item.name}</td>
+                        <td class="p-3">
+                            <input type="number" value="${item.price}" onchange="app.updateSheetPrice(${i}, this.value)" class="w-28 px-2.5 py-1 rounded bg-stone-900 border border-stone-700 text-amber-300 font-bold">
+                        </td>
+                        <td class="p-3 text-center">
+                            <button type="button" onclick="app.toggleSheetStock(${i})" class="px-3 py-1 rounded-full font-bold text-xs ${item.available ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'}">
+                                ${item.available ? '🟢 Tersedia' : '🔴 Habis'}
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            updateSheetPrice(i, val) {
+                this.getStore().items[i].price = parseInt(val, 10) || 0;
+                this.renderTheme();
+            }
+
+            toggleSheetStock(i) {
+                this.getStore().items[i].available = !this.getStore().items[i].available;
+                this.renderSheetRows();
+                this.renderTheme();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.app = new BespokeShowcaseApp();
+        });
+    </script>
+</body>
+</html>
+

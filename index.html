@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitra — Web &amp; AI Solutions | Less Complexity. More Growth.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Sora"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* =====================================================================
+           DIGITRA BRAND GUIDELINE & MODERN WEB GUIDANCE:
+           - cross-document-transitions: @view-transition { navigation: auto; }
+           - same-document-transitions: document.startViewTransition() + reduced motion
+           - scroll-snap-state-sync: scroll-snap-type: x mandatory + scrollsnapchange
+        ====================================================================== */
+        @media (prefers-reduced-motion: no-preference) {
+            @view-transition {
+                navigation: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) {
+                animation: none !important;
+            }
+        }
+
+        :root {
+            --chameleon-accent: #FBBF24;
+            --chameleon-glow: rgba(245, 158, 11, 0.30);
+            --chameleon-border: rgba(251, 191, 36, 0.45);
+        }
+
+        body {
+            background-color: #05070F;
+            color: #F5F7FF;
+            overflow-x: hidden;
+        }
+
+        .text-gradient-digitra {
+            background: linear-gradient(90deg, #00E5FF 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-chameleon {
+            background: linear-gradient(90deg, #00E5FF 0%, var(--chameleon-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.7s ease;
+        }
+
+        .bg-gradient-digitra {
+            background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
+        }
+
+        .bg-gradient-chameleon {
+            background: linear-gradient(135deg, #00E5FF 0%, var(--chameleon-accent) 100%);
+            box-shadow: 0 14px 40px -6px var(--chameleon-glow);
+            transition: background 0.7s ease, box-shadow 0.7s ease, transform 0.25s ease;
+        }
+
+        /* Standout Floating Capsule Navbar with Chameleon Ambient Sync */
+        .navbar-capsule {
+            background: linear-gradient(180deg, rgba(11, 16, 32, 0.90) 0%, rgba(5, 7, 15, 0.92) 100%);
+            box-shadow:
+                0 18px 50px -12px var(--chameleon-glow),
+                0 0 0 1px var(--chameleon-border),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+            transition: box-shadow 0.8s ease;
+        }
+
+        .cta-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-shimmer::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 45%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transform: rotate(25deg);
+            animation: sheenSweep 3.8s infinite ease-in-out;
+        }
+        @keyframes sheenSweep {
+            0%, 35% { left: -60%; }
+            75%, 100% { left: 135%; }
+        }
+
+        /* Full-Screen Real Website Background Slides + Smooth Vertical Auto-Scroll */
+        .hero-web-slide {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .hero-web-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        @keyframes liveWebsiteAutoScroll {
+            0% { transform: translateY(0%); }
+            50% { transform: translateY(-22%); }
+            100% { transform: translateY(0%); }
+        }
+        .live-web-canvas-scroll {
+            animation: liveWebsiteAutoScroll 16s ease-in-out infinite;
+        }
+
+        /* Interactive Spotlight + 3D Tilt Card */
+        .interactive-tilt-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .interactive-tilt-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(0, 229, 255, 0.13),
+                rgba(139, 92, 246, 0.06) 40%,
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .interactive-tilt-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Horizontal Scroll-Snap Track (modern-web-guidance: scroll-snap-state-sync) */
+        .showcase-track {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .showcase-track::-webkit-scrollbar {
+            display: none;
+        }
+        .showcase-item {
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Laser Scan Animation for QRIS Sandbox */
+        @keyframes qrisLaser {
+            0%, 100% { top: 8%; opacity: 0.85; }
+            50% { top: 88%; opacity: 1; }
+        }
+        .qris-laser-line {
+            animation: qrisLaser 2.1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+
+    <!-- =======================================================================
+         1. UNIFIED NAVBAR (MERGED SEAMLESSLY WITH TOP OF HERO SECTION)
+    ======================================================================== -->
+    <header class="absolute top-0 inset-x-0 z-40 bg-gradient-to-b from-[#05070F]/90 via-[#05070F]/45 to-transparent border-b border-white/5">
+        <!-- Subtle Top Viewport Chameleon Line -->
+        <div id="navbarTopBeam" class="h-[2px] w-full transition-all duration-700" style="background: linear-gradient(90deg, transparent, #00E5FF, var(--chameleon-accent), transparent);"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-24 flex items-center justify-between gap-6">
+            <!-- Brand Identity -->
+            <a href="index.html" class="flex items-center gap-3.5 group shrink-0">
+                <svg class="w-10 h-10 shrink-0 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="digCyan" x1="4" y1="6" x2="30" y2="28" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#00E5FF"/>
+                            <stop offset="100%" stop-color="#38BDF8"/>
+                        </linearGradient>
+                        <linearGradient id="digPurple" x1="12" y1="10" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#00E5FF"/>
+                            <stop offset="40%" stop-color="#6366F1"/>
+                            <stop offset="100%" stop-color="#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="url(#digCyan)"/>
+                    <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="url(#digPurple)"/>
+                </svg>
+                <div class="whitespace-nowrap">
+                    <div class="font-display font-extrabold text-xl tracking-tight text-[#F5F7FF] leading-none">Digitra</div>
+                    <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-300 mt-1">Web &amp; AI Solutions</div>
+                </div>
+            </a>
+
+            <!-- Clean Section Navigation (Merged Directly into Header, No Panel Box) -->
+            <nav id="mainNavTrack" aria-label="Navigasi Utama" class="hidden md:flex items-center gap-8 relative shrink-0">
+                <a href="#eksplorasi-karya" class="text-sm font-display font-semibold text-slate-200 hover:text-[#00E5FF] transition-colors whitespace-nowrap">
+                    Eksplorasi Karya
+                </a>
+                <a href="#sandbox-interaktif" class="text-sm font-display font-semibold text-slate-200 hover:text-[#00E5FF] transition-colors whitespace-nowrap">
+                    Uji Interaksi Live
+                </a>
+                <a href="#cara-kerja" class="text-sm font-display font-semibold text-slate-200 hover:text-[#00E5FF] transition-colors whitespace-nowrap">
+                    Alur Pemesanan
+                </a>
+                <a href="#keunggulan" class="text-sm font-display font-semibold text-slate-200 hover:text-[#00E5FF] transition-colors whitespace-nowrap">
+                    Keunggulan
+                </a>
+            </nav>
+
+            <!-- Primary CTA Button -->
+            <div class="flex items-center shrink-0">
+                <a href="pilih-desain.html" id="navbarCtaBtn"
+                    class="cta-shimmer px-5 py-2.5 rounded-xl bg-gradient-chameleon text-[#05070F] font-display font-extrabold text-xs sm:text-sm hover:scale-[1.03] active:scale-[0.99] transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <span>Mulai Buat Website</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <!-- ===================================================================
+             2. HERO SECTION: REAL FULL-SCREEN AUTO-SCROLLING WEBSITES IN BACKGROUND
+                + CHAMELEON AMBIENT SYNC (UNIFIED WITH TOP NAVBAR)
+        ==================================================================== -->
+        <section id="heroSection" class="relative min-h-screen flex flex-col justify-center pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden border-b border-white/10">
+
+            <!-- ===============================================================
+                 LAYER A: FULL-SCREEN AUTO-SCROLLING ACTUAL WEBSITE CREATIONS
+                 Each slide renders the actual full-width UI of our 4 websites
+                 (Header + Hero + Product Catalog Grid + Custom UI) scrolling live!
+            ================================================================ -->
+            <div id="heroLivingBackground" class="absolute inset-0 z-0 overflow-hidden select-none" aria-hidden="true">
+
+                <!-- ===========================================================
+                     WEBSITE 01 IN BACKGROUND: HARTH SPECIALTY COFFEE
+                ============================================================ -->
+                <div class="hero-web-slide active absolute inset-0 bg-[#120D0A]" data-bg-slide="0">
+                    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-10 pt-24 live-web-canvas-scroll opacity-55">
+                        <!-- Harth Website Top Navbar -->
+                        <div class="rounded-t-2xl bg-[#1A120D]/95 border border-amber-500/30 px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-serif font-bold">H</span>
+                                <div>
+                                    <div class="font-serif font-bold text-lg tracking-wider text-amber-100">HARTH. ROASTERY</div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-amber-400/80">Specialty Coffee &amp; Artisanal Bakehouse</div>
+                                </div>
+                            </div>
+                            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-amber-100/80">
+                                <span class="text-amber-400 font-bold border-b border-amber-400 pb-0.5">Signature Espresso</span>
+                                <span>Manual Brew V60</span>
+                                <span>Artisan Croissant</span>
+                                <span>WFC Space &amp; Wi-Fi</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-mono font-bold">● WFC: 14 Kursi Kosong</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-amber-500 text-stone-950 text-xs font-bold">☕ Meja #08 (QR Aktif)</span>
+                            </div>
+                        </div>
+
+                        <!-- Harth Website Hero Split -->
+                        <div class="bg-[#160F0B] border-x border-amber-500/25 p-6 sm:p-8 grid grid-cols-12 gap-6 items-center">
+                            <div class="col-span-7 space-y-3">
+                                <span class="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-mono">SMALL BATCH ROASTERY &bull; GAYO &amp; MANDHELING</span>
+                                <h4 class="font-serif text-3xl sm:text-4xl text-amber-50 font-bold leading-tight">Seduhan Hangat dari Biji Pilihan, Pesan Langsung dari Meja.</h4>
+                                <div class="flex items-center gap-3 pt-1">
+                                    <span class="px-4 py-2 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs">Pesan Tanpa Antre &rarr;</span>
+                                    <span class="px-3 py-2 rounded-xl bg-white/5 border border-amber-500/30 text-amber-200 text-xs font-mono">Wi-Fi: 145 Mbps</span>
+                                </div>
+                            </div>
+                            <div class="col-span-5 h-48 rounded-2xl overflow-hidden border border-amber-500/30 relative">
+                                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&q=80" alt="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Harth Website 4-Column Product & Barista Customizer Grid -->
+                        <div class="bg-[#120D0A] border border-t-0 border-amber-500/25 rounded-b-2xl p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="rounded-2xl bg-[#1C140E] border border-amber-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-amber-50">Oat Flat White</span><span class="font-mono text-xs text-amber-400 font-bold">Rp 42.000</span></div>
+                                    <div class="text-[11px] text-amber-200/70">Arabica Gayo • Oatside Barista • Less Ice</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">+ Racik Struk Barista</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1C140E] border border-amber-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-amber-50">Manual V60 Bali</span><span class="font-mono text-xs text-amber-400 font-bold">Rp 36.000</span></div>
+                                    <div class="text-[11px] text-amber-200/70">Kintamani Natural • Citrus &amp; Brown Sugar</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">+ Racik Struk Barista</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1C140E] border border-amber-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-amber-50">Almond Kouign-Amann</span><span class="font-mono text-xs text-amber-400 font-bold">Rp 34.000</span></div>
+                                    <div class="text-[11px] text-amber-200/70">French Butter Pastry • Disajikan Hangat</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">+ Racik Struk Barista</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1C140E] border border-amber-400/60 p-4 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <span class="px-2 py-0.5 rounded bg-amber-500 text-stone-950 font-mono text-[10px] font-bold">STRUK BARISTA LIVE</span>
+                                    <div class="font-serif font-bold text-sm text-white">Meja #08 &bull; Dine-In</div>
+                                    <div class="text-xs font-mono text-amber-200/90 space-y-1 pt-1">
+                                        <div>1x Oat Flat White (42rb)</div>
+                                        <div>1x Almond Pastry (34rb)</div>
+                                        <div class="text-emerald-400 font-bold">✓ QRIS Lunas: Rp 76.000</div>
+                                    </div>
+                                </div>
+                                <span class="block text-center py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold">Terhubung ke Kasir WA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===========================================================
+                     WEBSITE 02 IN BACKGROUND: HUSH MODERN IZAKAYA & GRILL
+                ============================================================ -->
+                <div class="hero-web-slide absolute inset-0 bg-[#14070B]" data-bg-slide="1">
+                    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-10 pt-24 live-web-canvas-scroll opacity-55">
+                        <!-- Hush Website Top Navbar -->
+                        <div class="rounded-t-2xl bg-[#1B090F]/95 border border-rose-500/35 px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-rose-300 font-serif font-bold">焔</span>
+                                <div>
+                                    <div class="font-serif font-bold text-lg tracking-wider text-rose-100">HUSH IZAKAYA &amp; GRILL</div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-rose-400/80">Modern Japanese Charcoal Dining</div>
+                                </div>
+                            </div>
+                            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-rose-100/80">
+                                <span class="text-rose-400 font-bold border-b border-rose-400 pb-0.5">Robatayaki Grill</span>
+                                <span>Omakase Sushi</span>
+                                <span>A5 Miyazaki Wagyu</span>
+                                <span>VIP Private Room</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-mono font-bold">🔥 Kurir Termal &lt; 5 KM</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-rose-500 text-white text-xs font-bold">🍣 Tiket Dapur Chef</span>
+                            </div>
+                        </div>
+
+                        <!-- Hush Website Hero Split -->
+                        <div class="bg-[#18080D] border-x border-rose-500/25 p-6 sm:p-8 grid grid-cols-12 gap-6 items-center">
+                            <div class="col-span-7 space-y-3">
+                                <span class="px-3 py-1 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-mono">BINCHOTAN CHARCOAL GRILL &bull; OMAKASE</span>
+                                <h4 class="font-serif text-3xl sm:text-4xl text-rose-50 font-bold leading-tight">Aroma Panggangan Arang Binchotan &amp; Sajian Presisi Chef.</h4>
+                                <div class="flex items-center gap-3 pt-1">
+                                    <span class="px-4 py-2 rounded-xl bg-rose-500 text-white font-bold text-xs">Buka Menu Malam &rarr;</span>
+                                    <span class="px-3 py-2 rounded-xl bg-white/5 border border-rose-500/30 text-rose-200 text-xs font-mono">Filter Bebas Alergi Aktif</span>
+                                </div>
+                            </div>
+                            <div class="col-span-5 h-48 rounded-2xl overflow-hidden border border-rose-500/30 relative">
+                                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80" alt="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Hush Website 4-Column Culinary Grid -->
+                        <div class="bg-[#14070B] border border-t-0 border-rose-500/25 rounded-b-2xl p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="rounded-2xl bg-[#1F0B11] border border-rose-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-rose-50">A5 Wagyu Truffle Don</span><span class="font-mono text-xs text-rose-400 font-bold">Rp 185.000</span></div>
+                                    <div class="text-[11px] text-rose-200/70">Medium Rare • Onsen Tamago • Black Truffle</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-bold">+ Tiket Dapur Chef</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F0B11] border border-rose-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-rose-50">Salmon Aburi Mentai</span><span class="font-mono text-xs text-rose-400 font-bold">Rp 88.000</span></div>
+                                    <div class="text-[11px] text-rose-200/70">Torched Norwegian Salmon • Tobiko</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-bold">+ Tiket Dapur Chef</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F0B11] border border-rose-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-rose-50">Tori Paitan Ramen</span><span class="font-mono text-xs text-rose-400 font-bold">Rp 78.000</span></div>
+                                    <div class="text-[11px] text-rose-200/70">Kaldu Kolagen 12 Jam • Smoked Chashu</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-bold">+ Tiket Dapur Chef</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F0B11] border border-rose-400/60 p-4 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <span class="px-2 py-0.5 rounded bg-rose-500 text-white font-mono text-[10px] font-bold">CHEF KITCHEN TICKET</span>
+                                    <div class="font-serif font-bold text-sm text-white">VIP Booth #04 &bull; Malam</div>
+                                    <div class="text-xs font-mono text-rose-200/90 space-y-1 pt-1">
+                                        <div>• Urutan: Keluar Bersamaan</div>
+                                        <div>• Alergi: Bebas Kerang</div>
+                                        <div class="text-emerald-400 font-bold">✓ Panggil Pelayan / Bill Aktif</div>
+                                    </div>
+                                </div>
+                                <span class="block text-center py-1.5 rounded-lg bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-bold">Terkirim ke Dapur &amp; Kasir</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===========================================================
+                     WEBSITE 03 IN BACKGROUND: CEDAR HERITAGE FOOTWEAR
+                ============================================================ -->
+                <div class="hero-web-slide absolute inset-0 bg-[#140E0A]" data-bg-slide="2">
+                    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-10 pt-24 live-web-canvas-scroll opacity-55">
+                        <!-- Cedar Website Top Navbar -->
+                        <div class="rounded-t-2xl bg-[#1C130D]/95 border border-orange-500/35 px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-orange-300 font-serif font-bold">C</span>
+                                <div>
+                                    <div class="font-serif font-bold text-lg tracking-wider text-orange-100">CEDAR FOOTWEAR CO.</div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-orange-400/80">Goodyear Welted Leather Craft &bull; Bandung</div>
+                                </div>
+                            </div>
+                            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-orange-100/80">
+                                <span class="text-orange-400 font-bold border-b border-orange-400 pb-0.5">Heritage Boots</span>
+                                <span>Service Oxford</span>
+                                <span>Tabel Ukuran EU-CM</span>
+                                <span>Grafir Monogram</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-mono font-bold">📏 Garansi Tukar Size 14 Hari</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-orange-500 text-stone-950 text-xs font-bold">🥾 Cek Ongkir Kurir</span>
+                            </div>
+                        </div>
+
+                        <!-- Cedar Website Hero Split -->
+                        <div class="bg-[#18100B] border-x border-orange-500/25 p-6 sm:p-8 grid grid-cols-12 gap-6 items-center">
+                            <div class="col-span-7 space-y-3">
+                                <span class="px-3 py-1 rounded-full bg-orange-500/15 border border-orange-400/30 text-orange-300 text-xs font-mono">FULL-GRAIN PULL UP LEATHER &bull; HANDCRAFTED</span>
+                                <h4 class="font-serif text-3xl sm:text-4xl text-orange-50 font-bold leading-tight">Konstruksi Tangguh Seumur Hidup, Pas di Kaki Tanpa Salah Ukuran.</h4>
+                                <div class="flex items-center gap-3 pt-1">
+                                    <span class="px-4 py-2 rounded-xl bg-orange-500 text-stone-950 font-bold text-xs">Konversi EU ke CM &rarr;</span>
+                                    <span class="px-3 py-2 rounded-xl bg-white/5 border border-orange-500/30 text-orange-200 text-xs font-mono">Gratis Ukir Inisial Kulit</span>
+                                </div>
+                            </div>
+                            <div class="col-span-5 h-48 rounded-2xl overflow-hidden border border-orange-500/30 relative">
+                                <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=900&q=80" alt="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Cedar Website 4-Column Catalog Grid -->
+                        <div class="bg-[#140E0A] border border-t-0 border-orange-500/25 rounded-b-2xl p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="rounded-2xl bg-[#1F150E] border border-orange-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-orange-50">Iron Ranger 6" Boot</span><span class="font-mono text-xs text-orange-400 font-bold">Rp 1.650rb</span></div>
+                                    <div class="text-[11px] text-orange-200/70">Copper Pull-Up • Vibram Sole • EU 40-44</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-bold">+ Pilih Ukuran &amp; Grafir</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F150E] border border-orange-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-orange-50">Moc Toe Heritage</span><span class="font-mono text-xs text-orange-400 font-bold">Rp 1.490rb</span></div>
+                                    <div class="text-[11px] text-orange-200/70">Briar Oil Slick • Christy Wedge Sole</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-bold">+ Pilih Ukuran &amp; Grafir</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F150E] border border-orange-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-orange-50">Artisan Derby Shoe</span><span class="font-mono text-xs text-orange-400 font-bold">Rp 1.280rb</span></div>
+                                    <div class="text-[11px] text-orange-200/70">Vegetable Tanned • Storm Welt</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-bold">+ Pilih Ukuran &amp; Grafir</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#1F150E] border border-orange-400/60 p-4 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <span class="px-2 py-0.5 rounded bg-orange-500 text-stone-950 font-mono text-[10px] font-bold">SPESIFIKASI BESPOKE</span>
+                                    <div class="font-serif font-bold text-sm text-white">EU 42 = 26.5 CM (Pas)</div>
+                                    <div class="text-xs font-mono text-orange-200/90 space-y-1 pt-1">
+                                        <div>• Grafir Kulit: "A.R.P"</div>
+                                        <div>• Kurir: JNE YES (Asuransi)</div>
+                                        <div class="text-emerald-400 font-bold">✓ Siap Kirim dari Workshop</div>
+                                    </div>
+                                </div>
+                                <span class="block text-center py-1.5 rounded-lg bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-bold">Checkout ke WhatsApp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===========================================================
+                     WEBSITE 04 IN BACKGROUND: BARBEARIA GENTLEMEN'S CLUB
+                ============================================================ -->
+                <div class="hero-web-slide absolute inset-0 bg-[#0D0918]" data-bg-slide="3">
+                    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-10 pt-24 live-web-canvas-scroll opacity-55">
+                        <!-- Barbearia Website Top Navbar -->
+                        <div class="rounded-t-2xl bg-[#140E24]/95 border border-purple-500/35 px-6 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 font-serif font-bold">💈</span>
+                                <div>
+                                    <div class="font-serif font-bold text-lg tracking-wider text-purple-100">BARBEARIA GENTLEMEN CLUB</div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-purple-400/80">Executive Grooming &amp; Private Lounge</div>
+                                </div>
+                            </div>
+                            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-purple-100/80">
+                                <span class="text-purple-400 font-bold border-b border-purple-400 pb-0.5">Executive Cut</span>
+                                <span>Hot Towel Shave</span>
+                                <span>Master Barber</span>
+                                <span>Complimentary Bar</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1.5 rounded-full bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-mono font-bold">💈 Kursi VIP #2 Tersedia</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-purple-500 text-white text-xs font-bold">🎫 Booking Tanpa Antre</span>
+                            </div>
+                        </div>
+
+                        <!-- Barbearia Website Hero Split -->
+                        <div class="bg-[#110C1F] border-x border-purple-500/25 p-6 sm:p-8 grid grid-cols-12 gap-6 items-center">
+                            <div class="col-span-7 space-y-3">
+                                <span class="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-xs font-mono">PRIVATE GROOMING LOUNGE &bull; SENOPATI</span>
+                                <h4 class="font-serif text-3xl sm:text-4xl text-purple-50 font-bold leading-tight">Kunci Jadwal Master Barber Pilihan Anda, Datang Langsung Dilayani.</h4>
+                                <div class="flex items-center gap-3 pt-1">
+                                    <span class="px-4 py-2 rounded-xl bg-purple-500 text-white font-bold text-xs">Ambil VIP Boarding Pass &rarr;</span>
+                                    <span class="px-3 py-2 rounded-xl bg-white/5 border border-purple-500/30 text-purple-200 text-xs font-mono">Gratis Cold Brew di Lounge</span>
+                                </div>
+                            </div>
+                            <div class="col-span-5 h-48 rounded-2xl overflow-hidden border border-purple-500/30 relative">
+                                <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&q=80" alt="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Barbearia Website 4-Column Service & Boarding Pass Grid -->
+                        <div class="bg-[#0D0918] border border-t-0 border-purple-500/25 rounded-b-2xl p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="rounded-2xl bg-[#17112B] border border-purple-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-purple-50">The Executive Ritual</span><span class="font-mono text-xs text-purple-400 font-bold">Rp 150.000</span></div>
+                                    <div class="text-[11px] text-purple-200/70">Precision Cut • Hot Towel • Shoulder Massage</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-bold">+ Pilih Jam &amp; Barber</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#17112B] border border-purple-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-purple-50">Royal Beard Sculpt</span><span class="font-mono text-xs text-purple-400 font-bold">Rp 95.000</span></div>
+                                    <div class="text-[11px] text-purple-200/70">Straight Razor Shave • Essential Oil Steam</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-bold">+ Pilih Jam &amp; Barber</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#17112B] border border-purple-500/30 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=500&q=80" alt="" class="w-full h-32 object-cover">
+                                <div class="p-3.5 space-y-1.5">
+                                    <div class="flex justify-between items-center"><span class="font-serif font-bold text-sm text-purple-50">Gentlemen Black Spa</span><span class="font-mono text-xs text-purple-400 font-bold">Rp 210.000</span></div>
+                                    <div class="text-[11px] text-purple-200/70">Full Cut • Charcoal Detox • Hair Tonic</div>
+                                    <div class="pt-1"><span class="block text-center py-1.5 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-bold">+ Pilih Jam &amp; Barber</span></div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl bg-[#17112B] border border-purple-400/60 p-4 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <span class="px-2 py-0.5 rounded bg-purple-500 text-white font-mono text-[10px] font-bold">VIP BOARDING PASS</span>
+                                    <div class="font-serif font-bold text-sm text-white">Master Barber: Marco</div>
+                                    <div class="text-xs font-mono text-purple-200/90 space-y-1 pt-1">
+                                        <div>• Jadwal: Hari Ini, 16:00 WIB</div>
+                                        <div>• Drink: Cold Brew Gratis</div>
+                                        <div class="text-emerald-400 font-bold">✓ Kursi VIP #2 Terkunci</div>
+                                    </div>
+                                </div>
+                                <span class="block text-center py-1.5 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-bold">Kirim Pass ke WhatsApp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Particle / Atmospheric Canvas Layer (Synced to Active Website) -->
+                <canvas id="heroAtmosphereCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-80"></canvas>
+
+                <!-- Tailored Readability Vignette + Chameleon Ambient Radial Glow -->
+                <div id="heroChameleonGlow" class="absolute inset-0 transition-all duration-1000"
+                    style="background: radial-gradient(circle at 50% 48%, rgba(5, 7, 15, 0.84) 0%, rgba(5, 7, 15, 0.60) 48%, rgba(5, 7, 15, 0.32) 100%), radial-gradient(circle at 50% 15%, var(--chameleon-glow), transparent 60%);">
+                </div>
+                <div class="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#05070F] via-[#05070F]/80 to-transparent"></div>
+                <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#05070F] to-transparent"></div>
+            </div>
+
+            <!-- ===============================================================
+                 LAYER B: CENTER HERO HEADLINE & SINGLE PRIMARY CTA
+                 (No Active Background Bar, No Secondary Button, No Bottom Switcher)
+            ================================================================ -->
+            <div class="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 text-center my-auto py-12">
+
+                <div class="text-xs sm:text-sm font-display font-semibold tracking-[0.18em] uppercase text-slate-300 mb-4 drop-shadow">
+                    Less Complexity. <span class="text-gradient-chameleon font-extrabold">More Growth.</span>
+                </div>
+
+                <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-[#F5F7FF] drop-shadow-[0_8px_35px_rgba(0,0,0,0.92)]">
+                    Solusi Website Berkarakter untuk <span id="chameleonHeadlineWord" class="text-gradient-chameleon">UMKM Indonesia.</span>
+                </h1>
+
+                <p class="mt-5 text-sm sm:text-base lg:text-lg text-slate-200 leading-relaxed max-w-2xl mx-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+                    Setiap bisnis punya cara jualan yang berbeda. Kami menghadirkan website hidup dengan <strong id="chameleonFeatureHighlight" class="transition-colors duration-700" style="color: var(--chameleon-accent);">Pop-Up Pemesanan Khas, Simulasi QRIS, &amp; Peta Interaktif</strong> yang dirancang khusus mengikuti karakter usaha Anda.
+                </p>
+
+                <!-- Single Clear Primary Action Button -->
+                <div class="mt-9 flex items-center justify-center">
+                    <a href="pilih-desain.html" id="chameleonPrimaryCta"
+                        class="cta-shimmer px-8 py-4 rounded-2xl bg-gradient-chameleon text-[#05070F] font-display font-extrabold text-sm sm:text-base hover:scale-[1.03] active:scale-[0.99] transition-all">
+                        🚀 Mulai Buat Website Anda (3 Langkah Mudah) &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             3. INTERACTIVE PORTFOLIO SHOWCASE (NO "CAROUSEL" WORDING)
+        ==================================================================== -->
+        <section id="eksplorasi-karya" class="py-16 lg:py-24 bg-[#0B1020] relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8">
+                <!-- Section Header & Synchronized Category Filter -->
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal-on-scroll">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-xs font-bold uppercase tracking-[0.18em] text-[#00E5FF]">
+                            <span>Galeri Arsitektur Website Digitra</span>
+                        </div>
+                        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-3">
+                            Eksplorasi Karya &amp; Karakter Website Kami
+                        </h2>
+                        <p class="text-sm text-slate-300 mt-2 max-w-2xl">
+                            Bukan sekadar ganti warna. Setiap karya memiliki <strong class="text-white">mekanisme transaksi, pop-up pemesanan, dan atmosfer visual</strong> yang dirancang khusus untuk industrinya.
+                        </p>
+                    </div>
+
+                    <!-- Synchronized Showcase Navigation (modern-web-guidance: scroll-snap-state-sync) -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <nav aria-label="Pilih kategori karya website" class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-xl border border-white/15">
+                            <button type="button" onclick="showcaseGallery.scrollToItem(0)" data-gallery-idx="0" aria-current="true"
+                                class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold bg-gradient-digitra text-[#05070F] transition-all">
+                                ☕ Cafe &amp; Roastery
+                            </button>
+                            <button type="button" onclick="showcaseGallery.scrollToItem(1)" data-gallery-idx="1"
+                                class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
+                                🍣 Resto &amp; Kuliner
+                            </button>
+                            <button type="button" onclick="showcaseGallery.scrollToItem(2)" data-gallery-idx="2"
+                                class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
+                                🥾 Retail &amp; Fashion
+                            </button>
+                            <button type="button" onclick="showcaseGallery.scrollToItem(3)" data-gallery-idx="3"
+                                class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
+                                💈 Barbershop &amp; Jasa
+                            </button>
+                        </nav>
+
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="showcaseGallery.step(-1)" aria-label="Karya sebelumnya"
+                                class="w-10 h-10 rounded-xl bg-[#05070F] hover:bg-white/10 border border-white/15 text-white font-bold flex items-center justify-center transition-colors">
+                                &larr;
+                            </button>
+                            <button type="button" onclick="showcaseGallery.step(1)" aria-label="Karya berikutnya"
+                                class="w-10 h-10 rounded-xl bg-[#05070F] hover:bg-white/10 border border-white/15 text-white font-bold flex items-center justify-center transition-colors">
+                                &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horizontal Snap Showcase Track with 3D Tilt Cards -->
+                <div id="showcaseTrack" class="showcase-track flex gap-6 overflow-x-auto pb-6">
+                    <!-- Karya 1: Harth Specialty Coffee -->
+                    <article id="karya-0" data-index="0" class="showcase-item interactive-tilt-card shrink-0 w-full rounded-3xl bg-[#05070F] border border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-[440px] overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=85" alt="Harth Specialty Coffee" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
+                            <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
+                                ☕ Karya 01 &bull; Cafe, Roastery &amp; Bakery
+                            </span>
+                            <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-lg">☕</span>
+                                <div class="text-xs">
+                                    <div class="font-display font-bold text-white">Efek Partikel Uap Kopi + QR Meja</div>
+                                    <div class="text-slate-400">Klik tombol di samping untuk mencoba langsung</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between relative z-10">
+                            <div class="space-y-4">
+                                <div class="inline-block px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs font-bold">
+                                    Kinfolk Editorial &bull; Barista Customizer
+                                </div>
+                                <h3 class="font-display font-bold text-2xl sm:text-3xl text-white">
+                                    Harth Specialty Coffee
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Dirancang hangat dengan partikel uap kopi di layar, sistem <strong>Scan QR Pesan dari Meja</strong>, serta <strong>Pop-Up Struk Barista</strong> untuk meracik biji kopi, susu oat, dan takaran gula/es.
+                                </p>
+                                <ul class="space-y-2 text-xs text-slate-200 pt-1">
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Pop-Up Struk Barista + Pembayaran QRIS Instan</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Peta Lokasi + Indikator Kursi WFC &amp; Speedtest Wi-Fi</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Generator Standee QR Meja Akrilik Siap Cetak</li>
+                                </ul>
+                            </div>
+                            <div class="pt-6 mt-6 border-t border-white/10 flex flex-wrap gap-3">
+                                <a href="pilih-paket.html?design=harth"
+                                    class="flex-1 py-3.5 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs text-center shadow-lg hover:opacity-95 transition-opacity">
+                                    Gunakan Desain Ini &rarr;
+                                </a>
+                                <a href="demos/harth-coffee/index.html" target="_blank" rel="noopener"
+                                    class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/20 text-white text-xs font-display font-bold transition-colors">
+                                    Buka Live Demo &nearr;
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Karya 2: Hush Modern Dining -->
+                    <article id="karya-1" data-index="1" class="showcase-item interactive-tilt-card shrink-0 w-full rounded-3xl bg-[#05070F] border border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-[440px] overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1400&q=85" alt="Hush Modern Restaurant" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
+                            <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
+                                🍣 Karya 02 &bull; Restoran, Sushi &amp; Kuliner
+                            </span>
+                            <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-lg">🔥</span>
+                                <div class="text-xs">
+                                    <div class="font-display font-bold text-white">Efek Bara Panggangan + Tiket Dapur Chef</div>
+                                    <div class="text-slate-400">Lengkap dengan filter alergi &amp; urutan sajian</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between relative z-10">
+                            <div class="space-y-4">
+                                <div class="inline-block px-3 py-1 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-bold">
+                                    Dark Culinary &bull; Chef Kitchen Ticket
+                                </div>
+                                <h3 class="font-display font-bold text-2xl sm:text-3xl text-white">
+                                    Hush Modern Izakaya &amp; Grill
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Menonjolkan visual kuliner malam yang menggugah selera dengan <strong>Pop-Up Tiket Dapur Chef</strong> (atur urutan keluar hidangan &amp; catatan alergi) serta radius pengantaran kurir termal.
+                                </p>
+                                <ul class="space-y-2 text-xs text-slate-200 pt-1">
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Pop-Up Tiket Dapur Chef + Filter Bebas Alergi</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Peta Valet VIP &amp; Radius Kurir Kemasan Termal</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Tombol Panggil Pelayan / Bill Langsung via WA</li>
+                                </ul>
+                            </div>
+                            <div class="pt-6 mt-6 border-t border-white/10 flex flex-wrap gap-3">
+                                <a href="pilih-paket.html?design=hush"
+                                    class="flex-1 py-3.5 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs text-center shadow-lg hover:opacity-95 transition-opacity">
+                                    Gunakan Desain Ini &rarr;
+                                </a>
+                                <a href="demos/hush-resto/index.html" target="_blank" rel="noopener"
+                                    class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/20 text-white text-xs font-display font-bold transition-colors">
+                                    Buka Live Demo &nearr;
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Karya 3: Cedar Heritage Footwear -->
+                    <article id="karya-2" data-index="2" class="showcase-item interactive-tilt-card shrink-0 w-full rounded-3xl bg-[#05070F] border border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-[440px] overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1400&q=85" alt="Cedar Shoe Co." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
+                            <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
+                                🥾 Karya 03 &bull; Retail Sepatu, Fashion &amp; Craft
+                            </span>
+                            <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-lg">📏</span>
+                                <div class="text-xs">
+                                    <div class="font-display font-bold text-white">Konversi Ukuran EU-ke-CM + Grafir Nama</div>
+                                    <div class="text-slate-400">Mencegah retur salah ukuran &amp; hitung ongkir otomatis</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between relative z-10">
+                            <div class="space-y-4">
+                                <div class="inline-block px-3 py-1 rounded-full bg-orange-500/15 border border-orange-400/30 text-orange-300 text-xs font-bold">
+                                    Heritage Lookbook &bull; Size Chart &amp; Ongkir
+                                </div>
+                                <h3 class="font-display font-bold text-2xl sm:text-3xl text-white">
+                                    Cedar Heritage Footwear
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Katalog produk fisik berkelas dengan <strong>Pop-Up Panduan Ukuran Kaki (EU ke CM)</strong>, input <strong>Gratis Ukir Inisial Nama (Monogram)</strong>, dan kalkulator ongkir JNE/J&amp;T/SiCepat.
+                                </p>
+                                <ul class="space-y-2 text-xs text-slate-200 pt-1">
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Tabel Ukuran EU 40–44 ke CM Anti Salah Beli</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Input Ukir Monogram + Kalkulator Ongkir Kurir</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Peta Studio Fitting &amp; Pengiriman Ekspedisi Nasional</li>
+                                </ul>
+                            </div>
+                            <div class="pt-6 mt-6 border-t border-white/10 flex flex-wrap gap-3">
+                                <a href="pilih-paket.html?design=cedar"
+                                    class="flex-1 py-3.5 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs text-center shadow-lg hover:opacity-95 transition-opacity">
+                                    Gunakan Desain Ini &rarr;
+                                </a>
+                                <a href="demos/cedar-shoes/index.html" target="_blank" rel="noopener"
+                                    class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/20 text-white text-xs font-display font-bold transition-colors">
+                                    Buka Live Demo &nearr;
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Karya 4: Barbearia Club -->
+                    <article id="karya-3" data-index="3" class="showcase-item interactive-tilt-card shrink-0 w-full rounded-3xl bg-[#05070F] border border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+                        <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-[440px] overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1400&q=85" alt="Barbearia Club" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
+                            <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
+                                💈 Karya 04 &bull; Barbershop, Salon &amp; Jasa VIP
+                            </span>
+                            <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg">💈</span>
+                                <div class="text-xs">
+                                    <div class="font-display font-bold text-white">VIP Boarding Pass + Pilih Master Barber</div>
+                                    <div class="text-slate-400">Reservasi jam kedatangan tanpa perlu antre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between relative z-10">
+                            <div class="space-y-4">
+                                <div class="inline-block px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-xs font-bold">
+                                    VIP Booking Club &bull; Tanpa Keranjang Barang
+                                </div>
+                                <h3 class="font-display font-bold text-2xl sm:text-3xl text-white">
+                                    Barbearia Gentlemen’s Club
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Mengganti konsep keranjang belanja biasa dengan <strong>VIP Appointment Boarding Pass</strong> untuk memilih Master Barber, slot jam kedatangan, dan minuman sambutan gratis.
+                                </p>
+                                <ul class="space-y-2 text-xs text-slate-200 pt-1">
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Pass Reservasi Kursi + Pilih Master Barber &amp; Jam</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Pilihan Complimentary Drink di Area Tunggu</li>
+                                    <li class="flex items-center gap-2"><span class="text-[#00E5FF] font-bold">✓</span> Peta Gentlemen Lounge &amp; Info Parkir VIP</li>
+                                </ul>
+                            </div>
+                            <div class="pt-6 mt-6 border-t border-white/10 flex flex-wrap gap-3">
+                                <a href="pilih-paket.html?design=barbearia"
+                                    class="flex-1 py-3.5 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs text-center shadow-lg hover:opacity-95 transition-opacity">
+                                    Gunakan Desain Ini &rarr;
+                                </a>
+                                <a href="demos/barbearia-club/index.html" target="_blank" rel="noopener"
+                                    class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/20 text-white text-xs font-display font-bold transition-colors">
+                                    Buka Live Demo &nearr;
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             4. INTERACTIVE LIVE FEATURE SANDBOX (PROVE DIGITRA QUALITY HANDS-ON!)
+        ==================================================================== -->
+        <section id="sandbox-interaktif" class="py-16 lg:py-24 bg-[#05070F] border-t border-white/10 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-xs font-bold uppercase tracking-[0.18em] text-purple-300">
+                        <span>🎮 Bukti Kualitas Engineering Digitra</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-3">
+                        Sentuh &amp; Uji Sendiri Komponen Interaktif Kami
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-2">
+                        Website yang bagus tidak boleh kaku. Coba klik tombol-tombol di bawah ini untuk merasakan bagaimana pelanggan Anda nantinya berinteraksi dengan website buatan Digitra.
+                    </p>
+                </div>
+
+                <!-- 3 Interactive Mini-Sandboxes -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Interactive Card 1: Live F&B / Retail Customizer -->
+                    <div class="interactive-tilt-card rounded-3xl bg-[#0B1020] border border-white/15 p-6 flex flex-col justify-between shadow-xl reveal-on-scroll">
+                        <div class="space-y-4 relative z-10">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-[#00E5FF]/15 text-[#00E5FF] font-mono text-xs font-bold">01 &bull; SMART CUSTOMIZER</span>
+                                <span class="text-xs text-emerald-400 font-semibold">● Klik Opsi di Bawah</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white">
+                                Racik Pesanan &amp; Hitung Harga Otomatis
+                            </h3>
+                            <p class="text-xs text-slate-300">
+                                Pelanggan tidak perlu mengetik manual. Klik opsi varian di bawah dan lihat struk WhatsApp terformat otomatis:
+                            </p>
+
+                            <div class="space-y-2.5 pt-1">
+                                <div class="text-xs font-semibold text-slate-400">Pilih Base Menu:</div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" onclick="sandboxApp.setMenu('Oat Flat White', 38000)" id="sbMenu0"
+                                        class="px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#00E5FF]/20 border border-[#00E5FF] text-white text-left transition-all">
+                                        ☕ Oat Flat White <span class="block text-[10px] font-mono text-[#00E5FF]">Rp 38.000</span>
+                                    </button>
+                                    <button type="button" onclick="sandboxApp.setMenu('Wagyu Truffle Don', 68000)" id="sbMenu1"
+                                        class="px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#05070F] border border-white/10 text-slate-300 hover:text-white text-left transition-all">
+                                        🍣 Wagyu Truffle <span class="block text-[10px] font-mono text-slate-400">Rp 68.000</span>
+                                    </button>
+                                </div>
+
+                                <div class="text-xs font-semibold text-slate-400 pt-1">Tambahan Kustomisasi (Add-On):</div>
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" onclick="sandboxApp.toggleAddon('Extra Espresso Shot', 6000, this)"
+                                        class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#05070F] border border-white/15 text-slate-300 hover:border-[#00E5FF] transition-all">
+                                        + Extra Shot (6rb)
+                                    </button>
+                                    <button type="button" onclick="sandboxApp.toggleAddon('Less Ice / Warm', 0, this)"
+                                        class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#00E5FF]/20 border border-[#00E5FF] text-[#00E5FF] transition-all">
+                                        ✓ Less Ice (Gratis)
+                                    </button>
+                                    <button type="button" onclick="sandboxApp.toggleAddon('Kemasan Termal VIP', 5000, this)"
+                                        class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#05070F] border border-white/15 text-slate-300 hover:border-[#00E5FF] transition-all">
+                                        + Box Termal (5rb)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-white/10 relative z-10">
+                            <div class="rounded-2xl bg-[#05070F] border border-white/10 p-3.5 font-mono text-xs space-y-1.5">
+                                <div class="flex items-center justify-between text-slate-400">
+                                    <span>STRUK OTOMATIS WA:</span>
+                                    <span id="sbTotalPrice" class="text-[#00E5FF] font-bold text-sm">Rp 38.000</span>
+                                </div>
+                                <div id="sbReceiptPreview" class="text-slate-200 text-xs leading-relaxed">
+                                    • 1x Oat Flat White<br>
+                                    • Catatan: Less Ice / Warm
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Card 2: Live QRIS Instant Scanner Simulation -->
+                    <div class="interactive-tilt-card rounded-3xl bg-[#0B1020] border border-white/15 p-6 flex flex-col justify-between shadow-xl reveal-on-scroll">
+                        <div class="space-y-4 relative z-10">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">02 &bull; SIMULASI QRIS INSTAN</span>
+                                <span id="qrisStatusPill" class="text-xs text-amber-300 font-semibold">● Menunggu Scan</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white">
+                                Pembayaran Tanpa Potongan Komisi
+                            </h3>
+                            <p class="text-xs text-slate-300">
+                                Uang langsung masuk 100% ke rekening UMKM Anda. Klik tombol simulasi di bawah untuk melihat animasi verifikasi QRIS:
+                            </p>
+
+                            <div class="rounded-2xl bg-[#05070F] border border-white/15 p-4 flex items-center gap-4 relative overflow-hidden">
+                                <div class="relative w-24 h-24 rounded-xl bg-white p-2 shrink-0 flex items-center justify-center overflow-hidden">
+                                    <svg class="w-full h-full text-[#05070F]" viewBox="0 0 64 64" fill="currentColor">
+                                        <rect x="4" y="4" width="18" height="18" rx="2"/>
+                                        <rect x="8" y="8" width="10" height="10" fill="white"/>
+                                        <rect x="10" y="10" width="6" height="6"/>
+                                        <rect x="42" y="4" width="18" height="18" rx="2"/>
+                                        <rect x="46" y="8" width="10" height="10" fill="white"/>
+                                        <rect x="48" y="10" width="6" height="6"/>
+                                        <rect x="4" y="42" width="18" height="18" rx="2"/>
+                                        <rect x="8" y="46" width="10" height="10" fill="white"/>
+                                        <rect x="10" y="48" width="6" height="6"/>
+                                        <rect x="26" y="6" width="6" height="6"/>
+                                        <rect x="26" y="16" width="6" height="12"/>
+                                        <rect x="6" y="26" width="12" height="6"/>
+                                        <rect x="24" y="28" width="14" height="10" rx="2"/>
+                                        <rect x="42" y="26" width="8" height="6"/>
+                                        <rect x="54" y="26" width="6" height="12"/>
+                                        <rect x="26" y="44" width="10" height="6"/>
+                                        <rect x="42" y="42" width="18" height="18" rx="2"/>
+                                        <rect x="47" y="47" width="8" height="8" fill="white"/>
+                                    </svg>
+                                    <div id="qrisLaserBar" class="qris-laser-line absolute inset-x-1 h-1 bg-gradient-to-r from-[#00E5FF] via-purple-500 to-[#00E5FF] shadow-[0_0_12px_#00E5FF]"></div>
+                                </div>
+                                <div class="space-y-1.5 text-xs">
+                                    <div class="font-display font-bold text-white" id="qrisMerchantTitle">QRIS Nasional (0% Fee)</div>
+                                    <div class="text-slate-400" id="qrisMerchantSub">Mendukung BCA, Mandiri, GoPay, OVO, Dana, ShopeePay</div>
+                                    <div id="qrisVerifiedBadge" class="hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold text-xs">
+                                        ✓ Pembayaran Terverifikasi!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-white/10 relative z-10">
+                            <button type="button" onclick="sandboxApp.simulateQrisScan()" id="qrisSimBtn"
+                                class="w-full py-3 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs shadow-lg hover:opacity-95 transition-all">
+                                ⚡ Klik untuk Simulasi Scan QRIS Lunas
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Card 3: Live Size & Monogram / Booking Switcher -->
+                    <div class="interactive-tilt-card rounded-3xl bg-[#0B1020] border border-white/15 p-6 flex flex-col justify-between shadow-xl reveal-on-scroll">
+                        <div class="space-y-4 relative z-10">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">03 &bull; FITUR SPESIFIK USAHA</span>
+                                <span class="text-xs text-[#00E5FF] font-semibold">● Anti Salah Pesan</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white">
+                                Konversi Ukuran &amp; Grafir Inisial Live
+                            </h3>
+                            <p class="text-xs text-slate-300">
+                                Untuk toko sepatu/fashion, pelanggan bisa mengecek panjang kaki (CM) dan mengetik inisial ukiran nama secara real-time:
+                            </p>
+
+                            <div class="space-y-3 pt-1">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-slate-400 font-semibold">Pilih Ukuran EU:</span>
+                                    <span id="sbSizeResult" class="font-mono font-bold text-[#00E5FF]">EU 42 = 26.5 CM (Pas)</span>
+                                </div>
+                                <div class="grid grid-cols-5 gap-1.5">
+                                    <button type="button" onclick="sandboxApp.selectSize(40, '25.0 CM', this)" class="sb-size-btn py-2 rounded-lg bg-[#05070F] border border-white/10 text-xs font-mono font-bold text-slate-300 hover:border-[#00E5FF]">40</button>
+                                    <button type="button" onclick="sandboxApp.selectSize(41, '25.8 CM', this)" class="sb-size-btn py-2 rounded-lg bg-[#05070F] border border-white/10 text-xs font-mono font-bold text-slate-300 hover:border-[#00E5FF]">41</button>
+                                    <button type="button" onclick="sandboxApp.selectSize(42, '26.5 CM', this)" class="sb-size-btn py-2 rounded-lg bg-[#00E5FF]/20 border border-[#00E5FF] text-xs font-mono font-bold text-white">42</button>
+                                    <button type="button" onclick="sandboxApp.selectSize(43, '27.2 CM', this)" class="sb-size-btn py-2 rounded-lg bg-[#05070F] border border-white/10 text-xs font-mono font-bold text-slate-300 hover:border-[#00E5FF]">43</button>
+                                    <button type="button" onclick="sandboxApp.selectSize(44, '28.0 CM', this)" class="sb-size-btn py-2 rounded-lg bg-[#05070F] border border-white/10 text-xs font-mono font-bold text-slate-300 hover:border-[#00E5FF]">44</button>
+                                </div>
+
+                                <div class="pt-1">
+                                    <label for="sbMonogramInput" class="block text-xs font-semibold text-slate-400 mb-1.5">Ketik Inisial Grafir Kulit (Maks 5 Huruf):</label>
+                                    <input id="sbMonogramInput" type="text" maxlength="5" value="A.R.P" oninput="sandboxApp.updateMonogram(this.value)"
+                                        class="w-full px-3.5 py-2 rounded-xl bg-[#05070F] border border-white/15 text-xs font-mono uppercase text-white focus:outline-none focus:border-[#00E5FF]"
+                                        placeholder="Contoh: A.R.P">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-white/10 relative z-10">
+                            <div class="rounded-2xl bg-gradient-to-r from-[#2B1810] via-[#3D2317] to-[#2B1810] border border-amber-500/40 p-3.5 flex items-center justify-between shadow-inner">
+                                <span class="text-xs font-semibold text-amber-200/80">Tag Kulit Pull-Up:</span>
+                                <span id="sbMonogramPreview" class="font-mono font-bold text-sm tracking-[0.25em] text-amber-300 drop-shadow">A.R.P</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             5. HOW IT WORKS (ALUR PEMESANAN 3 LANGKAH TERPANDU)
+        ==================================================================== -->
+        <section id="cara-kerja" class="py-16 lg:py-20 bg-[#0B1020] border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12 reveal-on-scroll">
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Alur Pemesanan Terpandu</span>
+                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-2">
+                        Miliki Website Usaha dalam 3 Langkah
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-2">
+                        Setiap tahap dipisahkan ke halaman khusus agar Anda dapat memilih desain, membandingkan paket, dan mengunggah foto usaha dengan nyaman.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="pilih-desain.html" class="interactive-tilt-card rounded-3xl bg-[#05070F] border border-white/15 hover:border-[#00E5FF]/50 p-7 space-y-3 group reveal-on-scroll block">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] font-display font-bold text-sm">01</span>
+                            <span class="text-xs font-display font-bold text-[#00E5FF] group-hover:translate-x-1 transition-transform">Buka Tahap 1 &rarr;</span>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Pilih Desain atau Request dari Nol</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Pilih template yang sesuai dengan kategori usaha Anda (Cafe, Resto, Retail, Jasa) atau ajukan pembuatan desain baru dari awal.
+                        </p>
+                    </a>
+
+                    <a href="pilih-paket.html?design=harth" class="interactive-tilt-card rounded-3xl bg-[#05070F] border border-white/15 hover:border-purple-400/50 p-7 space-y-3 group reveal-on-scroll block">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#8B5CF6]/20 text-purple-300 font-display font-bold text-sm">02</span>
+                            <span class="text-xs font-display font-bold text-purple-300 group-hover:translate-x-1 transition-transform">Buka Tahap 2 &rarr;</span>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Bandingkan Paket via Live Demo</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Lihat langsung perbedaan kualitas antara paket <strong>Starter (499rb)</strong>, <strong>Complete (899rb)</strong>, dan <strong>Pro Bespoke (1,49jt)</strong> pada desain pilihan Anda.
+                        </p>
+                    </a>
+
+                    <a href="kustomisasi.html?design=harth&tier=pro" class="interactive-tilt-card rounded-3xl bg-[#05070F] border border-white/15 hover:border-[#00E5FF]/50 p-7 space-y-3 group reveal-on-scroll block">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] font-display font-bold text-sm">03</span>
+                            <span class="text-xs font-display font-bold text-[#00E5FF] group-hover:translate-x-1 transition-transform">Buka Tahap 3 &rarr;</span>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-white">Upload Foto UMKM &amp; Terima Beres</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Upload logo dan foto usaha Anda, lihat simulasi hasilnya secara instan di browser, lalu selesaikan pemesanan.
+                        </p>
+                    </a>
+                </div>
+
+                <!-- 4 Brand Values Strip -->
+                <div id="keunggulan" class="mt-14 pt-12 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-on-scroll">
+                    <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
+                        <div class="font-display font-bold text-sm text-[#00E5FF]">⚡ Praktis Tanpa Coding</div>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Update harga &amp; stok produk kapan saja cukup lewat Google Sheets dari HP Anda.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
+                        <div class="font-display font-bold text-sm text-purple-300">🛡️ Sekali Bayar, Hak Milik</div>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Tanpa biaya sewa bulanan yang membebani UMKM &amp; 0% potongan komisi per transaksi.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
+                        <div class="font-display font-bold text-sm text-[#00E5FF]">✨ Inovatif &amp; Berkarakter</div>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Dilengkapi simulasi QRIS, struk WA otomatis, peta interaktif &amp; Standee QR meja.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
+                        <div class="font-display font-bold text-sm text-purple-300">🤝 Pendampingan Penuh</div>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Tim Digitra mendampingi mulai dari input foto menu hingga website siap menerima pesanan.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom CTA -->
+                <div class="mt-12 text-center reveal-on-scroll">
+                    <a href="pilih-desain.html"
+                        class="cta-shimmer inline-flex items-center gap-3 px-9 py-4 rounded-2xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-sm sm:text-base shadow-[0_12px_35px_rgba(0,229,255,0.3)] hover:scale-[1.03] transition-all">
+                        <span>Lanjut ke Langkah 1: Pilih Desain Website</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =======================================================================
+         6. MINIMALIST FOOTER
+    ======================================================================== -->
+    <footer class="bg-[#05070F] border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="flex items-center gap-2.5">
+                <span class="font-display font-bold text-white">Digitra</span>
+                <span>&bull; Web &amp; AI Solutions &bull;</span>
+                <span class="text-gradient-digitra font-semibold">Less Complexity. More Growth.</span>
+            </div>
+            <div>Transformasi digital untuk setiap langkah bisnis Anda.</div>
+        </div>
+    </footer>
+
+    <!-- =======================================================================
+         7. INTERACTIVE CONTROLLERS:
+            - Full-Screen Website Background + Chameleon Ambient Sync
+            - Atmospheric Canvas (Steam / Embers / Gold Dust / VIP Orbs)
+            - Navbar Magnetic Hover Pill
+            - 3D Tilt & Cursor Spotlight Cards
+            - Scroll-Snap Gallery Sync (scrollsnapchange + IntersectionObserver)
+            - Live Interactive Feature Sandbox
+    ======================================================================== -->
+    <script>
+        /* ---------------------------------------------------------------------
+           A. CHAMELEON AMBIENT SYNC + FULL-SCREEN WEBSITE BACKGROUND CONTROLLER
+        ---------------------------------------------------------------------- */
+        const HERO_STAGE_DATA = [
+            {
+                key: 'harth',
+                badgeText: '☕ Harth Specialty Coffee (Efek Uap Kopi & Struk Barista)',
+                accentHex: '#FBBF24',
+                glowRgba: 'rgba(245, 158, 11, 0.30)',
+                borderRgba: 'rgba(251, 191, 36, 0.45)',
+                studioBadgeClass: 'hidden sm:inline-block px-2 py-0.5 rounded-md bg-amber-400/15 border border-amber-400/40 text-[10px] font-display font-bold text-amber-300 transition-colors duration-700',
+                demoHref: 'demos/harth-coffee/index.html',
+                particleColor: 'rgba(251, 191, 36, 0.35)'
+            },
+            {
+                key: 'hush',
+                badgeText: '🍣 Hush Modern Izakaya (Bara Api Panggangan & Tiket Chef)',
+                accentHex: '#FB7185',
+                glowRgba: 'rgba(244, 63, 94, 0.32)',
+                borderRgba: 'rgba(251, 113, 133, 0.45)',
+                studioBadgeClass: 'hidden sm:inline-block px-2 py-0.5 rounded-md bg-rose-400/15 border border-rose-400/40 text-[10px] font-display font-bold text-rose-300 transition-colors duration-700',
+                demoHref: 'demos/hush-resto/index.html',
+                particleColor: 'rgba(244, 63, 94, 0.42)'
+            },
+            {
+                key: 'cedar',
+                badgeText: '🥾 Cedar Heritage Footwear (Konversi Ukuran EU-CM & Ongkir)',
+                accentHex: '#FB923C',
+                glowRgba: 'rgba(249, 115, 22, 0.30)',
+                borderRgba: 'rgba(251, 146, 60, 0.45)',
+                studioBadgeClass: 'hidden sm:inline-block px-2 py-0.5 rounded-md bg-orange-400/15 border border-orange-400/40 text-[10px] font-display font-bold text-orange-300 transition-colors duration-700',
+                demoHref: 'demos/cedar-shoes/index.html',
+                particleColor: 'rgba(249, 115, 22, 0.35)'
+            },
+            {
+                key: 'barbearia',
+                badgeText: '💈 Barbearia Gentlemen’s Club (VIP Boarding Pass & Booking Jam)',
+                accentHex: '#C084FC',
+                glowRgba: 'rgba(139, 92, 246, 0.35)',
+                borderRgba: 'rgba(192, 132, 252, 0.45)',
+                studioBadgeClass: 'hidden sm:inline-block px-2 py-0.5 rounded-md bg-purple-400/15 border border-purple-400/40 text-[10px] font-display font-bold text-purple-300 transition-colors duration-700',
+                demoHref: 'demos/barbearia-club/index.html',
+                particleColor: 'rgba(168, 85, 247, 0.42)'
+            }
+        ];
+
+        class HeroLivingStageController {
+            constructor() {
+                this.currentIdx = 0;
+                this.bgSlides = Array.from(document.querySelectorAll('[data-bg-slide]'));
+                this.intervalMs = 4600;
+                this.timer = null;
+                this.init();
+            }
+
+            init() {
+                this.applySlide(this.currentIdx);
+                this.startAutoCycle();
+            }
+
+            pickNextRandomIdx() {
+                if (HERO_STAGE_DATA.length <= 1) return 0;
+                let next = this.currentIdx;
+                while (next === this.currentIdx) {
+                    next = Math.floor(Math.random() * HERO_STAGE_DATA.length);
+                }
+                return next;
+            }
+
+            startAutoCycle() {
+                clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    this.applySlide(this.pickNextRandomIdx());
+                }, this.intervalMs);
+            }
+
+            applySlide(idx) {
+                this.currentIdx = idx;
+                const data = HERO_STAGE_DATA[idx];
+
+                // 1. Toggle Full-Bleed Real Website Slides
+                this.bgSlides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === idx);
+                });
+
+                // 2. Chameleon Ambient Sync: Update CSS Variables on :root
+                const root = document.documentElement;
+                root.style.setProperty('--chameleon-accent', data.accentHex);
+                root.style.setProperty('--chameleon-glow', data.glowRgba);
+                root.style.setProperty('--chameleon-border', data.borderRgba);
+
+                // 3. Sync Atmospheric Particles
+                if (window.heroCanvasParticles) {
+                    window.heroCanvasParticles.setColor(data.particleColor);
+                }
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           B. HERO ATMOSPHERIC PARTICLE ENGINE (Dynamic Rising Wisps/Embers)
+        ---------------------------------------------------------------------- */
+        class HeroAtmosphereParticles {
+            constructor() {
+                this.canvas = document.getElementById('heroAtmosphereCanvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.color = 'rgba(251, 191, 36, 0.35)';
+                this.particles = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                for (let i = 0; i < 30; i++) {
+                    this.particles.push(this.createParticle());
+                }
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth || window.innerWidth;
+                this.canvas.height = this.canvas.offsetHeight || 700;
+            }
+
+            setColor(newColor) {
+                this.color = newColor;
+            }
+
+            createParticle() {
+                return {
+                    x: Math.random() * this.canvas.width,
+                    y: Math.random() * this.canvas.height,
+                    r: Math.random() * 2.8 + 1,
+                    vy: -(Math.random() * 0.55 + 0.2),
+                    vx: (Math.random() - 0.5) * 0.4,
+                    alpha: Math.random() * 0.65 + 0.15
+                };
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                for (const p of this.particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y < -10) {
+                        p.y = this.canvas.height + 10;
+                        p.x = Math.random() * this.canvas.width;
+                    }
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    this.ctx.fillStyle = this.color;
+                    this.ctx.fill();
+                }
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           C. PROMINENT NAVBAR MAGNETIC HOVER PILL
+        ---------------------------------------------------------------------- */
+        function initMagneticNavbar() {
+            const track = document.getElementById('mainNavTrack');
+            const pill = document.getElementById('navHoverPill');
+            const links = Array.from(document.querySelectorAll('[data-nav-link]'));
+            if (!track || !pill || !links.length) return;
+
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    const trackRect = track.getBoundingClientRect();
+                    const linkRect = link.getBoundingClientRect();
+                    pill.style.width = `${linkRect.width}px`;
+                    pill.style.transform = `translateX(${linkRect.left - trackRect.left - 6}px)`;
+                    pill.style.opacity = '1';
+                });
+            });
+
+            track.addEventListener('mouseleave', () => {
+                pill.style.opacity = '0';
+            });
+        }
+
+        /* ---------------------------------------------------------------------
+           D. 3D PERSPECTIVE TILT & CURSOR RADIAL SPOTLIGHT CARDS
+        ---------------------------------------------------------------------- */
+        function initInteractiveTiltCards() {
+            const cards = document.querySelectorAll('.interactive-tilt-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+
+                    const rotateY = ((x / rect.width) - 0.5) * 3.2;
+                    const rotateX = ((y / rect.height) - 0.5) * -3.2;
+                    card.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg)';
+                });
+            });
+        }
+
+        /* ---------------------------------------------------------------------
+           E. SHOWCASE GALLERY SCROLL-SNAP SYNC (modern-web-guidance: scroll-snap-state-sync)
+        ---------------------------------------------------------------------- */
+        class ShowcaseGalleryController {
+            constructor() {
+                this.track = document.getElementById('showcaseTrack');
+                this.items = Array.from(document.querySelectorAll('.showcase-item'));
+                this.pills = Array.from(document.querySelectorAll('.gallery-pill'));
+                this.activeIndex = 0;
+                this.init();
+            }
+
+            init() {
+                if (!this.track) return;
+
+                this.track.addEventListener('scrollsnapchange', (event) => {
+                    const snappedItem = event.snapTargetInline;
+                    if (snappedItem && snappedItem.dataset.index !== undefined) {
+                        this.setActivePill(Number(snappedItem.dataset.index));
+                    }
+                });
+
+                if (!('onscrollsnapchange' in HTMLElement.prototype)) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && entry.target.dataset.index !== undefined) {
+                                this.setActivePill(Number(entry.target.dataset.index));
+                            }
+                        });
+                    }, { root: this.track, threshold: 0.6 });
+                    this.items.forEach(item => observer.observe(item));
+                }
+            }
+
+            setActivePill(idx) {
+                this.activeIndex = idx;
+                this.pills.forEach((pill, i) => {
+                    if (i === idx) {
+                        pill.setAttribute('aria-current', 'true');
+                        pill.className = 'gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold bg-gradient-digitra text-[#05070F] transition-all';
+                    } else {
+                        pill.removeAttribute('aria-current');
+                        pill.className = 'gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all';
+                    }
+                });
+            }
+
+            scrollToItem(idx) {
+                const target = this.items[idx];
+                if (!target) return;
+                this.setActivePill(idx);
+                target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            step(dir) {
+                const next = (this.activeIndex + dir + this.items.length) % this.items.length;
+                this.scrollToItem(next);
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           F. LIVE INTERACTIVE FEATURE SANDBOX CONTROLLER
+        ---------------------------------------------------------------------- */
+        const sandboxApp = {
+            menuName: 'Oat Flat White',
+            basePrice: 38000,
+            addons: new Map([['Less Ice / Warm', 0]]),
+
+            setMenu(name, price) {
+                this.menuName = name;
+                this.basePrice = price;
+                const btn0 = document.getElementById('sbMenu0');
+                const btn1 = document.getElementById('sbMenu1');
+                if (name.includes('Oat')) {
+                    btn0.className = 'px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#00E5FF]/20 border border-[#00E5FF] text-white text-left transition-all';
+                    btn1.className = 'px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#05070F] border border-white/10 text-slate-300 hover:text-white text-left transition-all';
+                } else {
+                    btn1.className = 'px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#00E5FF]/20 border border-[#00E5FF] text-white text-left transition-all';
+                    btn0.className = 'px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#05070F] border border-white/10 text-slate-300 hover:text-white text-left transition-all';
+                }
+                this.renderReceipt();
+            },
+
+            toggleAddon(label, price, btnEl) {
+                if (this.addons.has(label)) {
+                    this.addons.delete(label);
+                    btnEl.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#05070F] border border-white/15 text-slate-300 hover:border-[#00E5FF] transition-all';
+                } else {
+                    this.addons.set(label, price);
+                    btnEl.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#00E5FF]/20 border border-[#00E5FF] text-[#00E5FF] transition-all';
+                }
+                this.renderReceipt();
+            },
+
+            renderReceipt() {
+                let total = this.basePrice;
+                const notes = [];
+                this.addons.forEach((p, k) => {
+                    total += p;
+                    notes.push(k);
+                });
+                const priceEl = document.getElementById('sbTotalPrice');
+                const previewEl = document.getElementById('sbReceiptPreview');
+                if (priceEl) priceEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
+                if (previewEl) {
+                    previewEl.innerHTML = `• 1x ${this.menuName}<br>• Catatan: ${notes.length ? notes.join(', ') : 'Standar'}`;
+                }
+            },
+
+            simulateQrisScan() {
+                const pill = document.getElementById('qrisStatusPill');
+                const badge = document.getElementById('qrisVerifiedBadge');
+                const btn = document.getElementById('qrisSimBtn');
+                if (pill) {
+                    pill.textContent = '● LUNAS TERVERIFIKASI';
+                    pill.className = 'text-xs text-emerald-400 font-bold';
+                }
+                if (badge) badge.classList.remove('hidden');
+                if (btn) {
+                    btn.textContent = '✓ QRIS Terverifikasi! Pesanan Masuk ke WhatsApp Kasir';
+                    btn.className = 'w-full py-3 px-4 rounded-xl bg-emerald-400 text-[#05070F] font-display font-extrabold text-xs shadow-lg transition-all';
+                }
+            },
+
+            selectSize(eu, cm, btnEl) {
+                document.querySelectorAll('.sb-size-btn').forEach(b => {
+                    b.className = 'sb-size-btn py-2 rounded-lg bg-[#05070F] border border-white/10 text-xs font-mono font-bold text-slate-300 hover:border-[#00E5FF]';
+                });
+                btnEl.className = 'sb-size-btn py-2 rounded-lg bg-[#00E5FF]/20 border border-[#00E5FF] text-xs font-mono font-bold text-white';
+                const res = document.getElementById('sbSizeResult');
+                if (res) res.textContent = `EU ${eu} = ${cm} (Tersedia)`;
+            },
+
+            updateMonogram(val) {
+                const clean = (val || '').toUpperCase().trim() || 'TANPA UKIR';
+                const prev = document.getElementById('sbMonogramPreview');
+                if (prev) prev.textContent = clean;
+            }
+        };
+
+        /* ---------------------------------------------------------------------
+           G. SCROLL REVEAL OBSERVER
+        ---------------------------------------------------------------------- */
+        function initScrollReveal() {
+            const els = document.querySelectorAll('.reveal-on-scroll');
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.12 });
+            els.forEach(el => obs.observe(el));
+        }
+
+        // Initialize all interactive systems on load
+        window.heroCanvasParticles = new HeroAtmosphereParticles();
+        const heroStage = new HeroLivingStageController();
+        const showcaseGallery = new ShowcaseGalleryController();
+        initMagneticNavbar();
+        initInteractiveTiltCards();
+        initScrollReveal();
+    </script>
+</body>
+</html>
