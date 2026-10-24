@@ -78,12 +78,13 @@
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
 
     <!-- =======================================================================
-         1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
+         1. UNIFIED SLEEK HEADER & 3-STEP PROGRESS STEPPER (IDENTICAL TO STEPS 1 & 2)
     ======================================================================== -->
     <header class="sticky top-0 z-40 bg-[#05070F]/90 backdrop-blur-xl border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
-            <a href="index.html" class="flex items-center gap-3">
-                <svg class="w-9 h-9 shrink-0" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                <svg width="36" height="36" style="width: 36px; height: 36px; min-width: 36px;" class="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                     <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="#00E5FF"/>
                     <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="#8B5CF6"/>
                 </svg>
@@ -93,23 +94,31 @@
                 </div>
             </a>
 
-            <!-- 3-Step Progress Stepper -->
-            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-3 text-xs font-display font-bold">
-                <a href="pilih-desain.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
-                    ✓ ① Pilih Desain
+            <!-- Sleek 3-Step Progress Stepper -->
+            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-2.5 text-xs font-display font-bold">
+                <!-- Step 1: Completed -->
+                <a href="pilih-desain.html" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-300 hover:text-white border border-white/10 transition-colors">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-[10px] font-extrabold">✓</span>
+                    <span>1. Desain Terpilih</span>
                 </a>
-                <span class="text-slate-600">&rarr;</span>
-                <a id="stepBackPaketLink" href="pilih-paket.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
-                    ✓ ② Pilih Paket &amp; Cek Demo
+                <span class="text-slate-600 font-bold">&rarr;</span>
+                <!-- Step 2: Completed -->
+                <a id="stepBackPaketLink" href="pilih-paket.html" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-300 hover:text-white border border-white/10 transition-colors">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-[10px] font-extrabold">✓</span>
+                    <span>2. Paket Terpilih</span>
                 </a>
-                <span class="text-slate-600">&rarr;</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow">
-                    ③ Kustomisasi &amp; Upload Foto
-                </span>
+                <span class="text-slate-600 font-bold">&rarr;</span>
+                <!-- Step 3: ACTIVE -->
+                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow-lg shadow-[#00E5FF]/20">
+                    <span class="w-5 h-5 rounded-full bg-[#05070F] text-[#00E5FF] flex items-center justify-center text-[11px] font-extrabold">3</span>
+                    <span>Kustomisasi UMKM</span>
+                </div>
             </nav>
 
-            <a id="topBackPaketBtn" href="pilih-paket.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300">
-                &larr; Kembali ke Paket
+            <!-- Navigation Back to Step 2 -->
+            <a id="topBackPaketBtn" href="pilih-paket.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center gap-1.5">
+                <span>&larr;</span>
+                <span>Kembali ke Paket</span>
             </a>
         </div>
     </header>
@@ -120,14 +129,17 @@
     <main class="flex-1 py-10 sm:py-14">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
 
-            <!-- Page Title -->
-            <div class="max-w-3xl mb-10">
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Langkah 3 dari 3 &bull; Kustomisasi &amp; Materi Usaha</span>
-                <h1 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1.5">
-                    Lengkapi Preferensi, Upload Foto UMKM &amp; Informasi Bisnis
+            <!-- Centered Hero Title (Consistent with Step 1 & Step 2) -->
+            <div class="text-center space-y-3 max-w-3xl mx-auto mb-12">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20 text-xs font-bold tracking-wider uppercase">
+                    <span class="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                    Langkah 3 dari 3 &bull; Kustomisasi Brand &amp; Materi Usaha
+                </span>
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
+                    Sesuaikan Identitas &amp; <span class="text-gradient-digitra">Materi Bisnis Anda</span>
                 </h1>
-                <p class="text-sm text-slate-400 mt-1.5">
-                    Anda juga dapat menekan tombol <strong class="text-[#00E5FF]">"🪄 Simulasikan Foto &amp; Nama Usaha Saya di Website"</strong> setelah meng-upload foto untuk melihat langsung tampilan website dengan identitas usaha Anda!
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                    Kustomisasi minor seperti ganti warna brand, font, logo, dan foto produk sudah <strong class="text-emerald-400">GRATIS (Rp 0)</strong>. Butuh perombakan struktur masif &amp; terima beres? Aktifkan opsi <strong class="text-[#00E5FF]">👑 Upgrade Paket Pro</strong> di bawah.
                 </p>
             </div>
 
@@ -136,39 +148,68 @@
                 <!-- LEFT 7 COLS: STEP-BY-STEP CUSTOMIZATION & UPLOAD -->
                 <div class="lg:col-span-7 space-y-7">
 
-                    <!-- CARD A: RINGKASAN DESAIN & PREFERENSI TAMPILAN -->
-                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-5">
+                    <!-- CARD A: RINGKASAN DESAIN & TINGKAT KUSTOMISASI (MINOR GRATIS vs PAKET PRO MASIF) -->
+                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-6">
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
                             <div>
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian A &bull; Preferensi Desain &amp; Warna</span>
-                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Kustomisasi Tampilan Website</h2>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian A &bull; Tingkat Kustomisasi &amp; Identitas Brand</span>
+                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Pilih Cakupan Kustomisasi Website</h2>
                             </div>
-                            <a href="pilih-desain.html" class="text-xs font-semibold text-purple-300 hover:underline">Ubah Template / Paket</a>
+                            <a id="changePackageTopLink" href="pilih-paket.html" class="text-xs font-semibold text-purple-300 hover:underline">&larr; Ubah Paket Template</a>
                         </div>
 
-                        <!-- Mode Kustomisasi -->
+                        <!-- 2 Pilihan Utama Tingkat Kustomisasi: Minor Gratis (Rp 0) vs Upgrade Paket Pro (+Rp 590.000) -->
                         <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-2">Pilih Tingkat Kustomisasi Desain:</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                <button type="button" onclick="customApp.setMode('ready')" data-mode="ready" class="mode-btn p-3 rounded-2xl border text-left transition-all">
-                                    <div class="font-display font-bold text-xs text-white">1. Sesuai Template</div>
-                                    <div class="text-[11px] text-slate-400 mt-0.5">Hanya ganti teks, menu &amp; foto</div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-3">Pilih Tingkat Kustomisasi Pengerjaan:</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Pilihan 1: Kustomisasi Minor & Brand (GRATIS Rp 0) -->
+                                <button type="button" onclick="customApp.setMode('minor')" data-mode="minor" class="mode-btn p-4 rounded-2xl border text-left transition-all flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">✓ Termasuk di Paket</span>
+                                            <span class="font-display font-bold text-sm text-emerald-400">GRATIS (Rp 0)</span>
+                                        </div>
+                                        <div class="font-display font-bold text-sm text-white">🎨 1. Kustomisasi Minor &amp; Brand</div>
+                                        <p class="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                                            Penyesuaian identitas usaha mengikuti struktur template pilihan Anda:
+                                        </p>
+                                    </div>
+                                    <ul class="mt-3 pt-2.5 border-t border-white/10 space-y-1 text-[11px] text-slate-300">
+                                        <li>✓ Gratis Ganti Skema Warna &amp; Font Brand</li>
+                                        <li>✓ Gratis Pasang Logo, Banner &amp; Foto Produk</li>
+                                        <li>✓ Gratis Setel Nomor WA &amp; Peta Lokasi</li>
+                                    </ul>
                                 </button>
-                                <button type="button" onclick="customApp.setMode('modify')" data-mode="modify" class="mode-btn p-3 rounded-2xl border text-left transition-all">
-                                    <div class="font-display font-bold text-xs text-white">2. Kustom Warna &amp; Fitur</div>
-                                    <div class="text-[11px] text-slate-400 mt-0.5">Sesuaikan palet warna &amp; form</div>
-                                </button>
-                                <button type="button" onclick="customApp.setMode('scratch')" data-mode="scratch" class="mode-btn p-3 rounded-2xl border text-left transition-all">
-                                    <div class="font-display font-bold text-xs text-white">3. Desain Baru dari Nol</div>
-                                    <div class="text-[11px] text-slate-400 mt-0.5">Arsitektur eksklusif (Rp 1,89jt)</div>
+
+                                <!-- Pilihan 2: Upgrade Paket Pro — Kustomisasi Masif & Terima Beres (+Rp 590.000) -->
+                                <button type="button" onclick="customApp.setMode('pro')" data-mode="pro" class="mode-btn p-4 rounded-2xl border text-left transition-all flex flex-col justify-between relative">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                                            <span class="px-2.5 py-0.5 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40 text-[10px] font-extrabold uppercase">👑 Terima Beres VIP</span>
+                                            <span class="font-display font-bold text-sm text-[#00E5FF]">+Rp 590.000</span>
+                                        </div>
+                                        <div class="font-display font-bold text-sm text-white">👑 2. Upgrade Paket Pro (Kustom Masif)</div>
+                                        <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                                            Untuk bisnis yang membutuhkan perombakan layout besar, alur khusus &amp; layanan terima beres penuh:
+                                        </p>
+                                    </div>
+                                    <ul class="mt-3 pt-2.5 border-t border-white/10 space-y-1 text-[11px] text-slate-200">
+                                        <li class="text-[#00E5FF] font-semibold">🔥 Rombak Struktur Section &amp; Alur Form Khusus</li>
+                                        <li class="text-[#00E5FF] font-semibold">🌐 Gratis Domain Resmi (.com / .id) 1 Tahun</li>
+                                        <li>✓ Bantuan Input s/d 50 Menu/Produk Terima Beres</li>
+                                        <li>✓ Gratis Seluruh Add-On Satuan di Bawah!</li>
+                                    </ul>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Pilihan Palet Warna & Gaya Font -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Pilihan Palet Warna & Gaya Font (Gratis di Kedua Mode!) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-white/10">
                             <div>
-                                <label for="brandPaletteSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Skema Warna Brand:</label>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label for="brandPaletteSelect" class="block text-xs font-semibold text-slate-300">Skema Warna Brand:</label>
+                                    <span class="text-[10px] font-bold text-emerald-400">GRATIS</span>
+                                </div>
                                 <select id="brandPaletteSelect" onchange="customApp.palette = this.value; customApp.renderSummary()"
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
                                     <option value="Sesuai Warna Template Asli">✨ Sesuai Warna Template Asli</option>
@@ -180,7 +221,10 @@
                                 </select>
                             </div>
                             <div>
-                                <label for="fontStyleSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Karakter Tipografi (Font):</label>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label for="fontStyleSelect" class="block text-xs font-semibold text-slate-300">Karakter Tipografi (Font):</label>
+                                    <span class="text-[10px] font-bold text-emerald-400">GRATIS</span>
+                                </div>
                                 <select id="fontStyleSelect" onchange="customApp.fontStyle = this.value; customApp.renderSummary()"
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
                                     <option value="Rekomendasi Bawaan Template">✨ Rekomendasi Bawaan Template</option>
@@ -191,24 +235,45 @@
                             </div>
                         </div>
 
-                        <!-- Add-on Checkboxes -->
-                        <div class="pt-2 border-t border-white/10">
-                            <label class="block text-xs font-semibold text-slate-300 mb-2">Fitur Tambahan (Opsional):</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-                                <label class="flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer">
-                                    <input type="checkbox" onchange="customApp.toggleAddon('customPopup', 150000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
+                        <!-- Modular A-La-Carte Add-Ons (Optional for Minor, Included FREE in Pro!) -->
+                        <div class="pt-3 border-t border-white/10 space-y-2.5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label class="block text-xs font-semibold text-slate-300">Fitur Tambahan Satuan (Opsional untuk Kustomisasi Minor):</label>
+                                <span id="proIncludedBadge" class="hidden px-2.5 py-0.5 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30 text-[10px] font-bold">
+                                    👑 Sudah Termasuk GRATIS di Paket Pro!
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
+                                    <input type="checkbox" id="chkAddonDomain" onchange="customApp.toggleAddon('domainCom', 185000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
                                     <span>
-                                        <strong class="block text-white">Kustom Field Pop-Up Pemesanan</strong>
-                                        <span class="text-[#00E5FF] font-semibold">+Rp 150.000</span>
+                                        <strong class="block text-white leading-snug">🌐 Domain Resmi (.com / .id) 1 Tahun</strong>
+                                        <span id="priceAddonDomain" class="text-[#00E5FF] font-semibold text-[11px]">+Rp 185.000</span>
                                     </span>
                                 </label>
-                                <label class="flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer">
-                                    <input type="checkbox" onchange="customApp.toggleAddon('multiBranch', 200000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
+                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
+                                    <input type="checkbox" id="chkAddonPopup" onchange="customApp.toggleAddon('customPopup', 150000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
                                     <span>
-                                        <strong class="block text-white">Fitur Multi-Cabang &amp; Multi-Admin WA</strong>
-                                        <span class="text-purple-300 font-semibold">+Rp 200.000</span>
+                                        <strong class="block text-white leading-snug">🛠️ Kustom Field Pop-Up Pesanan</strong>
+                                        <span id="priceAddonPopup" class="text-[#00E5FF] font-semibold text-[11px]">+Rp 150.000</span>
                                     </span>
                                 </label>
+                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
+                                    <input type="checkbox" id="chkAddonBranch" onchange="customApp.toggleAddon('multiBranch', 200000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
+                                    <span>
+                                        <strong class="block text-white leading-snug">🏢 Fitur Multi-Cabang &amp; Multi-WA</strong>
+                                        <span id="priceAddonBranch" class="text-purple-300 font-semibold text-[11px]">+Rp 200.000</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Smart Upsell Tip when user selects multiple individual add-ons -->
+                            <div id="smartProUpsellTip" class="hidden p-3 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/40 text-xs text-purple-200 flex items-center justify-between gap-3">
+                                <span>💡 <strong>Tips Hemat:</strong> Dengan menambah sedikit ke <strong>👑 Upgrade Paket Pro (+Rp 590rb)</strong>, Anda sudah mendapatkan ketiga fitur di atas + rombak layout kustom + input 50 produk terima beres!</span>
+                                <button type="button" onclick="customApp.setMode('pro')" class="px-3 py-1.5 rounded-lg bg-[#00E5FF] text-[#05070F] font-bold text-[11px] shrink-0">
+                                    Upgrade ke Pro &rarr;
+                                </button>
                             </div>
                         </div>
                     </section>
@@ -466,12 +531,12 @@
                 const mParam = params.get('mode');
 
                 this.design = (dParam && DESIGN_NAMES[dParam]) ? dParam : 'harth';
-                this.tier = (tParam && ['starter', 'complete', 'pro'].includes(tParam)) ? tParam : 'pro';
-                this.mode = (mParam && ['ready', 'modify', 'scratch'].includes(mParam)) ? mParam : 'modify';
+                this.tier = (tParam === 'starter') ? 'starter' : 'complete';
+                this.mode = (mParam === 'pro' || mParam === 'scratch') ? 'pro' : 'minor';
 
                 this.palette = 'Sesuai Warna Template Asli';
                 this.fontStyle = 'Rekomendasi Bawaan Template';
-                this.addons = { customPopup: 0, multiBranch: 0 };
+                this.addons = { domainCom: 0, customPopup: 0, multiBranch: 0 };
 
                 // Uploaded Assets State
                 this.logoDataUrl = '';
@@ -502,6 +567,8 @@
                 const backUrl = `pilih-paket.html?design=${this.design}&tier=${this.tier}`;
                 document.getElementById('stepBackPaketLink').href = backUrl;
                 document.getElementById('topBackPaketBtn').href = backUrl;
+                const changeLink = document.getElementById('changePackageTopLink');
+                if (changeLink) changeLink.href = backUrl;
 
                 this.updateModeButtons();
                 this.renderProductsList();
@@ -527,18 +594,54 @@
             }
 
             setMode(m) {
-                this.mode = m;
+                this.mode = (m === 'pro') ? 'pro' : 'minor';
                 this.updateModeButtons();
                 this.renderSummary();
             }
 
             updateModeButtons() {
                 document.querySelectorAll('.mode-btn').forEach(btn => {
-                    const act = btn.getAttribute('data-mode') === this.mode;
-                    btn.className = act
-                        ? 'mode-btn p-3 rounded-2xl border-2 border-[#00E5FF] bg-[#00E5FF]/10 text-left transition-all'
-                        : 'mode-btn p-3 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/25 text-left transition-all';
+                    const m = btn.getAttribute('data-mode');
+                    const act = m === this.mode;
+                    if (m === 'pro') {
+                        btn.className = act
+                            ? 'mode-btn p-4 rounded-2xl border-2 border-[#00E5FF] bg-gradient-to-b from-[#111A36] to-[#0B1020] shadow-xl shadow-[#00E5FF]/15 text-left transition-all flex flex-col justify-between relative'
+                            : 'mode-btn p-4 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-[#00E5FF]/40 text-left transition-all flex flex-col justify-between relative';
+                    } else {
+                        btn.className = act
+                            ? 'mode-btn p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-500/10 shadow-lg text-left transition-all flex flex-col justify-between'
+                            : 'mode-btn p-4 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/25 text-left transition-all flex flex-col justify-between';
+                    }
                 });
+
+                // Update add-on checkboxes & badges when Paket Pro is active
+                const isPro = this.mode === 'pro';
+                const proBadge = document.getElementById('proIncludedBadge');
+                if (proBadge) proBadge.classList.toggle('hidden', !isPro);
+
+                const chkDomain = document.getElementById('chkAddonDomain');
+                const chkPopup = document.getElementById('chkAddonPopup');
+                const chkBranch = document.getElementById('chkAddonBranch');
+
+                const pDomain = document.getElementById('priceAddonDomain');
+                const pPopup = document.getElementById('priceAddonPopup');
+                const pBranch = document.getElementById('priceAddonBranch');
+
+                if (isPro) {
+                    if (chkDomain) { chkDomain.checked = true; chkDomain.disabled = true; }
+                    if (chkPopup) { chkPopup.checked = true; chkPopup.disabled = true; }
+                    if (chkBranch) { chkBranch.checked = true; chkBranch.disabled = true; }
+                    if (pDomain) { pDomain.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
+                    if (pPopup) { pPopup.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
+                    if (pBranch) { pBranch.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
+                } else {
+                    if (chkDomain) { chkDomain.disabled = false; chkDomain.checked = this.addons.domainCom > 0; }
+                    if (chkPopup) { chkPopup.disabled = false; chkPopup.checked = this.addons.customPopup > 0; }
+                    if (chkBranch) { chkBranch.disabled = false; chkBranch.checked = this.addons.multiBranch > 0; }
+                    if (pDomain) { pDomain.innerHTML = '+Rp 185.000'; }
+                    if (pPopup) { pPopup.innerHTML = '+Rp 150.000'; }
+                    if (pBranch) { pBranch.innerHTML = '+Rp 200.000'; }
+                }
             }
 
             toggleAddon(key, price, checked) {
@@ -668,29 +771,37 @@
             }
 
             getTotals() {
-                const tierMap = { starter: 499000, complete: 899000, pro: 1490000 };
-                const base = this.mode === 'scratch' ? 1890000 : tierMap[this.tier];
-                const addon = Object.values(this.addons).reduce((a, b) => a + b, 0);
-                const total = base + addon;
+                const tierMap = { starter: 499000, complete: 899000 };
+                const base = tierMap[this.tier] || 899000;
+                const proFee = this.mode === 'pro' ? 590000 : 0;
+                const addon = this.mode === 'pro' ? 0 : Object.values(this.addons).reduce((a, b) => a + b, 0);
+                const total = base + proFee + addon;
                 const payNow = this.payTerm === 'dp50' ? Math.round(total * 0.5) : total;
-                return { base, addon, total, payNow };
+                return { base, proFee, addon, total, payNow };
             }
 
             renderSummary() {
-                const { base, addon, total, payNow } = this.getTotals();
+                const { base, proFee, addon, total, payNow } = this.getTotals();
                 const dMeta = DESIGN_NAMES[this.design];
                 const tierNames = {
-                    starter: 'Starter (Rp 499rb)',
-                    complete: 'Complete (Rp 899rb)',
-                    pro: '👑 Pro Bespoke (Rp 1,49jt)'
+                    starter: 'Paket Starter (Rp 499rb)',
+                    complete: '✨ Paket Complete All-In (Rp 899rb)'
                 };
                 const modeNames = {
-                    ready: 'Sesuai Template Standar',
-                    modify: 'Template + Kustomisasi Brand',
-                    scratch: 'Desain Baru dari Nol (Custom)'
+                    minor: '🎨 Kustomisasi Minor & Brand (GRATIS Rp 0)',
+                    pro: '👑 Upgrade Paket Pro — Kustom Masif (+Rp 590rb)'
                 };
 
-                document.getElementById('summaryTierBadge').innerText = this.mode === 'scratch' ? '🎨 Full Custom' : tierNames[this.tier];
+                // Smart upsell tip if user is on minor and selects 2+ add-ons
+                const upsellTip = document.getElementById('smartProUpsellTip');
+                if (upsellTip) {
+                    const checkedCount = Object.values(this.addons).filter(v => v > 0).length;
+                    upsellTip.classList.toggle('hidden', this.mode === 'pro' || checkedCount < 2);
+                }
+
+                document.getElementById('summaryTierBadge').innerText = this.mode === 'pro'
+                    ? `${this.tier === 'starter' ? 'Starter' : 'Complete'} + 👑 Pro`
+                    : (this.tier === 'starter' ? '1. Starter' : '✨ 2. Complete All-In');
 
                 const uploadedCount = (this.logoDataUrl ? 1 : 0) + (this.bannerDataUrl ? 1 : 0) + this.products.filter(p => p.imgDataUrl).length;
 
@@ -700,20 +811,30 @@
                         <span class="font-semibold text-white text-right">${dMeta.label}</span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-slate-400">Paket &amp; Mode:</span>
-                        <span class="font-semibold text-[#00E5FF] text-right">${this.mode === 'scratch' ? modeNames.scratch : tierNames[this.tier]}</span>
+                        <span class="text-slate-400">Paket Template:</span>
+                        <span class="font-semibold text-[#00E5FF] text-right">${tierNames[this.tier]}</span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-slate-400">Skema Warna:</span>
-                        <span class="font-semibold text-slate-200 text-right">${this.palette}</span>
+                        <span class="text-slate-400">Tingkat Kustomisasi:</span>
+                        <span class="font-semibold ${this.mode === 'pro' ? 'text-[#00E5FF]' : 'text-emerald-400'} text-right">${this.mode === 'pro' ? '👑 Upgrade Paket Pro (+Rp 590.000)' : '✓ Kustomisasi Minor (GRATIS Rp 0)'}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Skema Warna &amp; Font:</span>
+                        <span class="font-semibold text-slate-200 text-right">${this.palette} (Gratis)</span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-white/10">
                         <span class="text-slate-400">File Foto Di-upload:</span>
                         <span class="font-semibold text-purple-300 text-right">${uploadedCount} File Foto Siap Pakai</span>
                     </div>
+                    ${this.mode === 'pro' ? `
+                        <div class="flex justify-between py-1.5 border-b border-white/10">
+                            <span class="text-slate-400">Bonus Paket Pro:</span>
+                            <span class="font-semibold text-emerald-400 text-right">Domain .com + Input 50 Produk + Add-On Gratis</span>
+                        </div>
+                    ` : ''}
                     ${addon > 0 ? `
                         <div class="flex justify-between py-1.5 border-b border-white/10">
-                            <span class="text-slate-400">Fitur Tambahan:</span>
+                            <span class="text-slate-400">Add-On Satuan:</span>
                             <span class="font-semibold text-purple-300">+${this.formatRp(addon)}</span>
                         </div>
                     ` : ''}
@@ -783,8 +904,9 @@
                     `🕒 *Jam Buka:* ${this.hours}`,
                     `----------------------------------`,
                     `🎯 *Basis Desain:* ${dMeta.label}`,
-                    `📦 *Paket & Mode:* ${this.mode === 'scratch' ? modeNames.scratch : tierNames[this.tier]} (${modeNames[this.mode]})`,
-                    `🎨 *Warna & Font:* ${this.palette} • ${this.fontStyle}`,
+                    `📦 *Paket Template:* ${tierNames[this.tier]}`,
+                    `🛠️ *Tingkat Kustomisasi:* ${modeNames[this.mode]}`,
+                    `🎨 *Warna & Font (Gratis):* ${this.palette} • ${this.fontStyle}`,
                     `🖼️ *Materi Foto:* Logo (${this.logoName || 'Menyusul'}), Banner (${this.bannerName || 'Menyusul'}), ${this.products.length} Sampel Produk`,
                     this.gdriveUrl ? `📂 *Link GDrive Foto:* ${this.gdriveUrl}` : null,
                     `📝 *Catatan:* ${this.extraNotes || '-'}`,

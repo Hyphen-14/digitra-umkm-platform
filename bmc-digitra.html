@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas - Digitra (Web & AI Solutions)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 26px 46px 20px 46px;
+        }
+        /* Header */
+        .bmc-header {
+            margin-bottom: 10px;
+        }
+        .bmc-eyebrow {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: #2f6f68;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .bmc-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .bmc-title {
+            font-size: 31px;
+            font-weight: 800;
+            color: #0f2926;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+        .bmc-badge {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        /* Upper 5-Column Grid */
+        .bmc-grid-top {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
+            height: 690px;
+        }
+        .card {
+            background: #eef4f3;
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #dce8e6;
+        }
+        .card.vp-card {
+            background: #fdf3df;
+            border: 1.5px solid #f3d79b;
+        }
+        .span-2-rows {
+            grid-row: span 2;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(15, 41, 38, 0.08);
+        }
+        .card-bar {
+            width: 5px;
+            height: 18px;
+            border-radius: 3px;
+            background: #2b7a71;
+            flex-shrink: 0;
+        }
+        .vp-card .card-bar {
+            background: #d97706;
+        }
+        .card-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: #1f5c55;
+            text-transform: uppercase;
+        }
+        .vp-card .card-title {
+            color: #b45309;
+        }
+
+        .card-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .card-list li {
+            font-size: 13.2px;
+            line-height: 1.36;
+            color: #334155;
+            position: relative;
+            padding-left: 14px;
+        }
+        .card-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: 800;
+            color: #2b7a71;
+        }
+        .vp-card .card-list li::before {
+            color: #d97706;
+        }
+        .card-list strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Bottom 2-Column Grid */
+        .bmc-grid-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 14px;
+            height: 205px;
+            margin-top: 12px;
+        }
+        .bottom-cols {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 16px;
+        }
+
+        /* Footer */
+        .bmc-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        @media print {
+            @page {
+                size: 1920px 1080px;
+                margin: 0;
+            }
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bmc-header">
+        <div class="bmc-eyebrow">BUSINESS MODEL CANVAS &middot; DIGITRA (WEB &amp; AI SOLUTIONS)</div>
+        <div class="bmc-title-row">
+            <h1 class="bmc-title">Hybrid App-Storefront + Smart WA Funnel + Live Sheet Menu untuk UMKM</h1>
+            <div class="bmc-badge">Powered by Google Antigravity + Cloudflare Pages + Google Sheets (Server Rp0)</div>
+        </div>
+    </header>
+
+    <main class="bmc-grid-top">
+        <!-- Col 1: Key Partners (Span 2 rows) -->
+        <section class="card span-2-rows">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">KEY PARTNERS</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Cloudflare Pages:</strong> infrastruktur hosting serverless super cepat &amp; gratis selamanya (Rp0).</li>
+                <li><strong>Google Antigravity:</strong> AI coding agent &amp; IDE untuk merakit UI dan kustomisasi web secara instan (Rp0 biaya kredit/web).</li>
+                <li><strong>Google Sheets:</strong> CMS/database gratis tempat pemilik UMKM update harga, stok &amp; promo dari HP.</li>
+                <li><strong>WhatsApp Business:</strong> platform auto-reply CS &amp; penerima struk pesanan terformat.</li>
+                <li><strong>Registrar Domain Custom:</strong> penyedia domain <code>.my.id</code>/<code>.biz.id</code> (Starter &amp; Complete) &amp; <code>.com</code>/<code>.id</code> (Upgrade Paket Pro &amp; Add-On).</li>
+                <li><strong>Vendor Stiker QR Akrilik:</strong> produksi standee QR Code fisik untuk meja kasir/pelanggan.</li>
+                <li><strong>Google Maps:</strong> sumber riset prospek UMKM lokal &amp; integrasi titik lokasi.</li>
+            </ul>
+        </section>
+
+        <!-- Col 2 Row 1: Key Activities -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">KEY ACTIVITIES</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Prospecting Google Maps:</strong> kurasi UMKM rating &ge; 4,5 yang belum punya web.</li>
+                <li><strong>Live Mockup-First (10 mnt):</strong> buat preview interaktif dengan Antigravity &amp; pitching via WA.</li>
+                <li><strong>Setup All-In Storefront:</strong> aktifkan 100% fitur interaktif di Paket Complete (Pop-Up Khas, QRIS, Voucher, Standee QR Meja #07).</li>
+                <li><strong>Kustomisasi Brand (Minor Rp0 / Pro Masif):</strong> sesuaikan warna/logo gratis atau rombak layout eksklusif di Paket Pro.</li>
+                <li><strong>Deploy &amp; Serah Terima:</strong> rilis di Cloudflare Pages + sinkronisasi Google Sheets.</li>
+            </ul>
+        </section>
+
+        <!-- Col 3: Value Propositions (Span 2 rows) -->
+        <section class="card vp-card span-2-rows">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">VALUE PROPOSITIONS</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Strategi Unbundled Value (2 Paket Template Tanpa Monopoli):</strong> <em>Paket Starter (Rp499rb)</em> hadir sebagai Katalog Foto HD Estetik yang tetap berkelas, sementara <em>Paket Complete All-In (Rp899rb)</em> membuka <strong>100% seluruh fitur &amp; efek interaktif</strong> (Pop-Up Khas, Keranjang + Voucher, Simulasi QRIS, Partikel Canvas, Generator Standee QR Meja #07 &amp; Google Sheets).</li>
+                <li><strong>Gratis Kustomisasi Minor (Rp 0) di Semua Paket:</strong> ganti skema warna brand, font, logo, foto tempat &amp; produk gratis tanpa biaya tersembunyi (dilengkapi fitur <em>Live Client Photo Simulator</em>).</li>
+                <li><strong>Alokasi Paket Pro (+Rp590rb) Khusus Kustomisasi Masif di Langkah 3:</strong> klien hanya membayar ekstra jika butuh perombakan layout/SOP masif, gratis domain <code>.com</code>, &amp; terima beres input 50 produk (atau pilih <em>Add-On Satuan</em> mulai Rp150rb).</li>
+                <li><strong>Update Harga, Stok &amp; Promo Mandiri via Google Sheets:</strong> pemilik UMKM bebas ganti harga, stok <em>"Habis"</em>, atau promo dari HP dalam 5 detik tanpa biaya server bulanan (Rp0 selamanya).</li>
+            </ul>
+        </section>
+
+        <!-- Col 4 Row 1: Customer Relationships -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">CUSTOMER RELATIONSHIPS</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Live Mockup-First:</strong> klien mencoba langsung prototipe web tokonya sebelum bayar DP.</li>
+                <li><strong>Personal Assistance &amp; Co-Creation:</strong> pitching personal via WA &amp; revisi draf bersama klien.</li>
+                <li><strong>Kemandirian Operasional (Self-Service):</strong> panduan 5 menit kelola menu/promo mandiri via Google Sheets dari HP.</li>
+                <li><strong>Retensi Tahunan:</strong> pengingat perpanjangan domain &amp; dukungan teknis tahun ke-2.</li>
+            </ul>
+        </section>
+
+        <!-- Col 5: Customer Segments (Span 2 rows) -->
+        <section class="card span-2-rows">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">CUSTOMER SEGMENTS</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>UMKM Indonesia Lintas Sektor:</strong> F&amp;B (kuliner/warkop/kafe), retail/online shop, penyedia jasa (barbershop/klinik/laundry), otomotif, &amp; akomodasi.</li>
+                <li><strong>UMKM Rating Google Maps &ge; 4,5:</strong> bisnis yang sudah punya pelanggan &amp; ulasan bagus namun belum memiliki website/katalog transaksi.</li>
+                <li><strong>Menerima Order via WhatsApp (60,9% responden):</strong> mengandalkan WA sebagai kanal transaksi utama.</li>
+                <li><strong>Kewalahan Operasional Chat:</strong> lelah membalas chat harga/menu satu per satu (<strong>65,2%</strong>) &amp; sering salah/pusing rekap pesanan manual (<strong>52,2%</strong>).</li>
+                <li><strong>Ingin Bebas Komisi &amp; Kelola Promo:</strong> terbebani potongan komisi aplikasi ojol/marketplace 20–30% (<strong>43,5%</strong>) serta butuh sistem promosi/diskon terstruktur (<strong>34,8%</strong>).</li>
+            </ul>
+        </section>
+
+        <!-- Col 2 Row 2: Key Resources -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">KEY RESOURCES</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Master Codebase Modular:</strong> arsitektur <em>Digitra Web Factory</em> (HTML/Tailwind/JS + Sheet Sync).</li>
+                <li><strong>Google Antigravity &amp; Skill Tim:</strong> kapabilitas rekayasa cepat &amp; kustomisasi tema instan.</li>
+                <li><strong>Infrastruktur Serverless:</strong> Cloudflare Pages + Google Sheets endpoint.</li>
+                <li><strong>Paket Template WA CS &amp; Demo Multi-Niche:</strong> prototipe siap pakai (F&amp;B, Retail, Jasa).</li>
+            </ul>
+        </section>
+
+        <!-- Col 4 Row 2: Channels -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">CHANNELS</h2>
+            </div>
+            <ul class="card-list">
+                <li><strong>Direct Outreach WhatsApp:</strong> pesan personal + link live mockup &amp; video demo.</li>
+                <li><strong> Akuisisi Prospek Google Maps:</strong> penargetan langsung bisnis lokal potensial.</li>
+                <li><strong>Phygital Touchpoint (Offline-to-Online):</strong> Standee QR Code akrilik di meja kasir/meja makan mengarahkan pelanggan walk-in ke web.</li>
+                <li><strong>Delivery Digital:</strong> Cloudflare Pages + Custom Domain.</li>
+            </ul>
+        </section>
+    </main>
+
+    <section class="bmc-grid-bottom">
+        <!-- Cost Structure -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">COST STRUCTURE</h2>
+            </div>
+            <div class="bottom-cols">
+                <ul class="card-list">
+                    <li><strong>Biaya Tetap Operasional Rp500rb/bln:</strong> Google Antigravity AI Workspace Rp250rb, kuota internet &amp; utilitas Rp150rb, tools WA &amp; prospecting Rp100rb.</li>
+                    <li><strong>HPP Starter (Rp50rb) &amp; Complete All-In (Rp50rb):</strong> domain <code>.my.id</code>/<code>.biz.id</code> Rp25rb + Standee QR Akrilik Rp25rb + Kustomisasi Minor (AI/Server Rp0).</li>
+                </ul>
+                <ul class="card-list">
+                    <li><strong>HPP Upgrade Paket Pro (+Rp175rb):</strong> domain resmi <code>.com</code> Rp150rb + tambahan Standee QR Akrilik Rp25rb (Total HPP Complete+Pro = Rp225rb).</li>
+                    <li><strong>Server &amp; Database Rp0</strong> (Cloudflare Pages + Google Sheets).</li>
+                    <li><strong>BEP &approx; 1 Klien/Bulan:</strong> Rp500rb &divide; margin Complete Rp849rb = <strong>0,59 unit</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Revenue Streams -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-bar"></span>
+                <h2 class="card-title">REVENUE STREAMS</h2>
+            </div>
+            <div class="bottom-cols">
+                <ul class="card-list">
+                    <li><strong>1. Paket Starter (Rp499.000):</strong> laba bersih <strong>Rp449rb (~90,0%)</strong> &mdash; <em>Katalog Foto HD Estetik + Chat WA Manual + Gratis Kustom Minor</em>.</li>
+                    <li><strong>2. Paket Complete All-In (Rp899.000):</strong> laba bersih <strong>Rp849rb (~94,4%)</strong> &mdash; <em>100% Fitur Terbuka (Pop-Up Khas, QRIS, Partikel, Standee #07, Sheet Sync) + Gratis Kustom Minor</em>.</li>
+                </ul>
+                <ul class="card-list">
+                    <li><strong>👑 Upgrade Paket Pro di Step 3 (+Rp590.000 / Total Rp1,489jt):</strong> laba bersih <strong>Rp1.264rb (~84,9%)</strong> &mdash; <em>Rombak Masif + Gratis Domain .com + Input 50 Produk + Semua Add-On Gratis</em>.</li>
+                    <li><strong>Add-On Satuan &amp; Recurring:</strong> Domain <code>.com</code> (+Rp185rb), Kustom Form (+Rp150rb), Multi-Cabang (+Rp200rb); Perpanjangan Rp350rb/thn.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bmc-footer">
+        <span>Digitra &middot; Laporan Perancangan Bisnis &amp; Student Activities (Updated Edition &mdash; Oktober 2026)</span>
+        <span>Arsitektur: Hybrid App-Storefront &bull; Google Antigravity &bull; Cloudflare Pages &bull; Google Sheets Live Sync</span>
+    </footer>
+
+</body>
+</html>

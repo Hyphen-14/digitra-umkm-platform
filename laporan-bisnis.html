@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen Perancangan Bisnis & Laporan Student Activities - Digitra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 14mm 16mm 14mm 16mm;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+            font-size: 9.6pt;
+            line-height: 1.46;
+            color: #111827;
+            background: #ffffff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 16px 24px;
+        }
+        @media print {
+            body {
+                max-width: none;
+                padding: 0;
+            }
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+            .avoid-break, table, .highlight-box {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            h2.section-title, h3.subsection-title {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            a {
+                color: #1d4ed8;
+                text-decoration: underline;
+            }
+        }
+
+        /* Document Header */
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px solid #0f2926;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+        .doc-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 13pt;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #0f172a;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .doc-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 10.5pt;
+            font-weight: 700;
+            color: #1f5c55;
+            margin-bottom: 5px;
+        }
+        .doc-meta {
+            font-size: 8.8pt;
+            font-style: italic;
+            color: #374151;
+            line-height: 1.38;
+        }
+
+        /* Headings */
+        h2.section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10.5pt;
+            font-weight: 800;
+            color: #0f2926;
+            text-transform: uppercase;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            padding-bottom: 3px;
+            border-bottom: 1.5px solid #cbd5e1;
+            letter-spacing: 0.01em;
+        }
+        h3.subsection-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 9.8pt;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 7px;
+            text-align: justify;
+        }
+        p.indent {
+            text-indent: 20px;
+        }
+
+        /* Lists */
+        ul.bullet-list, ol.num-list {
+            margin-left: 20px;
+            margin-bottom: 9px;
+        }
+        ul.bullet-list li, ol.num-list li {
+            margin-bottom: 5px;
+            text-align: justify;
+        }
+        li strong {
+            font-family: 'Inter', sans-serif;
+            font-size: 9.4pt;
+            color: #0f172a;
+        }
+
+        /* Callout Box */
+        .highlight-box {
+            background: #f8fafc;
+            border-left: 4px solid #1f5c55;
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 9px 13px;
+            border-radius: 0 6px 6px 0;
+            margin: 9px 0 12px 0;
+            font-size: 9.2pt;
+        }
+        .highlight-box.gold {
+            background: #fffbeb;
+            border-left-color: #d97706;
+            border-color: #fde68a;
+            border-left-width: 4px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 7px 0 12px 0;
+            font-size: 8.7pt;
+            font-family: 'Inter', sans-serif;
+        }
+        th, td {
+            border: 1px solid #475569;
+            padding: 6px 8px;
+            vertical-align: top;
+            text-align: left;
+            line-height: 1.35;
+        }
+        th {
+            background-color: #f1f5f9;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: center;
+        }
+        th.highlight-col {
+            background-color: #ecfdf5;
+            color: #065f46;
+        }
+        td.highlight-col {
+            background-color: #f0fdf4;
+        }
+        td.center {
+            text-align: center;
+        }
+        td.bold {
+            font-weight: 700;
+        }
+
+        .bmc-embed {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+        .footer-note {
+            margin-top: 22px;
+            padding-top: 8px;
+            border-top: 1px solid #cbd5e1;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="doc-header">
+        <div class="doc-title">DOKUMEN PERANCANGAN BISNIS &amp; LAPORAN STUDENT ACTIVITIES</div>
+        <div class="doc-subtitle">Sistem Hybrid App-Storefront, Smart WA Funnel &amp; Otomatisasi WA CS untuk UMKM</div>
+        <div class="doc-meta">
+            Inisiator: Digitra (Web &amp; AI Solutions) &nbsp;|&nbsp; Target Pasar: UMKM Indonesia (F&amp;B, Retail, Jasa, Otomotif, Akomodasi)<br>
+            Infrastruktur: Cloudflare Pages + Google Antigravity + Google Sheets Live Sync &nbsp;|&nbsp; Tanggal: Oktober 2026
+        </div>
+    </header>
+
+    <!-- 1. RINGKASAN EKSEKUTIF -->
+    <h2 class="section-title">1. RINGKASAN EKSEKUTIF</h2>
+    <p class="indent">
+        Proyek bisnis <strong>Digitra (Web &amp; AI Solutions)</strong> bertujuan menyediakan solusi transformasi transaksi digital bagi UMKM Indonesia yang mampu menggantikan ketergantungan pada komisi aplikasi pihak ketiga (20%–30%) sekaligus memangkas beban admin chat WhatsApp harian. Berbeda dari jasa pembuatan <em>landing page</em> konvensional yang hanya menyerahkan brosur profil statis, Digitra menawarkan ekosistem terpadu melalui portal <strong>Guided 3-Step Funnel</strong>: (1) <strong>Pemilihan Fondasi Desain Berkarakter</strong> lintas industri (Cafe, Resto, Retail, Barbershop), (2) <strong>2 Pilihan Paket Template Tanpa Monopoli</strong> — yaitu <strong>Paket Starter (Rp 499.000)</strong> sebagai Landing Page &amp; Katalog Foto HD Estetik, dan <strong>Paket Complete All-In (Rp 899.000)</strong> yang membuka <strong>100% seluruh fitur &amp; efek interaktif</strong> (Pop-Up Khas Kategori, Keranjang + Voucher, Simulasi QRIS, Partikel Visual Canvas, Standee QR Meja <code>#07</code> &amp; Sinkronisasi Google Sheets), serta (3) <strong>Model Kustomisasi Hybrid di Langkah 3</strong> di mana <strong>Kustomisasi Minor diberikan GRATIS (Rp 0)</strong> dan <strong>Upgrade Paket Pro (+Rp 590.000)</strong> dialokasikan khusus bagi UMKM yang membutuhkan perombakan layout masif, gratis domain <code>.com</code>, dan layanan terima beres.
+    </p>
+    <p class="indent">
+        Dengan memanfaatkan agen rekayasa perangkat lunak berbasis kecerdasan buatan (<strong>Google Antigravity</strong>) yang dipadukan dengan arsitektur kode modular (<em>Digitra Web Factory</em>), infrastruktur hosting <em>serverless</em> gratis dari <strong>Cloudflare Pages</strong>, serta basis data katalog gratis melalui <strong>Google Sheets</strong>, biaya pembuatan per situs (kredit AI variabel) dan biaya server bulanan berhasil ditekan menjadi <strong>Rp 0</strong>. Melalui strategi <em>Unbundled Value &amp; Fair Customization Pricing</em> ini, bisnis Digitra mampu mencetak margin laba bersih sebesar <strong>84,9% hingga 94,4%</strong> dan mencapai titik impas (<em>Break-Even Point / BEP</em>) hanya dengan memenangkan <strong>1 klien pertama setiap bulannya</strong>.
+    </p>
+
+    <!-- 2. PEMBEDA UTAMA -->
+    <h2 class="section-title">2. PEMBEDA UTAMA (USP): HYBRID APP-STOREFRONT &amp; SMART WA FUNNEL</h2>
+    <p>
+        Pasar jasa pembuatan website UMKM saat ini jenuh oleh penawaran <em>landing page</em> pasif yang jarang menghasilkan transaksi dan sulit diperbarui oleh pemilik usaha. Digitra memenangkan persaingan melalui enam keunggulan kompetitif (<em>Unique Selling Propositions</em>) yang menjawab langsung masalah operasional UMKM:
+    </p>
+    <ul class="bullet-list">
+        <li>
+            <strong>1. Hybrid App-Storefront &amp; 3 Mode Transaksi (Bebas Komisi Ojol 20%):</strong> Antarmuka mobile dirancang menyerupai aplikasi pemesanan modern (<em>GoFood/ShopeeFood milik sendiri</em>). Pelanggan dapat memilih mode <em>Makan di Tempat (Scan QR Nomor Meja)</em>, <em>Ambil Sendiri (Pickup)</em>, atau <em>Pesan Antar (Delivery + Pin Alamat)</em> beserta varian dan catatan khusus tanpa potongan komisi sepeser pun.
+        </li>
+        <li>
+            <strong>2. Auto-Format WhatsApp Invoice (Tanpa Rekap Manual):</strong> Klien tidak lagi menerima pesan acak seperti <em>"Halo kak, menu apa saja?"</em>. Sistem kalkulasi di sisi browser secara otomatis merangkum rincian item, kuantitas, varian, kode voucher diskon, metode pesanan, dan total tagihan menjadi format struk teks rapi yang langsung terkirim ke WhatsApp kasir/admin UMKM.
+        </li>
+        <li>
+            <strong>3. Update Harga, Stok &amp; Promo Mandiri via Google Sheets (Tanpa Koding):</strong> Menjawab keluhan terbesar pemilik UMKM terhadap website statis. Tanpa perlu <em>backend</em> berbayar, website menarik data menu dari <strong>Google Sheets milik UMKM</strong>. Saat pemilik toko mengubah harga, menandai produk <em>"Habis"</em>, atau menyalakan promo dari HP mereka, tampilan website berubah otomatis dalam hitungan detik.
+        </li>
+        <li>
+            <strong>4. Mesin Promo, Diskon Coret &amp; Voucher + Multi-Bahasa (ID/EN):</strong> Dirancang langsung dari hasil wawancara UMKM (60% responden meminta fitur promo/diskon dan akses bahasa Inggris). Pemilik usaha dapat menampilkan <em>Banner Flash Deal</em>, harga coret, kode kupon (misal: <code>HEMAT20</code>), serta tombol alih bahasa Indonesia–Inggris instan.
+        </li>
+        <li>
+            <strong>5. Integrasi Fisik-Digital (Standee QR Code Akrilik Meja):</strong> Setiap klien menerima stiker/standee QR Code berbahan akrilik untuk dipasang di meja kasir atau meja makan, mengubah antrean pelanggan <em>walk-in</em> menjadi pesanan digital mandiri yang terstruktur.
+        </li>
+        <li>
+            <strong>6. Rekayasa Instan Berbasis Google Antigravity (Metode <em>Live Mockup-First</em>):</strong> Penggunaan <strong>Google Antigravity</strong> di atas <em>Master Codebase Modular</em> memangkas waktu pembuatan <em>live preview</em> menjadi 10–15 menit tanpa biaya kredit AI per proyek, memungkinkan strategi <em>"Coba Web Toko Anda Dulu, Baru Bayar"</em>.
+        </li>
+    </ul>
+
+    <!-- 3. MATRIKS PERBANDINGAN PEMBEDA -->
+    <h2 class="section-title">3. MATRIKS PERBANDINGAN PEMBEDA (DIFFERENTIATOR MATRIX)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Dimensi Evaluasi</th>
+                <th style="width: 25%;">Agensi Web Konvensional</th>
+                <th style="width: 25%;">Web Builder DIY / Aplikasi Ojol Pihak Ketiga</th>
+                <th class="highlight-col" style="width: 32%;">Model Bisnis Digitra (Hybrid Storefront + Antigravity + Sheet Sync)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="bold">Bentuk Produk &amp; UI/UX</td>
+                <td>Brosur profil digital pasif (hanya tombol WA biasa)</td>
+                <td>Template kaku atau katalog di dalam aplikasi komisi tinggi</td>
+                <td class="highlight-col"><strong>Hybrid App-Storefront</strong> + <strong>Smart WA Funnel</strong> (Meja/Pickup/Antar) + <strong>WA Auto-Reply CS</strong></td>
+            </tr>
+            <tr>
+                <td class="bold">Update Harga, Stok &amp; Promo</td>
+                <td>Harus hubungi developer &amp; bayar biaya revisi manual</td>
+                <td>Panel admin rumit atau harga harus dinaikkan 20% demi komisi</td>
+                <td class="highlight-col"><strong>Mandiri via Google Sheets dari HP (5 detik)</strong> tanpa koding &amp; 0% komisi transaksi</td>
+            </tr>
+            <tr>
+                <td class="bold">Infrastruktur &amp; Biaya Server</td>
+                <td>Shared hosting berbayar bulanan/tahunan mahal</td>
+                <td>Langganan bulanan platform (Rp150rb–Rp500rb/bln)</td>
+                <td class="highlight-col"><strong>Cloudflare Pages + Google Sheets (Server &amp; Database Rp 0 Selamanya)</strong></td>
+            </tr>
+            <tr>
+                <td class="bold">Fitur Konversi Penjualan</td>
+                <td>Tidak ada keranjang, promo, atau kalkulasi harga</td>
+                <td>E-commerce cart rumit (wajib login/daftar akun)</td>
+                <td class="highlight-col"><strong>Tanpa Login</strong> + <strong>Kode Voucher Diskon</strong> + <strong>Toggle Bahasa ID/EN</strong> + Struk WA Otomatis</td>
+            </tr>
+            <tr>
+                <td class="bold">Waktu Pengerjaan</td>
+                <td>1 – 3 Minggu kerja</td>
+                <td>Dikerjakan sendiri oleh pemilik UMKM (sita waktu)</td>
+                <td class="highlight-col"><strong>Super Kilat (1 – 3 Hari Kerja)</strong> dengan akselerasi Google Antigravity</td>
+            </tr>
+            <tr>
+                <td class="bold">Strategi Pitching</td>
+                <td>Pesan teks penawaran panjang (sering diabaikan)</td>
+                <td>Iklan digital pasif</td>
+                <td class="highlight-col"><strong>Metode Live Mockup-First</strong> (Klien mencoba langsung draf web tokonya sebelum bayar)</td>
+            </tr>
+            <tr>
+                <td class="bold">Bonus Nilai Tambah</td>
+                <td>Hanya serah terima link website</td>
+                <td>Tidak ada pendampingan &amp; aset fisik</td>
+                <td class="highlight-col"><strong>Standee QR Code Akrilik Meja</strong> + <strong>Paket WA Auto-Reply &amp; 5 Quick Replies CS</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 4. MODEL BISNIS & PENAWARAN JASA -->
+    <div class="avoid-break">
+        <h2 class="section-title">4. MODEL BISNIS, STRATEGI 2 PAKET TEMPLATE (ALL-IN) &amp; ALOKASI PAKET PRO DI LANGKAH 3</h2>
+        <p>
+            Berdasarkan data riset BMC di mana <strong>91,3% responden UMKM siap menganggarkan Rp 1.000.000 – Rp 2.500.000</strong> untuk solusi digital yang menyelesaikan masalah chat dan rekap pesanan, Digitra menerapkan strategi <strong>Unbundled Value &amp; Fair Customization Pricing</strong>. Pada <strong>Langkah 2 (Pilih Paket Template)</strong>, klien hanya dihadapkan pada <strong>2 pilihan paket yang adil (Starter Rp 499rb vs Complete All-In Rp 899rb)</strong> di mana paket Complete membuka 100% seluruh fitur interaktif. Sementara itu, <strong>Paket Pro (+Rp 590.000)</strong> dialokasikan khusus di <strong>Langkah 3 (Kustomisasi)</strong> sebagai biaya tambahan opsional hanya jika klien meminta kustomisasi masif (sedangkan <strong>Kustomisasi Minor diberikan GRATIS Rp 0</strong>):
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 17%;">Komponen Layanan</th>
+                    <th style="width: 26%;">1. Paket Starter<br>(Landing Page &amp; Katalog Estetik)</th>
+                    <th class="highlight-col" style="width: 30%;">✨ 2. Paket Complete All-In — BEST SELLER<br>(100% Fitur &amp; Sistem Interaktif Terbuka)</th>
+                    <th style="width: 27%;">👑 Upgrade Paket Pro (Di Langkah 3)<br>(Kustomisasi Masif &amp; Terima Beres)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bold">Target Segmen Klien</td>
+                    <td>UMKM yang membutuhkan website katalog foto HD estetik &amp; tombol chat WA manual yang tetap berkelas</td>
+                    <td class="highlight-col"><strong>UMKM aktif (90% klien) yang menginginkan seluruh fitur interaktif, QRIS, Voucher, Standee Meja &amp; Sheet Sync terbuka 100%</strong></td>
+                    <td>UMKM mapan/multi-cabang yang membutuhkan perombakan struktur layout masif, SOP unik, &amp; layanan terima beres penuh</td>
+                </tr>
+                <tr>
+                    <td class="bold">Fitur Website &amp; Transaksi</td>
+                    <td>Split-Hero Editorial sesuai tema + Galeri Katalog Foto HD + Harga &amp; Deskripsi + Tombol Chat WA Manual per produk</td>
+                    <td class="highlight-col"><strong>Membuka 100% Fitur Template:</strong> Pop-Up Kustomisasi Khas Kategori + Keranjang Multi-Item + Kode Voucher + <strong>Simulasi QRIS &amp; Salin Rek Bank</strong> + <strong>Animasi Partikel Canvas</strong> + Peta Fasilitas Live</td>
+                    <td>Seluruh fitur paket pilihan + <strong>Rombak Struktur Layout/Section Kustom</strong> + Alur Form Pemesanan Khusus + Fitur Multi-Cabang &amp; Multi-Admin WA</td>
+                </tr>
+                <tr>
+                    <td class="bold">Kustomisasi &amp; Manajemen Menu</td>
+                    <td><strong>GRATIS Kustomisasi Minor (Rp 0):</strong> Ganti Warna Brand, Font, Logo &amp; Foto Usaha (Statis)</td>
+                    <td class="highlight-col"><strong>GRATIS Kustomisasi Minor (Rp 0)</strong> + <strong>Sinkronisasi Database Menu Google Sheets Real-Time</strong> + Generator Standee QR Meja <code>#07</code></td>
+                    <td><strong>Kustomisasi Masif Terima Beres</strong> + <strong>Bantuan Input s/d 50 Produk/Menu</strong> + Gratis Seluruh Add-On Satuan di Langkah 3</td>
+                </tr>
+                <tr>
+                    <td class="bold">Hosting, Domain &amp; Aset Fisik</td>
+                    <td>Cloudflare Pages (Rp0) + Subdomain / Domain <code>.my.id</code> + 1 Stiker QR</td>
+                    <td class="highlight-col">Cloudflare Pages (Rp0) + Domain <code>.my.id</code>/<code>.biz.id</code> + <strong>Generator Standee QR Akrilik Meja (<code>#07</code>)</strong></td>
+                    <td>Cloudflare Pages (Rp0) + <strong>Gratis Domain Resmi <code>.com</code> / <code>.id</code> (1 Thn)</strong> + <strong>3 Standee QR Akrilik Meja</strong> + Prioritas VIP</td>
+                </tr>
+                <tr>
+                    <td class="bold">Harga Jual Klien</td>
+                    <td class="bold center">Rp 499.000<br><span style="font-size:7.8pt;font-weight:400;">(Kustom Minor: Rp 0)</span></td>
+                    <td class="highlight-col bold center" style="font-size: 10.5pt; color: #065f46;">Rp 899.000<br><span style="font-size:7.8pt;font-weight:600;">(Kustom Minor: Rp 0)</span></td>
+                    <td class="bold center">+Rp 590.000<br><span style="font-size:7.8pt;font-weight:600;">(Total c/w Complete: Rp 1.489.000)</span></td>
+                </tr>
+                <tr>
+                    <td class="bold">HPP &amp; Laba Bersih</td>
+                    <td>HPP: Rp 50.000<br><strong>Laba: Rp 449.000 (~90,0%)</strong></td>
+                    <td class="highlight-col">HPP: Rp 50.000<br><strong>Laba: Rp 849.000 (~94,4%)</strong></td>
+                    <td>HPP Total (Complete+Pro): Rp 225.000<br><strong>Laba: Rp 1.264.000 (~84,9%)</strong></td>
+                </tr>
+                <tr>
+                    <td class="bold">Opsi Add-On Satuan (Langkah 3)</td>
+                    <td colspan="2" class="center">Opsional bagi Kustomisasi Minor (Rp 0): <strong>🌐 Domain .com/.id (+Rp185rb)</strong> &bull; <strong>🛠️ Kustom Field Pop-Up (+Rp150rb)</strong> &bull; <strong>🏢 Multi-Cabang WA (+Rp200rb)</strong></td>
+                    <td class="center bold" style="color: #065f46;">✓ Ketiga Add-On di Samping Sudah Termasuk GRATIS di Paket Pro!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="highlight-box">
+        <strong>Skema Hubungan Pelanggan &amp; Pendapatan Berulang (BMC Customer Relationships &amp; Recurring Revenue):</strong>
+        <ul class="bullet-list" style="margin-top: 6px; margin-bottom: 0;">
+            <li><strong>Sistem Pembayaran Aman:</strong> DP 50% setelah klien menyetujui <em>Live Mockup</em>, dan pelunasan 50% saat website aktif di domain custom serta QR Akrilik siap dikirim.</li>
+            <li><strong>Co-Creation &amp; Kemandirian:</strong> Klien dilibatkan dalam revisi draf dan diberikan panduan singkat 5 menit untuk mengubah harga/stok/promo langsung dari Google Sheets di smartphone mereka.</li>
+            <li><strong>Pendapatan Perpanjangan Tahunan (Tahun ke-2 dst.):</strong> Biaya perpanjangan domain <code>.com</code> &amp; pemeliharaan sistem sebesar <strong>Rp 350.000 / tahun</strong> (menciptakan <em>passive recurring margin</em> ~50% setiap tahun tanpa biaya server).</li>
+        </ul>
+    </div>
+
+    <!-- 5. WORKFLOW OPERASIONAL -->
+    <h2 class="section-title">5. WORKFLOW OPERASIONAL (METODE LIVE MOCKUP-FIRST VIA ANTIGRAVITY)</h2>
+    <ol class="num-list">
+        <li>
+            <strong>Tahap 1: Prospecting Terkurasi (Google Maps Filtering)</strong> &mdash; Menyaring UMKM lokal potensial (sektor F&amp;B, Retail, Jasa, Otomotif, Akomodasi) yang memiliki rating minimal <strong>4,5 bintang</strong> dan ulasan ramai, namun belum mencantumkan tautan website pada profil Google Maps mereka. Mengekstrak nama usaha, daftar menu/layanan populer, dan nomor WhatsApp bisnis.
+        </li>
+        <li>
+            <strong>Tahap 2: Instant Prototype Generation via Google Antigravity (10–15 Menit)</strong> &mdash; Memasukkan data menu/produk prospek ke dalam arsitektur <em>Digitra Web Factory</em> menggunakan <strong>Google Antigravity</strong> untuk menghasilkan prototipe <em>Hybrid App-Storefront</em> yang sudah berfungsi penuh (lengkap dengan simulasi promo, nomor meja, dan kalkulasi WA). Mengambil 1–2 tangkapan layar (<em>screenshot</em>) dan tautan demo interaktif.
+        </li>
+        <li>
+            <strong>Tahap 3: Pitching Personal via WhatsApp (Pendekatan <em>Mockup First</em>)</strong> &mdash; Mengirimkan pesan personal beserta gambar/tautan prototipe toko mereka:<br>
+            <em>"Halo Kak [Nama Toko], kami melihat ulasan [Nama Toko] di Google Maps sangat bagus (4.8★), tapi belum ada link katalog pemesanan langsung. Kami sudah buatkan draf web kasir &amp; menu digital khusus [Nama Toko] yang langsung merangkum pesanan + diskon ke WA tanpa potongan komisi ojol. Boleh kami kirimkan link demonya untuk Kakak coba klik?"</em>
+        </li>
+        <li>
+            <strong>Tahap 4: Co-Creation, Integrasi Google Sheets &amp; Setting WA Auto-Reply (Setelah DP 50%)</strong> &mdash; Menyempurnakan daftar menu, foto, kode voucher promo, dan menghubungkan situs ke <strong>Google Sheets milik klien</strong>. Menyusun 5 template <em>Quick Replies</em> serta pesan salam otomatis (<em>Greeting &amp; Away Message</em>) di WhatsApp Business klien.
+        </li>
+        <li>
+            <strong>Tahap 5: Deployment Serverless, Serah Terima QR Akrilik &amp; Pelunasan 50%</strong> &mdash; Melakukan <em>deployment</em> ke <strong>Cloudflare Pages</strong>, menghubungkan domain custom (<code>.my.id</code> atau <code>.com</code>), menyerahkan <strong>Standee QR Code Akrilik Meja</strong> beserta video panduan 2 menit cara mengubah harga/promo dari HP, lalu menyelesaikan pelunasan 50%.
+        </li>
+    </ol>
+
+    <!-- 6. ANALISIS FINANSIAL -->
+    <h2 class="section-title">6. ANALISIS FINANSIAL: MODAL, UNTUNG, DAN RUGI (UNIT ECONOMICS BARU)</h2>
+
+    <h3 class="subsection-title">A. Biaya Tetap Operasional (Fixed Costs) Bulanan</h3>
+    <ul class="bullet-list">
+        <li>Subskripsi AI Agent &amp; IDE (Google Antigravity Workspace): <strong>Rp 250.000</strong></li>
+        <li>Alokasi Kuota Internet &amp; Utilitas Kerja: <strong>Rp 150.000</strong></li>
+        <li>Tools WhatsApp Automation &amp; Google Maps Prospecting: <strong>Rp 100.000</strong></li>
+        <li>Biaya Hosting Server (Cloudflare Pages) &amp; Database (Google Sheets): <strong>Rp 0 (Gratis Selamanya)</strong></li>
+        <li><strong>Total Biaya Tetap Operasional Bulanan: Rp 500.000 / Bulan</strong></li>
+    </ul>
+
+    <h3 class="subsection-title">B. Biaya Variabel per Klien (Harga Pokok Penjualan / HPP)</h3>
+    <p>
+        Dengan mengganti generator berbasis kredit berbayar menjadi <strong>Google Antigravity + Arsitektur Modular</strong> serta mengalokasikan Domain Resmi <code>.com</code> ke dalam <strong>Upgrade Paket Pro (+Rp 590.000)</strong> atau <strong>Add-On Satuan (+Rp 185.000)</strong> di Langkah 3, biaya variabel dasar untuk Paket Starter dan Paket Complete berhasil ditekan menjadi sangat ringan:
+    </p>
+    <ul class="bullet-list">
+        <li><strong>HPP Paket Starter (Kustomisasi Minor Gratis):</strong> Domain <code>.my.id</code>/<code>.biz.id</code> 1 Tahun (Rp 25.000) + Cetak Stiker QR Akrilik (Rp 25.000) + AI/Server (Rp 0) = <strong>Rp 50.000 / Klien</strong>.</li>
+        <li><strong>HPP Paket Complete All-In (Kustomisasi Minor Gratis):</strong> Domain <code>.my.id</code>/<code>.biz.id</code> 1 Tahun (Rp 25.000) + Cetak Standee QR Akrilik Meja (Rp 25.000) + AI/Server (Rp 0) = <strong>Rp 50.000 / Klien</strong>.</li>
+        <li><strong>HPP Paket Complete + Upgrade Paket Pro (Kustomisasi Masif):</strong> Domain Resmi <code>.com</code> 1 Tahun (Rp 150.000) + 3 pcs Standee QR Akrilik Meja (Rp 75.000) + AI/Server (Rp 0) = <strong>Rp 225.000 / Klien</strong>.</li>
+    </ul>
+
+    <h3 class="subsection-title">C. Perhitungan Laba Bersih &amp; Margin per Paket</h3>
+    <ul class="bullet-list">
+        <li><strong>1. Paket Starter (Rp 499.000 + Kustom Minor Rp 0):</strong> Profit Bersih = Rp 499.000 &ndash; Rp 50.000 = <strong>Rp 449.000 / KLIEN (Margin ~90,0%)</strong></li>
+        <li><strong>2. Paket Complete All-In (Rp 899.000 + Kustom Minor Rp 0):</strong> Profit Bersih = Rp 899.000 &ndash; Rp 50.000 = <strong>Rp 849.000 / KLIEN (Margin ~94,4%)</strong></li>
+        <li><strong>3. Paket Complete + 👑 Upgrade Paket Pro (Rp 899.000 + Rp 590.000 = Rp 1.489.000):</strong> Profit Bersih = Rp 1.489.000 &ndash; Rp 225.000 = <strong>Rp 1.264.000 / KLIEN (Margin ~84,9%)</strong></li>
+    </ul>
+
+    <h3 class="subsection-title">D. Analisis Break-Even Point (BEP)</h3>
+    <div class="highlight-box gold avoid-break">
+        <p style="margin-bottom: 6px;">
+            <strong>BEP Unit (berdasarkan Paket Complete All-In sebagai paket utama):</strong><br>
+            <code>BEP = Fixed Cost Bulanan &divide; Laba Bersih per Unit = Rp 500.000 &divide; Rp 849.000 = 0,59 Unit (~1 Klien / Bulan)</code>
+        </p>
+        <p style="margin-bottom: 0;">
+            <strong>Kesimpulan Finansial:</strong> Strategi membuka 100% fitur interaktif pada <strong>Paket Complete All-In (Rp 899.000)</strong> dan menempatkan <strong>Paket Pro (+Rp 590.000)</strong> di Langkah 3 meningkatkan margin laba bersih Paket Complete dari 80,5% menjadi <strong>94,4% (Rp 849.000/klien)</strong> tanpa membuat pelanggan merasa dimonopoli. Hanya dengan memenangkan <strong>1 klien Paket Complete</strong> per bulan, seluruh biaya operasional bulanan sudah tertutup penuh.
+        </p>
+    </div>
+
+    <!-- 7. STUDENT ACTIVITIES REPORT -->
+    <h2 class="section-title">7. STUDENT ACTIVITIES REPORT (DATA RIIL RESPONDEN UMKM)</h2>
+    <p>
+        <strong>Dokumentasi Video Pengujian Lapangan:</strong> <a href="VID-20261003-WA0028.mp4">VID-20261003-WA0028.mp4</a>
+    </p>
+
+    <h3 class="subsection-title">A. Metodologi Testing Prototipe</h3>
+    <p class="indent">
+        Pengujian prototipe dan validasi pasar dilakukan melalui pendekatan <em>Asynchronous Video-Demo Survey</em>, wawancara langsung, serta pengisian kuesioner terstruktur yang melibatkan <strong>23 responden pemilik UMKM riil</strong> di berbagai lintas sektor bisnis (meliputi sektor F&amp;B/Kuliner, Retail/Online Shop, Penyedia Jasa, Otomotif, hingga Akomodasi). Pengujian ini dirancang untuk memvalidasi <em>problem-solution fit</em>, memetakan kebiasaan transaksi harian, serta mengukur daya beli (<em>willingness to pay</em>) terhadap solusi integrasi <em>Hybrid App-Storefront</em>, <em>Smart WA Funnel</em>, dan otomatisasi balasan <em>Customer Service</em> (WA Auto-Reply).
+    </p>
+
+    <h3 class="subsection-title">B. Hasil Analisis Masalah Utama &amp; Karakteristik Pasar UMKM (Sinkronisasi Data BMC)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 7%;">No</th>
+                <th style="width: 61%;">Kategori Masalah Operasional (Pain Point) &amp; Perilaku Pasar UMKM</th>
+                <th style="width: 16%;">Jumlah UMKM</th>
+                <th style="width: 16%;">Persentase</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="center">1</td>
+                <td><strong>Kelelahan Admin Chat:</strong> Capek membalas chat pelanggan yang menanyakan harga/menu/ketersediaan satu per satu secara berulang</td>
+                <td class="center">15 UMKM</td>
+                <td class="center bold">65,2%</td>
+            </tr>
+            <tr>
+                <td class="center">2</td>
+                <td><strong>Ketergantungan Kanal WhatsApp:</strong> Menerima pesanan pelanggan secara rutin melalui chat WhatsApp sebagai kanal transaksi utama</td>
+                <td class="center">14 UMKM</td>
+                <td class="center bold">60,9%</td>
+            </tr>
+            <tr>
+                <td class="center">3</td>
+                <td><strong>Human Error Rekapitulasi:</strong> Sering salah hitung atau pusing merekap pesanan karena chat masuk menumpuk di jam sibuk</td>
+                <td class="center">12 UMKM</td>
+                <td class="center bold">52,2%</td>
+            </tr>
+            <tr>
+                <td class="center">4</td>
+                <td><strong>Beban Komisi Pihak Ketiga:</strong> Terbebani oleh potongan bagi hasil/komisi aplikasi ojol &amp; marketplace (20%–30%) yang menggerus margin</td>
+                <td class="center">10 UMKM</td>
+                <td class="center bold">43,5%</td>
+            </tr>
+            <tr>
+                <td class="center">5</td>
+                <td><strong>Hambatan Eksekusi Promosi:</strong> Kesulitan mengelola program promo/diskon &amp; komunikasi balasan tindak lanjut ke pelanggan</td>
+                <td class="center">8 UMKM</td>
+                <td class="center bold">34,8%</td>
+            </tr>
+            <tr>
+                <td class="center">6</td>
+                <td class="highlight-col"><strong>Validasi Daya Beli (Willingness to Pay):</strong> Menyatakan kesiapan anggaran investasi sistem digital di rentang <strong>Rp 1.000.000 – Rp 2.500.000</strong></td>
+                <td class="highlight-col center">21 UMKM</td>
+                <td class="highlight-col center bold">91,3%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="subsection-title">C. Analisis Minat Solusi &amp; Preferensi Fitur</h3>
+    <p>
+        Hasil pengumpulan preferensi menunjukkan adanya urgensi tinggi dari para pemilik usaha untuk beralih ke sistem transaksi yang lebih terstruktur dan efisien:
+    </p>
+    <ul class="bullet-list">
+        <li>
+            <strong>Fitur Integrasi Pesanan Otomatis ke WhatsApp (Smart WA Funnel):</strong> Menjadi fitur paling diminati oleh <strong>40,9% pelaku usaha</strong>. Sistem ini dinilai sangat solutif karena mampu merangkum seluruh rincian order, mode pesanan (meja/antar), potongan diskon, dan total harga secara otomatis menjadi format teks struk rapi tanpa proses rekap manual dari pihak penjual.
+        </li>
+        <li>
+            <strong>Paket Solusi Lengkap (Storefront + WA Auto-Reply + Fitur Promosi):</strong> Diminati oleh <strong>36,4% pelaku usaha</strong> yang membutuhkan ekosistem digital secara utuh untuk memperluas jangkauan pasar, mengelola diskon/voucher, sekaligus mengotomatiskan balasan chat pelanggan.
+        </li>
+        <li>
+            <strong>Tampilan Katalog / Menu Digital Interaktif:</strong> Diminati oleh <strong>22,7% pelaku usaha</strong> sebagai media informasi mandiri yang praktis agar pelanggan dapat mempelajari detail produk, harga, dan ketersediaan stok sebelum melakukan pemesanan.
+        </li>
+    </ul>
+
+    <!-- 8. FEEDBACK CAPTURE GRID -->
+    <div class="avoid-break">
+        <h2 class="section-title">8. FEEDBACK CAPTURE GRID &amp; TINDAK LANJUT FITUR PROTOTIPE</h2>
+        <p>
+            Berdasarkan hasil <em>in-depth interview</em> terhadap 5 calon pengguna UMKM lintas segmen, umpan balik dikelompokkan ke dalam empat kuadran evaluasi: <em>Likes</em>, <em>Ideas</em>, <em>Questions</em>, dan <em>Criticism</em>.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Likes (Hal yang Disukai)</th>
+                    <th style="width: 25%;">Ideas (Saran Pengembangan)</th>
+                    <th style="width: 25%;">Questions (Pertanyaan)</th>
+                    <th style="width: 25%;">Criticism (Kritik)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Orang 1:</strong> Mengatakan harga yang ditawarkan sangat terjangkau dan website dapat membantu usaha wartegnya lebih dikenal luas.</td>
+                    <td><strong>Orang 1:</strong> Menyarankan agar daftar makanan yang tersedia ditambahkan lebih banyak &amp; mudah di-update.</td>
+                    <td rowspan="2">Tidak ada responden yang menyampaikan kebingungan mengenai cara penggunaan prototipe atau fungsi tombol tertentu.<br><br><em>Interpretasi:</em> Alur transaksi mandiri dari pilih produk hingga kirim ke WA sudah intuitif.</td>
+                    <td rowspan="2">Tidak ada kritik negatif terhadap struktur tata letak (UI) maupun kecepatan akses prototipe.<br><br><em>Interpretasi:</em> Desain dasar sudah memenuhi standar kenyamanan pengguna seluler.</td>
+                </tr>
+                <tr>
+                    <td><strong>Orang 2:</strong> Mengatakan prototipe sangat membantu usahanya terlihat profesional dan dikenal lebih luas.</td>
+                    <td><strong>Orang 2:</strong> Menyarankan penambahan <strong>fitur terjemahan bahasa (Translate ID/EN)</strong> untuk pelanggan asing.</td>
+                </tr>
+                <tr>
+                    <td><strong>Orang 3:</strong> Menilai desain visual prototipe bagus serta membantu pemilik toko maupun pembeli saat bertransaksi.</td>
+                    <td><strong>Orang 3:</strong> Memberikan masukan kuat untuk menambahkan <strong>fitur diskon / harga coret</strong> pada produk.</td>
+                    <td rowspan="3" colspan="2" class="highlight-col">
+                        <strong>Tindak Lanjut Nyata pada Rancangan Baru (Prototype_3):</strong><br>
+                        1. <strong>Fitur Promo &amp; Kode Voucher Diskon</strong> ditambahkan langsung di keranjang &amp; banner utama (menjawab Orang 3, 4, 5).<br>
+                        2. <strong>Toggle Bahasa Instan (ID/EN)</strong> dipasang di navigasi atas (menjawab Orang 2).<br>
+                        3. <strong>Sinkronisasi Google Sheets &amp; Filter Kategori</strong> ditambahkan agar UMKM leluasa memuat banyak menu dan mengubah stok sendiri dari HP (menjawab Orang 1).
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Orang 4:</strong> Menyatakan menu digital jauh lebih mudah digunakan dibanding chat manual karena UI tidak rumit dan alurnya jelas.</td>
+                    <td><strong>Orang 4:</strong> Menyarankan penambahan <strong>fitur paket promo / voucher</strong> untuk menarik pembeli.</td>
+                </tr>
+                <tr>
+                    <td><strong>Orang 5:</strong> Mengatakan menu digital praktis, tampilan bersih, dan tidak ada fitur yang membingungkan pelanggan.</td>
+                    <td><strong>Orang 5:</strong> Juga menyarankan penambahan <strong>fitur promo berkala</strong> di halaman utama.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="subsection-title">Interpretasi Utama dari Feedback Wawancara</h3>
+    <ol class="num-list">
+        <li>
+            <strong>Usability &amp; Kejelasan Alur Menjadi Kekuatan Utama:</strong> Responden 3, 4, dan 5 secara konsisten mengonfirmasi bahwa antarmuka katalog dan tombol <em>checkout</em> WhatsApp sangat mudah dipahami baik oleh pemilik usaha maupun pelanggan awam. Oleh karena itu, model <strong>Hybrid App-Storefront</strong> mempertahankan alur satu halaman tanpa kewajiban membuat akun/login.
+        </li>
+        <li>
+            <strong>Fitur Promo/Diskon Adalah Kebutuhan Paling Kritis (60% Responden):</strong> Tiga dari lima responden wawancara (Orang 3, 4, dan 5) secara independen meminta fitur diskon/promo. Temuan ini menjadi alasan utama Digitra membangun <strong>Promo &amp; Voucher Engine</strong> serta integrasi <strong>Google Sheets</strong> agar pemilik UMKM dapat menyalakan promo kapan saja tanpa biaya tambahan.
+        </li>
+        <li>
+            <strong>Kelengkapan Katalog &amp; Aksesibilitas Multi-Bahasa (ID/EN):</strong> Masukan dari Orang 1 (kapasitas daftar menu lebih banyak) dan Orang 2 (fitur <em>translate</em>) diwujudkan melalui fitur <em>Sticky Category Pills</em>, kolom pencarian instan, serta tombol pengubah bahasa Indonesia–Inggris (ID/EN) satu klik pada <code>Prototype_3</code>.
+        </li>
+        <li>
+            <strong>Ruang Optimalisasi Harga di Bawah Ekspektasi Pasar:</strong> Karena 91,3% responden survei menilai solusi ini layak dihargai Rp 1.000.000 – Rp 2.500.000, penetapan harga baru Digitra di angka <strong>Rp 499.000 (Starter)</strong> dan <strong>Rp 899.000 (Complete)</strong> tetap terasa sangat hemat bagi UMKM, namun memberikan lonjakan margin laba bersih hingga 80%–90% bagi tim Digitra.
+        </li>
+    </ol>
+
+    <!-- 9. DESIGN ITERATION -->
+    <div class="avoid-break">
+        <h2 class="section-title">9. DESIGN ITERATION (PERJALANAN ITERASI PROTOTIPE 1 &rarr; 3)</h2>
+        <p>
+            Bagian ini merangkum evolusi rancangan produk dan model bisnis Digitra berdasarkan pengujian lapangan dan penyempurnaan Business Model Canvas (BMC):
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 18%;">Tahap Iterasi</th>
+                    <th style="width: 26%;">Fokus Desain &amp; Penawaran</th>
+                    <th style="width: 28%;">Temuan Riset / Umpan Balik</th>
+                    <th style="width: 28%;">Perubahan &amp; Upgrade yang Dilakukan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bold">Iterasi 1 &ndash;<br>Konsep Awal<br>(Prototype 1)</td>
+                    <td>Landing page profil statis + Smart WA Funnel dasar dengan QR Code akrilik di meja kasir.</td>
+                    <td>Survei pada 23 UMKM lintas sektor membuktikan masalah terbesar adalah lelah balas chat harga/menu satu per satu (<strong>65,2%</strong>), salah rekap pesanan (<strong>52,2%</strong>), dan komisi ojol (<strong>43,5%</strong>).</td>
+                    <td>Menggeser fokus dari sekadar brosur digital pasif menjadi solusi pengurangan beban operasional chat dan otomatisasi rekap pesanan via WA.</td>
+                </tr>
+                <tr>
+                    <td class="bold">Iterasi 2 &ndash;<br>Integrasi WA CS &amp; Feedback Grid<br>(Prototype 2)</td>
+                    <td>Penambahan Paket WA Business Auto-Reply &amp; 5 Template Quick Replies CS AI.</td>
+                    <td>Wawancara 5 UMKM mengungkap kebutuhan konsisten akan <strong>fitur promo/diskon (60%)</strong>, <strong>fitur translate ID/EN</strong>, kemudahan update menu mandiri, serta fakta bahwa <strong>91,3% UMKM siap bayar Rp1–2,5 juta</strong>.</td>
+                    <td>Merancang sistem <strong>Promo/Voucher</strong>, <strong>Toggle Bahasa ID/EN</strong>, dan <strong>Live Menu via Google Sheets</strong> agar klien bisa update harga/stok/promo sendiri dari HP.</td>
+                </tr>
+                <tr>
+                    <td class="highlight-col bold">Iterasi 3 &ndash;<br>Strategi 2 Paket All-In &amp; Kustomisasi Pro Hybrid<br>(Digitra Official Web)</td>
+                    <td class="highlight-col"><strong>2 Paket Template (Starter Rp499rb Estetik vs Complete All-In Rp899rb 100% Fitur)</strong> + Alokasi <strong>Paket Pro (+Rp590rb)</strong> khusus di Langkah 3 (Kustomisasi Masif) &amp; Kustomisasi Minor Gratis (Rp0).</td>
+                    <td class="highlight-col">Memisahkan paket menjadi 3 tier di awal membuat fitur terasa dikunci/dimonopoli, sementara tampilan Starter standar yang kaku menurunkan citra kualitas karya Digitra.</td>
+                    <td class="highlight-col">Mendesain ulang <strong>Starter (Rp499rb)</strong> agar tetap berkelas (Katalog Foto HD Estetik), membuka <strong>100% seluruh fitur di Complete (Rp899rb, Margin 94,4%)</strong>, menggratiskan Kustomisasi Minor (Rp0), dan mengalokasikan <strong>Upgrade Paket Pro (+Rp590rb)</strong> serta <em>Add-On Satuan</em> secara adil di Langkah 3.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 10. KESIMPULAN AKHIR -->
+    <div class="avoid-break">
+        <h2 class="section-title">10. KESIMPULAN AKHIR &amp; BUSINESS MODEL CANVAS (BMC) TERBARU</h2>
+        <p class="indent">
+            Hasil validasi pasar terhadap 23 pelaku UMKM dan wawancara mendalam membuktikan bahwa hambatan utama UMKM di era digital bukanlah ketiadaan brosur profil, melainkan <strong>beban operasional membalas chat berulang (65,2%), kesalahan rekapitulasi pesanan di WhatsApp (52,2%), potongan komisi aplikasi pihak ketiga (43,5%), serta ketidakmampuan memperbarui promo/harga secara mandiri</strong>.
+        </p>
+        <p class="indent">
+            Melalui pembaruan strategi <strong>Unbundled Value &amp; Fair Customization Pricing</strong> pada dokumen ini dan pengembangan <strong>Digitra Official Web</strong>, Digitra menghadirkan keunggulan yang adil bagi pelanggan sekaligus bermargin tinggi bagi bisnis: (1) <strong>Paket Starter (Rp 499.000)</strong> menyajikan katalog foto HD estetik yang menjaga wibawa brand Digitra, (2) <strong>Paket Complete All-In (Rp 899.000)</strong> membuka <strong>100% seluruh sistem &amp; efek interaktif</strong> (Pop-Up Khas, Keranjang + Voucher, Simulasi QRIS, Partikel Canvas, Generator Standee QR Meja <code>#07</code> &amp; Google Sheets Sync) dengan margin bersih <strong>94,4% (Rp 849.000/klien)</strong>, serta (3) di Langkah 3, <strong>Kustomisasi Minor diberikan GRATIS (Rp 0)</strong> dan <strong>Upgrade Paket Pro (+Rp 590.000)</strong> hadir secara transparan bagi bisnis yang membutuhkan kustomisasi masif &amp; terima beres.
+        </p>
+        <img src="BMC_Digitra_Updated.png" alt="Business Model Canvas Digitra Terbaru" class="bmc-embed">
+    </div>
+
+    <div class="footer-note">
+        Laporan Perancangan Bisnis &amp; Student Activities &mdash; Digitra (Web &amp; AI Solutions) &bull; Edisi Pembaruan BMC &amp; Prototype_3 (Oktober 2026)
+    </div>
+
+</body>
+</html>

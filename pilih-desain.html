@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -15,6 +15,7 @@
                     fontFamily: {
                         sans: ['"Inter"', 'sans-serif'],
                         display: ['"Sora"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
                     }
                 }
             }
@@ -27,7 +28,7 @@
             }
         }
         body {
-            background-color: #0B1020;
+            background-color: #05070F;
             color: #F5F7FF;
         }
         .text-gradient-digitra {
@@ -38,17 +39,31 @@
         .bg-gradient-digitra {
             background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
         }
+        .card-glow {
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-glow:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 229, 255, 0.22);
+            border-color: rgba(0, 229, 255, 0.45);
+        }
+        /* Modal Backdrop styling */
+        dialog::backdrop {
+            background: rgba(5, 7, 15, 0.85);
+            backdrop-filter: blur(8px);
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
 
     <!-- =======================================================================
-         1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
+         1. UNIFIED SLEEK HEADER & 3-STEP PROGRESS STEPPER
     ======================================================================== -->
     <header class="sticky top-0 z-40 bg-[#05070F]/90 backdrop-blur-xl border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
-            <a href="index.html" class="flex items-center gap-3 group">
-                <svg class="w-9 h-9 shrink-0" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-3 group shrink-0">
+                <svg width="36" height="36" style="width: 36px; height: 36px; min-width: 36px;" class="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                     <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="#00E5FF"/>
                     <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="#8B5CF6"/>
                 </svg>
@@ -58,141 +73,220 @@
                 </div>
             </a>
 
-            <!-- 3-Step Progress Stepper -->
-            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-3 text-xs font-display font-bold">
-                <span class="px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow">
-                    ① Pilih Desain
-                </span>
-                <span class="text-slate-600">&rarr;</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
-                    ② Pilih Paket &amp; Cek Demo
-                </span>
-                <span class="text-slate-600">&rarr;</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
-                    ③ Kustomisasi &amp; Upload Foto
-                </span>
+            <!-- Sleek 3-Step Progress Stepper -->
+            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-2.5 text-xs font-display font-bold">
+                <!-- Step 1: Active -->
+                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow-lg shadow-[#00E5FF]/20">
+                    <span class="w-5 h-5 rounded-full bg-[#05070F] text-[#00E5FF] flex items-center justify-center text-[11px] font-extrabold">1</span>
+                    <span>Pilih Desain</span>
+                </div>
+                <span class="text-slate-600 font-bold">&rarr;</span>
+                <!-- Step 2: Next -->
+                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
+                    <span class="w-5 h-5 rounded-full bg-white/10 text-slate-400 flex items-center justify-center text-[11px]">2</span>
+                    <span>Pilih Paket &amp; Fitur</span>
+                </div>
+                <span class="text-slate-600 font-bold">&rarr;</span>
+                <!-- Step 3: Customization -->
+                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-400 border border-white/10">
+                    <span class="w-5 h-5 rounded-full bg-white/10 text-slate-400 flex items-center justify-center text-[11px]">3</span>
+                    <span>Kustomisasi UMKM</span>
+                </div>
             </nav>
 
-            <a href="index.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300">
-                &larr; Beranda
+            <!-- Navigation Back to Home -->
+            <a href="index.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center gap-1.5">
+                <span>&larr;</span>
+                <span>Beranda</span>
             </a>
         </div>
     </header>
 
     <!-- =======================================================================
-         2. MAIN CONTENT: PILIH TEMPLATE SESUAI KATEGORI ATAU CUSTOM DARI NOL
+         2. MAIN CONTENT: CLEAN SHOWCASE CARDS & BALANCED FILTERS
     ======================================================================== -->
     <main class="flex-1 py-12 sm:py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-8">
-            <!-- Header & Category Filter -->
-            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Langkah 1 dari 3 &bull; Pilih Basis Tampilan</span>
-                    <h1 class="font-display font-bold text-3xl sm:text-4xl text-white mt-1.5">
-                        Pilih Desain Website Sesuai Kategori Bisnis Anda
-                    </h1>
-                    <p class="text-sm text-slate-400 mt-1.5 max-w-2xl">
-                        Setiap template di bawah ini nantinya dapat Anda gunakan langsung maupun dimodifikasi warna, logo, dan foto produknya pada langkah ke-3.
-                    </p>
-                </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 space-y-10">
 
-                <!-- Category Filter Buttons -->
-                <div class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-2xl border border-white/10 shrink-0 overflow-x-auto">
-                    <button type="button" onclick="filterDesigns('all')" data-cat="all" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] whitespace-nowrap">
-                        ✨ Semua (4)
+            <!-- Hero Headline & Category Filter Bar -->
+            <div class="text-center space-y-4 max-w-3xl mx-auto">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20 text-xs font-bold tracking-wider uppercase">
+                    <span class="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                    Langkah 1 dari 3 &bull; Fondasi Tampilan
+                </span>
+                
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
+                    Pilih Desain Berkarakter untuk Usaha Anda
+                </h1>
+                
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                    Setiap karya di bawah ini dilengkapi sistem interaksi pemesanan khas. Teks, menu, foto produk, dan warna brand akan disesuaikan dengan UMKM Anda di langkah ke-3.
+                </p>
+
+                <!-- Category Filter Tabs -->
+                <div class="pt-4 flex flex-wrap items-center justify-center gap-2">
+                    <button type="button" onclick="filterDesigns('all')" data-cat="all" 
+                        class="filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] shadow-lg shadow-[#00E5FF]/20 whitespace-nowrap transition-all">
+                        ✨ Semua Karya (4)
                     </button>
-                    <button type="button" onclick="filterDesigns('harth')" data-cat="harth" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                    <button type="button" onclick="filterDesigns('harth')" data-cat="harth" 
+                        class="filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-[#0B1020] text-slate-400 hover:text-white border border-white/10 whitespace-nowrap transition-all">
                         ☕ Cafe &amp; Bakery
                     </button>
-                    <button type="button" onclick="filterDesigns('hush')" data-cat="hush" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                    <button type="button" onclick="filterDesigns('hush')" data-cat="hush" 
+                        class="filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-[#0B1020] text-slate-400 hover:text-white border border-white/10 whitespace-nowrap transition-all">
                         🍣 Resto &amp; Kuliner
                     </button>
-                    <button type="button" onclick="filterDesigns('cedar')" data-cat="cedar" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
-                        🥾 Retail &amp; Sepatu
+                    <button type="button" onclick="filterDesigns('cedar')" data-cat="cedar" 
+                        class="filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-[#0B1020] text-slate-400 hover:text-white border border-white/10 whitespace-nowrap transition-all">
+                        🥾 Retail &amp; Fashion
                     </button>
-                    <button type="button" onclick="filterDesigns('barbearia')" data-cat="barbearia" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
+                    <button type="button" onclick="filterDesigns('barbearia')" data-cat="barbearia" 
+                        class="filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-[#0B1020] text-slate-400 hover:text-white border border-white/10 whitespace-nowrap transition-all">
                         💈 Barbershop &amp; Jasa
                     </button>
                 </div>
             </div>
 
-            <!-- 2x2 Clean Template Cards Grid -->
-            <div id="designCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-7"></div>
+            <!-- 2-Column Clean Template Showcase Grid -->
+            <div id="designCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
 
-            <!-- Option B: Custom Design from Scratch Card -->
-            <div class="mt-10 rounded-3xl bg-gradient-to-r from-[#05070F] via-[#131129] to-[#05070F] border-2 border-[#8B5CF6]/50 p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-2xl">
+            <!-- Option B: Custom Design / Paket Pro Massive Customization Banner -->
+            <div class="mt-14 rounded-3xl bg-gradient-to-r from-[#0B1020] via-[#14122e] to-[#0B1020] border border-[#8B5CF6]/40 p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-2xl">
                 <div class="space-y-2 max-w-2xl">
-                    <span class="inline-block px-3 py-1 rounded-full bg-[#8B5CF6]/20 text-purple-300 border border-[#8B5CF6]/40 text-xs font-bold">
-                        🎨 Opsi Full Custom (Desain Baru dari Awal)
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B5CF6]/20 text-purple-300 border border-[#8B5CF6]/30 text-xs font-bold">
+                        👑 Opsi Paket Pro: Kustomisasi Masif &amp; Terima Beres
                     </span>
                     <h2 class="font-display font-bold text-xl sm:text-2xl text-white">
-                        Punya Referensi Desain Sendiri atau Kategori Usaha Unik?
+                        Punya Referensi Desain Sendiri atau Butuh Perombakan Masif?
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Jika Anda menginginkan tampilan website yang dirancang 100% baru dari nol (di luar template di atas), tim UI/UX Digitra siap merancangkannya khusus untuk perusahaan Anda.
+                        Kustomisasi minor (ganti warna brand, font, logo &amp; foto produk) sudah <strong class="text-emerald-400">GRATIS</strong> di semua template. Namun jika bisnis Anda membutuhkan struktur layout khusus, gratis Domain Resmi <code>.com</code>, dan input 50 produk terima beres, pilih <strong>Upgrade Paket Pro (+Rp 590rb)</strong> di Langkah 3.
                     </p>
                 </div>
                 <div class="shrink-0">
-                    <a href="kustomisasi.html?design=harth&tier=pro&mode=scratch"
-                        class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#8B5CF6] hover:bg-[#7c4deb] text-white font-display font-bold text-xs shadow-xl transition-all">
-                        <span>Request Desain Baru dari Nol</span>
+                    <a href="kustomisasi.html?design=harth&tier=complete&mode=pro"
+                        class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-[#8B5CF6] border border-[#8B5CF6]/50 hover:border-[#8B5CF6] text-white font-display font-bold text-xs shadow-lg transition-all">
+                        <span>Lanjut dengan Paket Pro</span>
                         <span>&rarr;</span>
                     </a>
                 </div>
             </div>
+
         </div>
     </main>
 
     <!-- =======================================================================
-         3. FOOTER
+         3. SEAMLESS LIVE PREVIEW MODAL (LIGHTBOX POPUP)
+    ======================================================================== -->
+    <dialog id="previewModal" class="rounded-3xl bg-[#05070F] border border-white/15 text-white max-w-5xl w-[94vw] h-[88vh] p-0 shadow-2xl overflow-hidden m-auto">
+        <div class="flex flex-col h-full">
+            <!-- Modal Header -->
+            <div class="px-5 py-3.5 bg-[#0B1020] border-b border-white/10 flex items-center justify-between gap-4 shrink-0">
+                <div class="flex items-center gap-3">
+                    <span id="modalCategoryBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-white"></span>
+                    <h3 id="modalTitle" class="font-display font-bold text-base sm:text-lg text-white"></h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a id="modalExternalLink" href="#" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300">
+                        <span>Buka Tab Baru</span>
+                        <span>&nearr;</span>
+                    </a>
+                    <a id="modalSelectLink" href="#" class="px-4 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs shadow-md">
+                        Gunakan Desain Ini &rarr;
+                    </a>
+                    <button type="button" onclick="closePreviewModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-rose-500/20 hover:text-rose-300 flex items-center justify-center text-slate-400 text-sm font-bold transition-colors">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Iframe Preview Area -->
+            <div class="flex-1 bg-black relative">
+                <div id="modalLoading" class="absolute inset-0 flex items-center justify-center bg-[#05070F] text-xs text-slate-400">
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 border-2 border-[#00E5FF] border-t-transparent rounded-full animate-spin"></div>
+                        <span>Memuat interaksi live demo...</span>
+                    </div>
+                </div>
+                <iframe id="modalIframe" src="" class="w-full h-full border-0" onload="document.getElementById('modalLoading').style.display='none'"></iframe>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- =======================================================================
+         4. FOOTER
     ======================================================================== -->
     <footer class="bg-[#05070F] border-t border-white/10 py-6 text-center text-xs text-slate-400">
-        Digitra — Web &amp; AI Solutions &bull; Langkah 1 dari 3: Pemilihan Desain Website
+        Digitra — Web &amp; AI Solutions &bull; Langkah 1 dari 3: Pemilihan Fondasi Desain Website
     </footer>
 
+    <!-- =======================================================================
+         5. SCRIPTS: TEMPLATE DATA & DYNAMIC RENDERING
+    ======================================================================== -->
     <script>
         const DESIGNS = [
             {
                 id: 'harth',
-                categoryBadge: '☕ Cafe, Roastery & Artisan Bakery',
+                categoryBadge: '☕ Cafe & Bakery',
+                badgeColor: 'text-amber-300 bg-amber-500/10 border-amber-500/30',
                 title: 'Harth Specialty Coffee',
-                vibe: 'Warm Kinfolk Editorial & Animasi Uap Kopi',
-                desc: 'Cocok untuk coffee shop, toko roti, dan tempat nongkrong WFC. Dilengkapi struk pesanan meja barista dan indikator kursi/colokan.',
-                popupFeature: 'Pop-Up Struk Barista (Pilih Biji Kopi, Oat Milk, Takaran Gula & Es + QRIS)',
-                mapFeature: 'Peta Lokasi + Status Kursi WFC, Kecepatan Wi-Fi & Jam Fresh Roast',
+                slug: 'harth-coffee.digitra.id',
+                vibe: 'Warm Kinfolk & Barista Flow',
+                desc: 'Dirancang untuk coffee shop, roastery, & toko roti dengan struk pesanan meja barista otomatis dan peta indikator kursi colokan WFC.',
+                pills: [
+                    '⚡ Pop-Up Struk QRIS',
+                    '📍 Peta & Status Kursi WFC',
+                    '☕ Pilihan Roast & Oat Milk'
+                ],
                 demoUrl: 'demos/harth-coffee/index.html',
                 img: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=85'
             },
             {
                 id: 'hush',
-                categoryBadge: '🍣 Restoran, Sushi Bar & Kuliner',
+                categoryBadge: '🍣 Resto & Kuliner',
+                badgeColor: 'text-rose-300 bg-rose-500/10 border-rose-500/30',
                 title: 'Hush Modern Izakaya & Grill',
-                vibe: 'Dark Culinary & Efek Bara Api Panggangan',
-                desc: 'Cocok untuk restoran keluarga, sushi bar, steakhouse, maupun bisnis kuliner dengan layanan makan di tempat dan kurir instan.',
-                popupFeature: 'Pop-Up Tiket Dapur Chef (Pilih Saus/Torch, Urutan Keluar Makanan & Filter Alergi + QRIS)',
-                mapFeature: 'Peta Restoran + Info Valet VIP, Private Room & Radius Kurir Termal',
+                slug: 'hush-resto.digitra.id',
+                vibe: 'Dark Culinary & Efek Bara Api',
+                desc: 'Cocok untuk restoran keluarga, steakhouse, atau kuliner modern dengan tiket pesanan dapur chef, filter alergi, & radius kurir termal.',
+                pills: [
+                    '⚡ Tiket Dapur Chef',
+                    '📍 Info Valet & Private Room',
+                    '🥢 Filter Alergi & Saus'
+                ],
                 demoUrl: 'demos/hush-resto/index.html',
                 img: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=85'
             },
             {
                 id: 'cedar',
-                categoryBadge: '🥾 Retail Sepatu, Fashion & Kerajinan',
+                categoryBadge: '🥾 Retail & Fashion',
+                badgeColor: 'text-orange-300 bg-orange-500/10 border-orange-500/30',
                 title: 'Cedar Heritage Footwear',
-                vibe: 'Stitched Leather Lookbook & Panduan Size CM',
-                desc: 'Cocok untuk brand sepatu lokal, pakaian, tas kulit, dan kerajinan tangan yang dikirim ke seluruh Indonesia.',
-                popupFeature: 'Pop-Up Lembar Pengrajin (Tabel Ukuran EU 40–44 ke CM + Ukir Nama Monogram + Ongkir Kurir)',
-                mapFeature: 'Peta Studio Fitting & Workshop + Info Ekspedisi JNE/J&T/SiCepat',
+                slug: 'cedar-shoes.digitra.id',
+                vibe: 'Stitched Leather & Lookbook',
+                desc: 'Khusus brand sepatu kulit, kriya lokal, pakaian, dan aksesori dengan tabel konversi ukuran CM serta formulir ukir inisial monogram.',
+                pills: [
+                    '⚡ Tabel Ukuran EU-CM',
+                    '📍 Peta Studio & Ekspedisi',
+                    '🧵 Fitur Ukir Inisial Nama'
+                ],
                 demoUrl: 'demos/cedar-shoes/index.html',
                 img: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1000&q=85'
             },
             {
                 id: 'barbearia',
-                categoryBadge: '💈 Barbershop, Salon, Klinik & Jasa VIP',
+                categoryBadge: '💈 Barbershop & Jasa',
+                badgeColor: 'text-cyan-300 bg-cyan-500/10 border-cyan-500/30',
                 title: 'Barbearia Gentlemen’s Club',
-                vibe: 'Obsidian Gold Luxury & Sistem Booking Kursi',
-                desc: 'Khusus bisnis jasa yang menggunakan sistem jadwal jam kedatangan dan pemilihan kapster/terapis tanpa antre.',
-                popupFeature: 'Pop-Up VIP Appointment Pass (Pilih Master Barber, Jam Kedatangan & Welcome Drink)',
-                mapFeature: 'Peta Gentlemen Lounge + Info Parkir VIP & Slot Kursi Kosong Hari Ini',
+                slug: 'barbearia-club.digitra.id',
+                vibe: 'Obsidian Gold Luxury',
+                desc: 'Khusus bisnis jasa & perawatan pria yang membutuhkan sistem booking jam kedatangan, pemilihan kapster, dan pass VIP anti antre.',
+                pills: [
+                    '⚡ VIP Appointment Pass',
+                    '📍 Status Kursi Kapster Kosong',
+                    '☕ Free Welcome Drink'
+                ],
                 demoUrl: 'demos/barbearia-club/index.html',
                 img: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=85'
             }
@@ -203,46 +297,77 @@
             const list = filter === 'all' ? DESIGNS : DESIGNS.filter(d => d.id === filter);
 
             grid.innerHTML = list.map(d => `
-                <article class="rounded-3xl bg-[#05070F] border border-white/10 hover:border-[#00E5FF]/50 overflow-hidden shadow-2xl flex flex-col justify-between transition-all group">
+                <article class="group bg-[#0B1020] border border-white/10 hover:border-[#00E5FF]/40 rounded-3xl overflow-hidden card-glow shadow-2xl flex flex-col justify-between">
                     <div>
-                        <div class="relative h-60 overflow-hidden">
-                            <img src="${d.img}" alt="${d.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-[#05070F]/25 to-transparent"></div>
-                            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#05070F]/90 border border-white/15 text-xs font-bold text-[#00E5FF]">
-                                ${d.categoryBadge}
+                        <!-- Mockup Browser Top Bar -->
+                        <div class="bg-[#05070F] px-4 py-2.5 border-b border-white/10 flex items-center justify-between">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+                                <span class="text-[11px] text-slate-400 font-mono ml-2 tracking-tight">${d.slug}</span>
+                            </div>
+                            <span class="text-[11px] font-semibold text-emerald-400 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Siap Pakai
                             </span>
-                            <a href="${d.demoUrl}" target="_blank" rel="noopener"
-                                class="absolute bottom-3 right-3 px-3.5 py-1.5 rounded-xl bg-[#05070F]/90 hover:bg-black text-white border border-white/20 text-xs font-semibold">
-                                👁️ Lihat Live Demo &nearr;
-                            </a>
                         </div>
 
-                        <div class="p-6 space-y-3">
-                            <div class="text-xs font-semibold text-purple-300">${d.vibe}</div>
-                            <h2 class="font-display font-bold text-2xl text-white">${d.title}</h2>
-                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${d.desc}</p>
+                        <!-- Card Cover Image with Quick Preview Hover -->
+                        <div class="relative h-60 overflow-hidden bg-slate-900">
+                            <img src="${d.img}" alt="${d.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0B1020] via-transparent to-transparent"></div>
+                            
+                            <!-- Category Badge -->
+                            <div class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-[#05070F]/90 backdrop-blur-md border ${d.badgeColor} text-xs font-bold">
+                                ${d.categoryBadge}
+                            </div>
 
-                            <div class="pt-2 space-y-2 text-xs">
-                                <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
-                                    <strong class="text-[#00E5FF] block">✨ Pop-Up Pemesanan Khas:</strong>
-                                    <span class="text-slate-300">${d.popupFeature}</span>
-                                </div>
-                                <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
-                                    <strong class="text-purple-300 block">📍 Peta Lokasi Khas:</strong>
-                                    <span class="text-slate-300">${d.mapFeature}</span>
-                                </div>
+                            <!-- On-Hover Quick Peek Lightbox Trigger -->
+                            <div class="absolute inset-0 bg-[#05070F]/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm gap-2">
+                                <button type="button" onclick="openPreviewModal('${d.id}')" 
+                                    class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-display font-bold text-xs flex items-center gap-2 shadow-xl hover:scale-105 transition-all">
+                                    <span>👁️ Intip Demo di Sini</span>
+                                </button>
+                                <a href="${d.demoUrl}" target="_blank" rel="noopener" 
+                                    class="px-3.5 py-2.5 rounded-xl bg-[#05070F]/90 hover:bg-[#05070F] border border-white/20 text-slate-300 hover:text-white text-xs font-semibold">
+                                    &nearr;
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card Body Details -->
+                        <div class="p-6 space-y-3">
+                            <div class="text-[11px] font-bold uppercase tracking-wider text-purple-300">${d.vibe}</div>
+                            <h2 class="font-display font-bold text-2xl text-white group-hover:text-[#00E5FF] transition-colors leading-snug">
+                                ${d.title}
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                ${d.desc}
+                            </p>
+
+                            <!-- Modern Pills instead of bulky boxes -->
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                ${d.pills.map(p => `
+                                    <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-medium text-slate-300 flex items-center gap-1">
+                                        ${p}
+                                    </span>
+                                `).join('')}
                             </div>
                         </div>
                     </div>
 
-                    <div class="px-6 pb-6 pt-2 flex items-center gap-3">
-                        <a href="${d.demoUrl}" target="_blank" rel="noopener"
-                            class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-slate-200">
-                            Cek Demo &nearr;
-                        </a>
-                        <a href="pilih-paket.html?design=${d.id}"
-                            class="flex-1 py-3.5 px-5 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs text-center shadow-lg hover:opacity-95 transition-all">
-                            Pilih Desain Ini &amp; Lihat Paket &rarr;
+                    <!-- Clean Action Footer: 1 Subtle Demo Link + 1 Prominent Primary CTA -->
+                    <div class="p-6 pt-2 border-t border-white/5 flex items-center justify-between gap-3 mt-1">
+                        <button type="button" onclick="openPreviewModal('${d.id}')" 
+                            class="text-xs font-semibold text-slate-400 hover:text-[#00E5FF] transition-colors flex items-center gap-1 py-2">
+                            <span>Lihat Demo Web</span>
+                            <span>&nearr;</span>
+                        </button>
+                        
+                        <a href="pilih-paket.html?design=${d.id}" onclick="localStorage.setItem('digitra_selected_design', '${d.id}')"
+                            class="px-5 py-3 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs text-center shadow-lg shadow-[#00E5FF]/20 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
+                            <span>Gunakan Desain Ini &amp; Lihat Paket</span>
+                            <span>&rarr;</span>
                         </a>
                     </div>
                 </article>
@@ -253,14 +378,51 @@
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 const act = btn.getAttribute('data-cat') === cat;
                 btn.className = act
-                    ? 'filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] whitespace-nowrap'
-                    : 'filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap';
+                    ? 'filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] shadow-lg shadow-[#00E5FF]/20 whitespace-nowrap transition-all'
+                    : 'filter-btn px-4 py-2 rounded-xl text-xs font-display font-bold bg-[#0B1020] text-slate-400 hover:text-white border border-white/10 whitespace-nowrap transition-all';
             });
             renderDesigns(cat);
         }
 
+        /* Seamless Lightbox Preview Modal Functions */
+        function openPreviewModal(designId) {
+            const d = DESIGNS.find(item => item.id === designId);
+            if (!d) return;
+
+            document.getElementById('modalTitle').textContent = d.title;
+            document.getElementById('modalCategoryBadge').textContent = d.categoryBadge;
+            document.getElementById('modalExternalLink').href = d.demoUrl;
+            document.getElementById('modalSelectLink').href = `pilih-paket.html?design=${d.id}`;
+            document.getElementById('modalSelectLink').onclick = () => localStorage.setItem('digitra_selected_design', d.id);
+
+            document.getElementById('modalLoading').style.display = 'flex';
+            document.getElementById('modalIframe').src = d.demoUrl;
+
+            const modal = document.getElementById('previewModal');
+            modal.showModal();
+        }
+
+        function closePreviewModal() {
+            const modal = document.getElementById('previewModal');
+            modal.close();
+            document.getElementById('modalIframe').src = '';
+        }
+
+        // Close on backdrop click
+        document.getElementById('previewModal').addEventListener('click', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            if (
+                e.clientX < rect.left ||
+                e.clientX > rect.right ||
+                e.clientY < rect.top ||
+                e.clientY > rect.bottom
+            ) {
+                closePreviewModal();
+            }
+        });
+
+        // Initial render
         renderDesigns('all');
     </script>
 </body>
 </html>
-

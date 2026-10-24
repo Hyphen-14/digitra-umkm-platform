@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -174,35 +174,21 @@
 
         <!-- Expanded Dock Card -->
         <div id="dockExpandedCard" class="w-[330px] sm:w-[360px] rounded-2xl bg-[#0B1020]/95 text-[#F5F7FF] border border-white/15 shadow-[0_20px_50px_rgba(5,7,15,0.85)] backdrop-blur-xl p-3.5 space-y-2.5">
-            <!-- Row 1: Back to Digitra + Brand Badge + Minimize -->
+            <!-- Row 1: Back to Digitra / Step 2 + Business Badge + Minimize -->
             <div class="flex items-center justify-between gap-2 pb-2 border-b border-white/10">
                 <button
                     type="button"
                     onclick="app.goBackToDigitra()"
-                    class="inline-flex items-center gap-2 text-xs font-extrabold text-[#00E5FF] hover:text-white transition-colors"
+                    class="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#00E5FF] hover:text-white transition-colors"
                 >
-                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 40 40" fill="none">
-                        <defs>
-                            <linearGradient id="digGradDock" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#00E5FF"/>
-                                <stop offset="100%" stop-color="#8B5CF6"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M6 6H20L34 20L20 34H6L18 22L12 16L6 22V6Z" fill="url(#digGradDock)"/>
-                    </svg>
-                    <span>&larr; Kembali ke Digitra</span>
+                    <span>&larr;</span>
+                    <span>Kembali ke Pilih Paket</span>
                 </button>
 
-                <div class="flex items-center gap-1">
-                    <button type="button" onclick="app.openQRStandeeModal()" id="qrDemoBtn" title="Simulasi QR Meja" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-[11px] font-bold text-[#F5F7FF]">
-                        🪪 <span id="qrBtnLabel">QR #07</span>
-                    </button>
-                    <button type="button" onclick="app.openSheetModal()" id="sheetDemoBtn" title="Simulasi Google Sheets" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-[11px] font-bold text-[#F5F7FF]">
-                        📊 Sheet
-                    </button>
-                    <button type="button" onclick="app.toggleLang()" id="langBtn" class="px-1.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-[11px] font-bold text-cyan-300">
-                        🇮🇩 ID
-                    </button>
+                <div class="flex items-center gap-1.5">
+                    <span id="dockActiveThemeBadge" class="px-2 py-0.5 rounded-lg bg-white/10 text-[11px] font-bold text-rose-300">
+                        🍣 Resto
+                    </span>
                     <button
                         type="button"
                         onclick="app.toggleDock(true)"
@@ -212,37 +198,41 @@
                 </div>
             </div>
 
-            <!-- Row 2: Quick Category Switcher -->
+            <!-- Row 2: Ganti Kualitas Paket Website (2 Paket Template) -->
             <div>
-                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Pilih Kategori Demo:</div>
-                <div class="grid grid-cols-4 gap-1 bg-[#05070F] p-1 rounded-xl border border-white/10">
-                    <button type="button" onclick="app.switchTheme('harth')" id="tab-harth" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        ☕ Cafe
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1 flex items-center justify-between">
+                    <span>Bandingkan Paket:</span>
+                    <span id="tierFeatureStatusLabel" class="text-[10px] text-[#00E5FF] font-bold">✨ Full Fitur Aktif</span>
+                </div>
+                <div class="grid grid-cols-2 gap-1.5 bg-[#05070F] p-1 rounded-xl border border-white/10">
+                    <button type="button" onclick="app.switchTier('starter')" id="tier-starter" class="px-2.5 py-2 rounded-lg font-bold text-[11px] transition-all truncate">
+                        1. Starter (499rb)
                     </button>
-                    <button type="button" onclick="app.switchTheme('hush')" id="tab-hush" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        🍣 Resto
-                    </button>
-                    <button type="button" onclick="app.switchTheme('cedar')" id="tab-cedar" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        🥾 Retail
-                    </button>
-                    <button type="button" onclick="app.switchTheme('barbearia')" id="tab-barbearia" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        💈 Barber
+                    <button type="button" onclick="app.switchTier('complete')" id="tier-complete" class="px-2.5 py-2 rounded-lg font-bold text-[11px] transition-all truncate">
+                        ✨ 2. Complete (899rb)
                     </button>
                 </div>
             </div>
 
-            <!-- Row 3: Quick Package Tier Switcher -->
-            <div>
-                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Bandingkan Kualitas Paket:</div>
-                <div class="grid grid-cols-3 gap-1 bg-[#05070F] p-1 rounded-xl border border-white/10">
-                    <button type="button" onclick="app.switchTier('starter')" id="tier-starter" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        Starter 499rb
+            <!-- Row 3: Uji Fitur Interaktif (Direct Feature Testing Buttons) -->
+            <div class="space-y-1.5">
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Uji Fitur Interaktif:</div>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button type="button" onclick="app.triggerDemoPopupFeature()" id="dockFeaturePopupBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
+                        <span class="text-rose-400">⚡</span>
+                        <span class="truncate" id="dockPopupFeatureLabel">Tiket Chef</span>
                     </button>
-                    <button type="button" onclick="app.switchTier('complete')" id="tier-complete" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        Complete 899rb
+                    <button type="button" onclick="app.triggerDemoQrisFeature()" id="dockFeatureQrisBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
+                        <span class="text-cyan-400">💳</span>
+                        <span class="truncate">Simulasi QRIS</span>
                     </button>
-                    <button type="button" onclick="app.switchTier('pro')" id="tier-pro" class="px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all truncate">
-                        👑 Pro 1,49jt
+                    <button type="button" onclick="app.triggerDemoStandeeFeature()" id="dockFeatureStandeeBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
+                        <span class="text-purple-400">🪪</span>
+                        <span class="truncate">Standee Meja</span>
+                    </button>
+                    <button type="button" onclick="app.triggerDemoSheetFeature()" id="dockFeatureSheetBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
+                        <span class="text-emerald-400">📊</span>
+                        <span class="truncate">Google Sheets</span>
                     </button>
                 </div>
             </div>
@@ -251,10 +241,11 @@
             <button
                 type="button"
                 onclick="app.orderThisDesign()"
+                id="dockCtaButton"
                 class="w-full py-2.5 px-4 rounded-xl font-extrabold text-xs text-[#05070F] shadow-lg transition-all flex items-center justify-center gap-1.5"
                 style="background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%); color: #FFFFFF;"
             >
-                <span>✨ Pilih &amp; Pesan Desain Ini di Digitra</span>
+                <span id="dockCtaText">✨ Lanjut dengan Paket Ini</span>
                 <span>&rarr;</span>
             </button>
         </div>
@@ -501,12 +492,12 @@
                 variantLabel: "Pilih Slot Jam & Master Barber:",
                 variants: ["11:00 WIB • Master Rafael", "14:30 WIB • Master Lucas", "17:00 WIB • Master Diego", "19:30 WIB • VIP Night Slot"],
                 items: [
-                    { id: "b1", cat: "CABELO / HAIR", name: "Corte Premium Visagista", desc: "Konsultasi anatomi wajah, potong presisi, keramas & pomade matte.", price: 65000, available: true },
-                    { id: "b2", cat: "CABELO / HAIR", name: "Acabamento & Selagem", desc: "Perapian kontur leher, jambang, dan nutrisi pelurusan rambut pria.", price: 55000, available: true },
-                    { id: "b3", cat: "BARBA / BEARD", name: "Barbaterapia Hot Towel", desc: "Ritual handuk panas aromaterapi, pisau cukur klasik & balm organik.", price: 50000, available: true },
-                    { id: "b4", cat: "BARBA / BEARD", name: "Design de Barba & Mustache", desc: "Sculpting garis jenggot simetris & perawatan minyak cedarwood.", price: 45000, available: true },
-                    { id: "b5", cat: "ESTÉTICA / SPA", name: "Skin Care Black Mask & Vapor", desc: "Detoks pori wajah dengan uap ozon hangat dan masker charcoal.", price: 60000, available: true },
-                    { id: "b6", cat: "ESTÉTICA / SPA", name: "Combo VIP: Corte + Barba + Spa", desc: "Paket transformasi penuh 90 menit + kopi espresso gratis.", price: 135000, available: true }
+                    { id: "b1", cat: "CABELO / HAIR", name: "Corte Premium Visagista", desc: "Konsultasi anatomi wajah, potong presisi, keramas & pomade matte.", price: 65000, available: true, img: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b2", cat: "CABELO / HAIR", name: "Acabamento & Selagem", desc: "Perapian kontur leher, jambang, dan nutrisi pelurusan rambut pria.", price: 55000, available: true, img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b3", cat: "BARBA / BEARD", name: "Barbaterapia Hot Towel", desc: "Ritual handuk panas aromaterapi, pisau cukur klasik & balm organik.", price: 50000, available: true, img: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b4", cat: "BARBA / BEARD", name: "Design de Barba & Mustache", desc: "Sculpting garis jenggot simetris & perawatan minyak cedarwood.", price: 45000, available: true, img: "https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b5", cat: "ESTÉTICA / SPA", name: "Skin Care Black Mask & Vapor", desc: "Detoks pori wajah dengan uap ozon hangat dan masker charcoal.", price: 60000, available: true, img: "https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b6", cat: "ESTÉTICA / SPA", name: "Combo VIP: Corte + Barba + Spa", desc: "Paket transformasi penuh 90 menit + kopi espresso gratis.", price: 135000, available: true, img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=700&q=80" }
                 ]
             }
         };
@@ -514,7 +505,7 @@
         class BespokeShowcaseApp {
             constructor() {
                 this.theme = 'harth'; // 'harth' | 'hush' | 'cedar' | 'barbearia'
-                this.tier = 'pro'; // 'starter' | 'complete' | 'pro'
+                this.tier = 'complete'; // 'starter' | 'complete'
                 this.lang = 'id';
                 this.orderMode = 'dinein';
                 this.tableNumber = 'Meja #07 (VIP Lounge)';
@@ -545,8 +536,10 @@
                 if (qTheme && THEMES_DB[qTheme]) {
                     this.theme = qTheme;
                 }
-                if (qTier && ['starter', 'complete', 'pro'].includes(qTier)) {
-                    this.tier = qTier;
+                if (qTier === 'starter') {
+                    this.tier = 'starter';
+                } else if (qTier === 'complete' || qTier === 'pro') {
+                    this.tier = 'complete';
                 }
 
                 // Hide Floating Dock if embedded inside pilih-paket.html (?embed=1)
@@ -609,25 +602,113 @@
             }
 
             syncHeaderButtons() {
-                ['harth', 'hush', 'cedar', 'barbearia'].forEach(k => {
-                    const btn = document.getElementById(`tab-${k}`);
-                    if (btn) {
-                        btn.className = k === this.theme
-                            ? "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-[#00E5FF] text-[#05070F] shadow truncate"
-                            : "px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all text-slate-300 hover:text-white truncate";
-                    }
-                });
-                ['starter', 'complete', 'pro'].forEach(t => {
+                // Sync 2-Tier buttons in dock (Starter vs Complete All-In)
+                ['starter', 'complete'].forEach(t => {
                     const btn = document.getElementById(`tier-${t}`);
                     if (!btn) return;
                     if (t === this.tier) {
-                        btn.className = t === 'pro'
-                            ? "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow truncate"
-                            : "px-2 py-1.5 rounded-lg font-extrabold text-[11px] transition-all bg-white text-[#05070F] shadow truncate";
+                        btn.className = t === 'complete'
+                            ? "px-2.5 py-2 rounded-lg font-extrabold text-[11px] transition-all bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-white shadow truncate"
+                            : "px-2.5 py-2 rounded-lg font-extrabold text-[11px] transition-all bg-white text-[#05070F] shadow truncate";
                     } else {
-                        btn.className = "px-2 py-1.5 rounded-lg font-bold text-[11px] transition-all text-slate-400 hover:text-white truncate";
+                        btn.className = "px-2.5 py-2 rounded-lg font-bold text-[11px] transition-all text-slate-400 hover:text-white truncate";
                     }
                 });
+
+                // Update Dock Active Theme Badge
+                const themeBadge = document.getElementById('dockActiveThemeBadge');
+                if (themeBadge) {
+                    if (this.theme === 'harth') themeBadge.innerHTML = '☕ Cafe';
+                    else if (this.theme === 'hush') themeBadge.innerHTML = '🍣 Resto';
+                    else if (this.theme === 'cedar') themeBadge.innerHTML = '🥾 Retail';
+                    else themeBadge.innerHTML = '💈 Barber';
+                }
+
+                // Update Dock CTA & Feature Status
+                const ctaText = document.getElementById('dockCtaText');
+                const statusLabel = document.getElementById('tierFeatureStatusLabel');
+                const popupLabel = document.getElementById('dockPopupFeatureLabel');
+                const standeeBtn = document.getElementById('dockFeatureStandeeBtn');
+                const sheetBtn = document.getElementById('dockFeatureSheetBtn');
+                const popupBtn = document.getElementById('dockFeaturePopupBtn');
+                const qrisBtn = document.getElementById('dockFeatureQrisBtn');
+
+                if (popupLabel) {
+                    if (this.theme === 'harth') popupLabel.textContent = 'Struk Barista';
+                    else if (this.theme === 'hush') popupLabel.textContent = 'Tiket Chef';
+                    else if (this.theme === 'cedar') popupLabel.textContent = 'Tabel Ukuran CM';
+                    else popupLabel.textContent = 'Booking VIP';
+                }
+
+                if (this.tier === 'starter') {
+                    if (statusLabel) {
+                        statusLabel.textContent = '🎨 Katalog Estetik';
+                        statusLabel.className = 'text-[10px] text-amber-300 font-bold';
+                    }
+                    if (ctaText) ctaText.textContent = 'Pilih Starter (Rp 499rb) & Lanjut';
+                    if (popupBtn) popupBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-500 opacity-50 flex items-center gap-1.5 cursor-pointer';
+                    if (qrisBtn) qrisBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-500 opacity-50 flex items-center gap-1.5 cursor-pointer';
+                    if (standeeBtn) standeeBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-500 opacity-50 flex items-center gap-1.5 cursor-pointer';
+                    if (sheetBtn) sheetBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-500 opacity-50 flex items-center gap-1.5 cursor-pointer';
+                } else {
+                    if (statusLabel) {
+                        statusLabel.textContent = '✨ Semua Fitur Aktif';
+                        statusLabel.className = 'text-[10px] text-[#00E5FF] font-bold';
+                    }
+                    if (ctaText) ctaText.textContent = '✨ Pilih Complete (Rp 899rb) & Lanjut';
+                    if (popupBtn) popupBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-amber-400/40 text-[11px] text-white flex items-center gap-1.5 font-bold transition-all';
+                    if (qrisBtn) qrisBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-cyan-400/40 text-[11px] text-white flex items-center gap-1.5 font-bold transition-all';
+                    if (standeeBtn) standeeBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-purple-400/40 text-[11px] text-[#00E5FF] flex items-center gap-1.5 font-bold transition-all';
+                    if (sheetBtn) sheetBtn.className = 'px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-emerald-400/40 text-[11px] text-emerald-300 flex items-center gap-1.5 font-bold transition-all';
+                }
+            }
+
+            triggerDemoPopupFeature() {
+                if (this.tier === 'starter') {
+                    if (confirm('✨ Fitur Pop-Up Kustomisasi Pesanan Khas tersedia di Paket Complete All-In (Rp 899.000).\n\nIngin beralih ke Paket Complete sekarang untuk mencobanya?')) {
+                        this.switchTier('complete');
+                        setTimeout(() => {
+                            const first = this.getStore().items[0];
+                            this.openItemModal(first.id);
+                        }, 250);
+                    }
+                    return;
+                }
+                const first = this.getStore().items[0];
+                this.openItemModal(first.id);
+            }
+
+            triggerDemoQrisFeature() {
+                if (this.tier === 'starter') {
+                    if (confirm('✨ Fitur Simulasi Pembayaran QRIS Dinamis & Rekening Bank tersedia di Paket Complete All-In (Rp 899.000).\n\nIngin beralih ke Paket Complete sekarang untuk mencobanya?')) {
+                        this.switchTier('complete');
+                        setTimeout(() => this.openCheckoutModal(), 250);
+                    }
+                    return;
+                }
+                this.openCheckoutModal();
+            }
+
+            triggerDemoStandeeFeature() {
+                if (this.tier === 'starter') {
+                    if (confirm('✨ Generator Cetak Standee QR Meja Akrilik (#07) sudah termasuk GRATIS di Paket Complete All-In (Rp 899.000).\n\nIngin beralih ke Paket Complete sekarang untuk mencobanya?')) {
+                        this.switchTier('complete');
+                        setTimeout(() => this.openQRStandeeModal(), 250);
+                    }
+                    return;
+                }
+                this.openQRStandeeModal();
+            }
+
+            triggerDemoSheetFeature() {
+                if (this.tier === 'starter') {
+                    if (confirm('✨ Fitur Sinkronisasi Database Google Sheets Real-Time sudah termasuk GRATIS di Paket Complete All-In (Rp 899.000).\n\nIngin beralih ke Paket Complete sekarang untuk mencobanya?')) {
+                        this.switchTier('complete');
+                        setTimeout(() => this.openSheetModal(), 250);
+                    }
+                    return;
+                }
+                this.openSheetModal();
             }
 
             toggleDock(minimize) {
@@ -676,9 +757,10 @@
             }
 
             switchTier(newTier) {
-                if (this.tier === newTier) return;
+                const normalized = (newTier === 'pro') ? 'complete' : newTier;
+                if (this.tier === normalized) return;
                 const applyTier = () => {
-                    this.tier = newTier;
+                    this.tier = normalized;
                     this.syncHeaderButtons();
                     this.renderTheme();
                 };
@@ -771,8 +853,7 @@
                     </div>
                 ` : '';
 
-                // If Starter Tier (Rp 499.000) is selected, render the Basic Catalog Starter Layout
-                // to create a stark visual & functional contrast against Complete (Rp 899rb) & Pro Bespoke (Rp 1,49jt)!
+                // If Starter Tier (Rp 499.000) is selected, render the Aesthetic Bespoke Starter Showcase
                 if (this.tier === 'starter') {
                     vp.innerHTML = customBanner + this.buildStarterEditionHTML();
                     this.applyCustomClientDOMOverrides();
@@ -780,28 +861,17 @@
                     return;
                 }
 
-                const tierBanner = this.tier === 'complete' ? `
-                    <div class="bg-amber-950/95 border-b border-amber-500/40 text-amber-100 px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2">
-                        <div>
-                            <span class="px-2 py-0.5 rounded bg-amber-400 text-stone-950 font-extrabold mr-2">MODE PAKET COMPLETE (Rp 899.000)</span>
-                            <span>Pop-up Kustom + QRIS &amp; Peta Lokasi Aktif. (Efek Partikel Asap/Uap Canvas, Standee QR Meja Akrilik &amp; Live Google Sheets dikhususkan untuk <strong>Paket Pro Rp 1,49jt</strong>).</span>
-                        </div>
-                        <button type="button" onclick="app.switchTier('pro')" class="px-3 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 font-extrabold">
-                            👑 Aktifkan Efek Pro Bespoke &rarr;
-                        </button>
-                    </div>
-                ` : '';
-
+                // Complete Tier (Rp 899.000 All-In) unlocks 100% of all flagship interactive features & canvas particles!
                 if (this.theme === 'harth') {
-                    vp.innerHTML = customBanner + tierBanner + this.buildHarthHTML();
-                    if (this.tier === 'pro') this.startCanvasParticles('steam');
+                    vp.innerHTML = customBanner + this.buildHarthHTML();
+                    this.startCanvasParticles('steam');
                 } else if (this.theme === 'hush') {
-                    vp.innerHTML = customBanner + tierBanner + this.buildHushHTML();
-                    if (this.tier === 'pro') this.startCanvasParticles('smoke');
+                    vp.innerHTML = customBanner + this.buildHushHTML();
+                    this.startCanvasParticles('smoke');
                 } else if (this.theme === 'cedar') {
-                    vp.innerHTML = customBanner + tierBanner + this.buildCedarHTML();
+                    vp.innerHTML = customBanner + this.buildCedarHTML();
                 } else {
-                    vp.innerHTML = customBanner + tierBanner + this.buildBarbeariaHTML();
+                    vp.innerHTML = customBanner + this.buildBarbeariaHTML();
                 }
 
                 this.applyCustomClientDOMOverrides();
@@ -810,70 +880,245 @@
             }
 
             /* =================================================================
-               STARTER EDITION RENDERER (Rp 499.000) — CLEAR DECOY COMPARISON
+               STARTER EDITION RENDERER (Rp 499.000)
+               - Aesthetic, On-Brand Boutique Landing Page & HD Photo Catalog
+               - Proud Digitra Craftsmanship, while highlighting why Complete (Rp 899rb)
+                 is 2x more valuable with full smart ordering & interactive systems
             ================================================================== */
             buildStarterEditionHTML() {
                 const store = this.getStore();
+                const styles = {
+                    harth: {
+                        pageBg: 'bg-[#F6F1E7] text-[#221A14]',
+                        navBg: 'bg-[#F6F1E7]/90 border-[#E4D9C8]',
+                        cardBg: 'bg-[#FDFBF7] border-[#E4D9C8]',
+                        mutedText: 'text-[#6E5A4F]',
+                        accentBadge: 'bg-[#E8DEC8] text-[#4A3525]',
+                        primaryBtn: 'bg-[#2C1E16] hover:bg-[#422D21] text-[#F6F1E7]',
+                        waBtn: 'bg-[#2C1E16] hover:bg-[#1E4620] text-[#F6F1E7]',
+                        priceColor: 'text-[#8C583A]',
+                        heroImg: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=85',
+                        tagline: '☕ Specialty Coffee & Artisan Bakery',
+                        slogan: 'Ruang seduh kopi Nusantara dengan sangrai segar setiap pekan dan pastry hangat untuk menemani hari Anda.',
+                        address: 'Jl. Senopati No. 48, Jakarta Selatan',
+                        hours: 'Setiap Hari • 07:00 – 22:00 WIB'
+                    },
+                    hush: {
+                        pageBg: 'bg-[#0E0E12] text-[#F4EFE6]',
+                        navBg: 'bg-[#0E0E12]/90 border-white/10',
+                        cardBg: 'bg-[#17171E] border-white/10',
+                        mutedText: 'text-stone-400',
+                        accentBadge: 'bg-[#C83E31]/20 text-[#FF7A6E] border border-[#C83E31]/30',
+                        primaryBtn: 'bg-[#C83E31] hover:bg-[#df493b] text-white',
+                        waBtn: 'bg-[#C83E31] hover:bg-[#b03226] text-white',
+                        priceColor: 'text-amber-400',
+                        heroImg: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
+                        tagline: '🍣 Modern Izakaya & Charcoal Grill',
+                        slogan: 'Sajian robatayaki Jepang autentik dengan bahan premium dan teknik panggang arang binchotan.',
+                        address: 'SCBD Lot 8, Jakarta Selatan',
+                        hours: 'Selasa – Minggu • 11:00 – 23:00 WIB'
+                    },
+                    cedar: {
+                        pageBg: 'bg-[#F4F0E8] text-[#1E1915]',
+                        navBg: 'bg-[#F4F0E8]/90 border-[#DFD6C7]',
+                        cardBg: 'bg-white border-[#DFD6C7]',
+                        mutedText: 'text-stone-600',
+                        accentBadge: 'bg-[#8C421E]/15 text-[#8C421E]',
+                        primaryBtn: 'bg-[#8C421E] hover:bg-[#a65027] text-white',
+                        waBtn: 'bg-[#2A211B] hover:bg-[#8C421E] text-white',
+                        priceColor: 'text-[#8C421E]',
+                        heroImg: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1400&q=85',
+                        tagline: '🥾 Handcrafted Heritage Leather Goods',
+                        slogan: 'Sepatu kulit pull-up asli buatan tangan pengrajin lokal Bandung dengan konstruksi Goodyear-welt.',
+                        address: 'Jl. Braga No. 88, Kota Bandung',
+                        hours: 'Senin – Sabtu • 09:00 – 20:00 WIB'
+                    },
+                    barbearia: {
+                        pageBg: 'bg-[#0D0F14] text-[#F5F2EB]',
+                        navBg: 'bg-[#0D0F14]/90 border-amber-500/20',
+                        cardBg: 'bg-[#151922] border-amber-500/20',
+                        mutedText: 'text-slate-400',
+                        accentBadge: 'bg-[#C59B6D]/20 text-[#E5C195] border border-[#C59B6D]/30',
+                        primaryBtn: 'bg-[#C59B6D] hover:bg-[#d6ad7f] text-[#0D0F14]',
+                        waBtn: 'bg-[#C59B6D] hover:bg-[#d6ad7f] text-[#0D0F14]',
+                        priceColor: 'text-[#C59B6D]',
+                        heroImg: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1400&q=85',
+                        tagline: '💈 Executive Gentlemen Grooming Club',
+                        slogan: 'Potongan rambut klasik & perawatan pria berkelas oleh master barber berpengalaman.',
+                        address: 'Jl. Kemang Raya No. 19, Jakarta Selatan',
+                        hours: 'Setiap Hari • 10:00 – 21:00 WIB'
+                    }
+                };
+                const st = styles[this.theme] || styles.harth;
+
                 return `
-                <div class="min-h-screen bg-slate-100 text-slate-800 font-sans pb-24">
-                    <!-- Upsell Comparison Banner -->
-                    <div class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white px-6 py-4 border-b border-amber-500/30">
-                        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <div class="text-xs">
-                                <span class="px-2.5 py-0.5 rounded-full bg-stone-700 text-stone-200 font-extrabold uppercase tracking-wider">Tampilan Paket Starter — Rp 499.000</span>
-                                <p class="text-stone-300 mt-1">
-                                    Hanya menampilkan katalog 1 halaman standar &amp; tombol chat WA manual (Tanpa Desain Bespoke, Tanpa Pop-Up Kustom + QRIS, Tanpa Peta Interaktif, &amp; Tanpa Animasi Partikel).
-                                </p>
+                <div class="min-h-screen ${st.pageBg} font-sans pb-24 transition-colors">
+                    <!-- Top Digitra Package Indicator Banner -->
+                    <div class="bg-[#05070F] text-white px-4 sm:px-6 py-3 border-b border-white/15 sticky top-0 z-40">
+                        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                            <div class="flex flex-wrap items-center gap-2 text-xs">
+                                <span class="px-2.5 py-0.5 rounded-full bg-white/15 text-white font-extrabold uppercase tracking-wider text-[10px]">
+                                    🎨 Paket Starter — Rp 499.000
+                                </span>
+                                <span class="text-slate-300">
+                                    Landing Page Estetik &amp; Katalog Foto HD dengan tombol Chat WA langsung.
+                                </span>
                             </div>
-                            <div class="flex items-center gap-2 shrink-0">
-                                <button type="button" onclick="app.switchTier('complete')" class="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-500/40 text-xs font-bold">
-                                    Lihat Complete (899rb)
-                                </button>
-                                <button type="button" onclick="app.switchTier('pro')" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-extrabold shadow-lg">
-                                    👑 Upgrade ke Pro Bespoke (1,49jt) &rarr;
-                                </button>
-                            </div>
+                            <button type="button" onclick="app.switchTier('complete')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-[#05070F] text-xs font-extrabold shadow-lg hover:brightness-110 transition-all shrink-0">
+                                ✨ Lihat Paket Complete All-In (Rp 899rb — Full Sistem Interaktif) &rarr;
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Basic Starter Header -->
-                    <div class="bg-white border-b border-slate-200 py-8 px-6 text-center">
-                        <h1 class="text-2xl font-bold text-slate-900">${store.storeTitle}</h1>
-                        <p class="text-xs text-slate-500 mt-1">Katalog Produk &amp; Layanan Standar (Paket Starter)</p>
-                    </div>
+                    <!-- Boutique Brand Navbar -->
+                    <nav class="border-b ${st.navBg} backdrop-blur-md">
+                        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+                            <div class="font-serif font-bold text-xl sm:text-2xl tracking-tight">${store.storeTitle}</div>
+                            <div class="hidden md:flex items-center gap-6 text-xs font-semibold ${st.mutedText}">
+                                <span>📍 ${st.address}</span>
+                                <span>🕒 ${st.hours}</span>
+                            </div>
+                            <a href="https://wa.me/${store.waPhone}?text=${encodeURIComponent('Halo ' + store.storeTitle + ', saya ingin bertanya mengenai menu/layanan Anda.')}" target="_blank" rel="noopener"
+                                class="px-4 py-2 rounded-xl ${st.primaryBtn} text-xs font-bold shadow-sm transition-all">
+                                Hubungi WhatsApp &nearr;
+                            </a>
+                        </div>
+                    </nav>
 
-                    <!-- Simple Flat Grid -->
-                    <div class="max-w-4xl mx-auto px-6 py-10">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            ${store.items.map(item => `
-                                <div class="bg-white rounded-lg border border-slate-200 p-4 flex items-center justify-between gap-4">
-                                    <div>
-                                        <span class="text-[10px] font-bold uppercase text-slate-400">${item.cat}</span>
-                                        <h3 class="font-bold text-sm text-slate-800">${item.name}</h3>
-                                        <p class="text-xs text-slate-500 mt-0.5">${item.desc}</p>
-                                        <div class="text-sm font-bold text-slate-900 mt-2">${this.formatRp(item.price)}</div>
-                                    </div>
-                                    <a href="https://wa.me/${store.waPhone}?text=${encodeURIComponent('Halo ' + store.storeTitle + ', saya ingin tanya produk ' + item.name)}" target="_blank" rel="noopener" class="px-3 py-2 rounded bg-emerald-600 text-white text-xs font-bold shrink-0">
-                                        Chat WA
+                    <!-- Editorial Split Hero Section (Clean, Classy, High-Craftsmanship) -->
+                    <section class="max-w-6xl mx-auto px-6 py-12 lg:py-16">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                            <div class="lg:col-span-6 space-y-5">
+                                <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold ${st.accentBadge}">
+                                    ${st.tagline}
+                                </span>
+                                <h1 class="font-serif font-bold text-4xl sm:text-5xl leading-[1.12] tracking-tight">
+                                    ${store.storeTitle}
+                                </h1>
+                                <p class="text-sm sm:text-base ${st.mutedText} leading-relaxed">
+                                    ${st.slogan}
+                                </p>
+                                <div class="pt-2 flex flex-wrap items-center gap-3">
+                                    <a href="#starterCatalogSection" class="px-6 py-3.5 rounded-xl ${st.primaryBtn} text-xs font-bold shadow-md transition-all">
+                                        Lihat Katalog Pilihan &darr;
                                     </a>
+                                    <span class="text-xs ${st.mutedText} font-medium">
+                                        📍 ${st.address}
+                                    </span>
                                 </div>
+                            </div>
+                            <div class="lg:col-span-6">
+                                <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-black/10 aspect-[4/3]">
+                                    <img src="${st.heroImg}" alt="${store.storeTitle}" class="w-full h-full object-cover">
+                                    <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-black/65 backdrop-blur-md text-white flex items-center justify-between text-xs">
+                                        <div>
+                                            <div class="font-bold">${store.storeTitle}</div>
+                                            <div class="text-[11px] text-white/80">${st.hours}</div>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold text-[10px]">
+                                            ● Buka Hari Ini
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Curated HD Photo Catalog Grid -->
+                    <section id="starterCatalogSection" class="max-w-6xl mx-auto px-6 py-10">
+                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-current/10">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-widest ${st.priceColor}">Katalog Resmi</span>
+                                <h2 class="font-serif font-bold text-2xl sm:text-3xl mt-1">Menu &amp; Produk Unggulan</h2>
+                            </div>
+                            <p class="text-xs ${st.mutedText}">
+                                Klik tombol <strong>Pesan via WA</strong> untuk memesan langsung melalui chat admin.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${store.items.map(item => `
+                                <article class="rounded-2xl border ${st.cardBg} overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group">
+                                    <div>
+                                        <div class="relative h-52 overflow-hidden bg-stone-900">
+                                            <img src="${item.img}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider">
+                                                ${item.cat}
+                                            </span>
+                                        </div>
+                                        <div class="p-5">
+                                            <div class="flex items-start justify-between gap-2">
+                                                <h3 class="font-serif font-bold text-lg leading-snug">${item.name}</h3>
+                                                <span class="font-bold text-sm ${st.priceColor} shrink-0">${this.formatRp(item.price)}</span>
+                                            </div>
+                                            <p class="text-xs ${st.mutedText} mt-2 leading-relaxed line-clamp-2">${item.desc}</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-5 pb-5 pt-2">
+                                        <a href="https://wa.me/${store.waPhone}?text=${encodeURIComponent('Halo ' + store.storeTitle + ', saya ingin memesan ' + item.name + ' (' + this.formatRp(item.price) + ')')}"
+                                           target="_blank" rel="noopener"
+                                           class="w-full py-2.5 px-4 rounded-xl ${st.waBtn} text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                            <span>💬 Pesan via Chat WhatsApp</span>
+                                        </a>
+                                    </div>
+                                </article>
                             `).join('')}
                         </div>
 
-                        <!-- Locked Features Comparison Card -->
-                        <div class="mt-10 p-6 rounded-2xl bg-white border-2 border-dashed border-amber-500/50 text-center space-y-3 shadow-sm">
-                            <div class="text-xs font-extrabold uppercase tracking-widest text-amber-700">🔒 Fitur Premium Terkunci di Paket Starter</div>
-                            <h3 class="text-lg font-bold text-slate-900">Ingin Website Usaha Anda Tampil Berkelas Seperti Brand Nasional?</h3>
-                            <p class="text-xs text-slate-600 max-w-xl mx-auto">
-                                Di <strong>Paket Complete (Rp 899rb)</strong> &amp; <strong>Paket Pro Bespoke (Rp 1,49jt)</strong>, Anda mendapatkan Desain Kustom Anti-Kaku, Efek Partikel Uap/Asap Dinamis, Pop-Up Pemesanan Spesifik Kategori + QRIS, Peta Lokasi Interaktif, dan Standee QR Meja Akrilik!
-                            </p>
-                            <div class="pt-2 flex justify-center gap-3">
-                                <button type="button" onclick="app.switchTier('pro')" class="px-6 py-3 rounded-xl bg-stone-950 text-amber-300 text-xs font-extrabold shadow-lg hover:bg-stone-800">
-                                    👑 Lihat Perbandingan Paket Pro Bespoke Sekarang &rarr;
+                        <!-- Clear Value-Jump Showcase: Why Upgrade to Complete (Rp 899.000)? -->
+                        <div class="mt-14 rounded-3xl bg-[#0B1020] text-[#F5F7FF] border-2 border-[#00E5FF]/50 p-6 sm:p-8 shadow-2xl space-y-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-white/10">
+                                <div class="space-y-1">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] text-[11px] font-extrabold uppercase tracking-wider">
+                                        ⚡ Perbandingan Fitur Paket Complete All-In (Rp 899.000)
+                                    </span>
+                                    <h3 class="font-serif font-bold text-xl sm:text-2xl text-white">
+                                        Ingin Website Ini Punya Sistem Kasir Pintar, QRIS &amp; Efek Interaktif Penuh?
+                                    </h3>
+                                    <p class="text-xs text-slate-300 max-w-2xl">
+                                        Paket Starter di atas sudah tampil estetik sebagai katalog informasi. Namun dengan <strong>Paket Complete (Rp 899rb)</strong>, website Anda bertransformasi menjadi sistem pemesanan otomatis lengkap:
+                                    </p>
+                                </div>
+                                <button type="button" onclick="app.switchTier('complete')"
+                                    class="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-[#00E5FF] to-[#8B5CF6] text-[#05070F] font-extrabold text-xs shadow-xl hover:scale-[1.02] transition-all shrink-0">
+                                    ✨ Coba Tampilan Paket Complete (Rp 899rb) &rarr;
                                 </button>
                             </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-[#00E5FF]">⚡ 1. Pop-Up Kustomisasi Pesanan Khas</div>
+                                    <p class="text-slate-400 text-[11px]">Pelanggan bisa memilih varian, catatan khusus barista/chef, ukuran sepatu, atau jam booking kapster sebelum pesan.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-purple-300">💳 2. Simulasi Scan QRIS &amp; Rekening Bank</div>
+                                    <p class="text-slate-400 text-[11px]">Dilengkapi keranjang pintar multi-item, kode voucher promo, scan QRIS langsung, &amp; struk WA terformat otomatis.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-amber-300">✨ 3. Atmosfer Kanvas Hidup &amp; Storytelling</div>
+                                    <p class="text-slate-400 text-[11px]">Efek partikel uap kopi / bara api dinamis, filter kategori interaktif, lookbook, &amp; bagian cerita filosofi brand.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-emerald-300">🪪 4. Generator Standee QR Meja Akrilik (#07)</div>
+                                    <p class="text-slate-400 text-[11px]">Cetak desain QR meja siap pakai agar pelanggan bisa langsung scan menu dari meja makan/kasir.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-cyan-300">📊 5. Database Google Sheets Real-Time</div>
+                                    <p class="text-slate-400 text-[11px]">Ubah harga dan status stok ("Tersedia" / "Habis") kapan saja semudah mengedit tabel Excel/Sheets.</p>
+                                </div>
+                                <div class="p-3.5 rounded-2xl bg-[#05070F] border border-white/10 space-y-1">
+                                    <div class="font-bold text-rose-300">📍 6. Peta Lokasi &amp; Indikator Fasilitas Live</div>
+                                    <p class="text-slate-400 text-[11px]">Menampilkan peta interaktif, indikator ketersediaan kursi/parkir, kecepatan Wi-Fi, &amp; navigasi rute.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
+
+                    <!-- Simple Brand Footer -->
+                    <footer class="max-w-6xl mx-auto px-6 pt-8 border-t border-current/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs ${st.mutedText}">
+                        <div>&copy; 2026 <strong>${store.storeTitle}</strong>. Powered by Digitra Web Solutions.</div>
+                        <div>${st.address} &bull; ${st.hours}</div>
+                    </footer>
                 </div>
                 `;
             }
@@ -2634,6 +2879,24 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             window.app = new BespokeShowcaseApp();
+            try {
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ type: 'DIGITRA_DEMO_READY', tier: window.app.tier }, '*');
+                }
+            } catch (e) {}
+        });
+
+        // Inter-frame Communication with Digitra Parent Frame (pilih-paket.html)
+        window.addEventListener('message', (event) => {
+            if (!event.data) return;
+            if (event.data.type === 'DIGITRA_SET_TIER' && window.app) {
+                window.app.switchTier(event.data.tier);
+            } else if (event.data.type === 'DIGITRA_TRIGGER_FEATURE' && window.app) {
+                if (event.data.feature === 'popup') window.app.triggerDemoPopupFeature();
+                else if (event.data.feature === 'qris') window.app.triggerDemoQrisFeature();
+                else if (event.data.feature === 'standee') window.app.triggerDemoStandeeFeature();
+                else if (event.data.feature === 'sheet') window.app.triggerDemoSheetFeature();
+            }
         });
     </script>
 </body>
