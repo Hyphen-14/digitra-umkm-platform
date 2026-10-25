@@ -50,56 +50,234 @@
             backdrop-filter: blur(6px);
         }
 
-        /* Scroll-Driven Entry Reveal Keyframes (Compositor-only: transform & opacity + clip-path) */
-        @keyframes editorialRevealUp {
-            from {
-                opacity: 0;
-                transform: translateY(42px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
+        /* =====================================================================
+           MODERN WEB GUIDANCE: GROUP ELEMENT VIEW TRANSITIONS & SCROLL TIMELINES
+        ====================================================================== */
+        :root {
+            /* Disable the root transition because we are only transitioning specific elements. */
+            view-transition-name: none;
+        }
+        ::view-transition {
+            /* Non-transitioned elements below the view transitions remain interactive */
+            pointer-events: none;
+        }
+        .soul-transition-card {
+            view-transition-class: soul-card;
+        }
+        ::view-transition-group(.soul-card) {
+            animation-duration: 0.45s;
+            animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        ::view-transition-new(.soul-card):only-child {
+            animation-name: soulCardSlideIn;
+            animation-duration: 0.45s;
+        }
+        ::view-transition-old(.soul-card):only-child {
+            animation-name: soulCardSlideOut;
+            animation-duration: 0.35s;
+        }
+        @keyframes soulCardSlideIn {
+            from { opacity: 0; translate: 0 28px; scale: 0.94; }
+        }
+        @keyframes soulCardSlideOut {
+            to { opacity: 0; translate: 0 -24px; scale: 0.94; }
+        }
+
+        /* Modern Web Guidance: Native CSS Scroll-Driven Entry/Exit & Parallax */
+        @media (prefers-reduced-motion: no-preference) {
+            @supports ((animation-timeline: view()) and (animation-range: entry)) {
+                @keyframes soulEntryReveal {
+                    from { opacity: 0; transform: translateY(42px) scale(0.94); }
+                }
+                @keyframes soulExitFade {
+                    to { opacity: 0.35; transform: translateY(-18px) scale(0.97); }
+                }
+                .scroll-reveal, .scroll-curtain {
+                    animation:
+                        soulEntryReveal auto linear backwards,
+                        soulExitFade auto linear forwards;
+                    animation-timeline: view(block);
+                    animation-range: entry, exit;
+                }
+                @keyframes mwParallax {
+                    from { transform: translateY(90px); }
+                }
+                .parallax-wrapper {
+                    overflow: clip;
+                    view-timeline: --wrapper;
+                }
+                .parallax-layer {
+                    animation: mwParallax linear both;
+                    animation-timeline: --wrapper;
+                    animation-range: entry 25% exit calc(100% / sibling-count() * sibling-index());
+                }
             }
         }
 
-        @keyframes curtainClipReveal {
-            from {
-                opacity: 0.2;
-                clip-path: inset(16% 6% 16% 6% round 16px);
-                transform: translateY(28px) scale(1.03);
-            }
-            to {
-                opacity: 1;
-                clip-path: inset(0% 0% 0% 0% round 16px);
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Native CSS Scroll-Driven Animation where supported (declared AFTER animation shorthand) */
-        @supports (animation-timeline: view()) and (animation-range: entry) {
-            .scroll-reveal {
-                animation: editorialRevealUp linear both;
-                animation-timeline: view(block);
-                animation-range: entry 5% cover 26%;
-                --animation-reduced: none;
-            }
-            .scroll-curtain {
-                animation: curtainClipReveal linear both;
-                animation-timeline: view(block);
-                animation-range: entry 5% cover 30%;
-                --animation-reduced: none;
-            }
-        }
-
-        /* Fallback classes for IntersectionObserver when view() timeline is unsupported */
+        /* Fallback Staggered Scroll Choreography (Used when native view() is unsupported) */
         .io-hidden {
             opacity: 0;
-            transform: translateY(36px) scale(0.97);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: perspective(1000px) translateY(54px) rotateX(9deg) scale(0.93);
+            filter: blur(4px);
+            transition:
+                opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: calc(var(--stagger-idx, 0) * 105ms);
+            will-change: opacity, transform, filter;
         }
         .io-visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: perspective(1000px) translateY(0) rotateX(0deg) scale(1);
+            filter: blur(0px);
+        }
+
+        /* =====================================================================
+           4 DISTINCT CATEGORY SOUL MICRO-PHYSICS (NOT GENERIC COPY-PASTE!)
+        ====================================================================== */
+        /* 1. HARTH CAFE SOUL: Rising Cup Steam Wisps, Liquid Crema Fill & Vinyl Turntable */
+        @keyframes cupSteamWisp {
+            0% { transform: translateY(6px) scaleX(0.85); opacity: 0; }
+            45% { opacity: 0.65; }
+            100% { transform: translateY(-28px) scaleX(1.25); opacity: 0; }
+        }
+        .harth-steam-wisp {
+            animation: cupSteamWisp 2.4s ease-in-out infinite;
+        }
+        @keyframes vinylSpin {
+            to { transform: rotate(360deg); }
+        }
+        .harth-vinyl-spin {
+            animation: vinylSpin 9s linear infinite;
+        }
+        .harth-soul-card {
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+        }
+        .harth-soul-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px -12px rgba(124, 77, 43, 0.42);
+        }
+
+        /* 2. HUSH RESTO SOUL: Binchotan Charcoal Ember Underglow & Sizzle Platter */
+        @keyframes binchotanEmberGlow {
+            0%, 100% { box-shadow: 0 14px 32px -6px rgba(232, 93, 63, 0.38), inset 0 0 18px rgba(232, 93, 63, 0.14); }
+            50% { box-shadow: 0 22px 48px -4px rgba(255, 115, 64, 0.72), inset 0 0 28px rgba(255, 115, 64, 0.28); }
+        }
+        .hush-soul-card {
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+        .hush-soul-card:hover {
+            transform: translateY(-7px) scale(1.015);
+            border-color: rgba(232, 93, 63, 0.85) !important;
+            animation: binchotanEmberGlow 1.8s ease-in-out infinite;
+        }
+
+        /* 3. CEDAR FOOTWEAR SOUL: Animated Goodyear Stitch Border & Blueprint Callouts */
+        @keyframes stitchMarch {
+            to { stroke-dashoffset: -28; }
+        }
+        .cedar-stitch-rect {
+            stroke-dasharray: 7 7;
+            animation: stitchMarch 1.1s linear infinite;
+        }
+        .cedar-soul-card {
+            transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.38s ease;
+        }
+        .cedar-soul-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 42px -10px rgba(140, 59, 43, 0.32);
+        }
+
+        /* 4. BARBEARIA SOUL: 24K Gold Sartorial Mirror Sweep & Barber Pole Rhythm */
+        @keyframes goldMirrorSweep {
+            0% { transform: translateX(-150%) skewX(-24deg); }
+            100% { transform: translateX(250%) skewX(-24deg); }
+        }
+        .barber-mirror-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .barber-mirror-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            width: 45%;
+            background: linear-gradient(90deg, transparent, rgba(197, 155, 109, 0.28), transparent);
+            transform: translateX(-150%) skewX(-24deg);
+            pointer-events: none;
+            z-index: 20;
+        }
+        .barber-mirror-card:hover::after {
+            animation: goldMirrorSweep 1.35s ease-in-out;
+        }
+        .barber-mirror-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 45px -10px rgba(197, 155, 109, 0.28);
+        }
+        @keyframes barberPoleStripe {
+            0% { background-position: 0 0; }
+            100% { background-position: 32px 0; }
+        }
+        .barber-pole-bar {
+            background: repeating-linear-gradient(
+                -45deg,
+                #C59B6D,
+                #C59B6D 8px,
+                #181512 8px,
+                #181512 16px,
+                #8C2D2D 16px,
+                #8C2D2D 24px,
+                #181512 24px,
+                #181512 32px
+            );
+            background-size: 45px 45px;
+            animation: barberPoleStripe 1.4s linear infinite;
+        }
+
+        /* Kinetic Infinite Marquee Ticker (Complete Mode Exclusive) */
+        @keyframes infiniteMarqueeScroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .complete-marquee-track {
+            display: flex;
+            width: max-content;
+            animation: infiniteMarqueeScroll 28s linear infinite;
+            --animation-reduced: none;
+        }
+        .complete-marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* 3D Magnetic Card Tilt & Specular Glare */
+        .complete-tilt-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+        }
+        .card-specular-glare {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 25;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.32), transparent 62%);
+            mix-blend-mode: overlay;
+        }
+        .complete-tilt-card:hover .card-specular-glare {
+            opacity: 1;
+        }
+
+        /* Floating Pulse Animation for Interactive Badges */
+        @keyframes floatSlowBob {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        .animate-float-bob {
+            animation: floatSlowBob 3.6s ease-in-out infinite;
+            --animation-reduced: none;
         }
 
         /* Scan Laser Animation for QR Standee Demo */
@@ -113,6 +291,11 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+            ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) {
+                animation: none !important;
+            }
             * {
                 animation: var(--animation-reduced) !important;
                 transition-duration: 0.05s !important;
@@ -139,6 +322,19 @@
     </style>
 </head>
 <body class="antialiased selection:bg-amber-300 selection:text-stone-950 overflow-x-hidden">
+
+    <!-- =====================================================================
+         COMPLETE TIER EXCLUSIVE: TOP SCROLL PROGRESS BAR & CATEGORY-BESPOKE LIVE TOAST
+    ====================================================================== -->
+    <div id="completeScrollProgressWrap" class="fixed top-0 left-0 right-0 h-1 z-[60] pointer-events-none bg-transparent">
+        <div id="completeScrollProgress" class="h-full w-0 transition-[width] duration-150 ease-out" style="background: linear-gradient(90deg, #8C2D2D 0%, #C59B6D 55%, #F5EFE6 100%); box-shadow: 0 0 14px rgba(197,155,109,0.65);"></div>
+    </div>
+
+    <!-- Floating Live Social Proof / Real-Time Activity Toast (Top-Right, Category-Bespoke Shape & Soul) -->
+    <div id="liveSocialProofToast"
+         onclick="app.handleSocialProofClick()"
+         class="fixed top-14 right-4 z-40 w-[335px] sm:w-[365px] cursor-pointer transition-all duration-500 ease-out opacity-0 translate-x-10 pointer-events-none">
+    </div>
 
     <!-- =====================================================================
          DYNAMIC VIEWPORT CONTAINER (100% CLEAN TOP NAVBAR — NO DOUBLE BARS!)
@@ -186,8 +382,8 @@
                 </button>
 
                 <div class="flex items-center gap-1.5">
-                    <span id="dockActiveThemeBadge" class="px-2 py-0.5 rounded-lg bg-white/10 text-[11px] font-bold text-cyan-300">
-                        💈 Barber
+                    <span id="dockActiveThemeBadge" class="px-2 py-0.5 rounded-lg bg-white/10 text-[11px] font-bold text-amber-300">
+                        ☕ Cafe
                     </span>
                     <button
                         type="button"
@@ -219,8 +415,8 @@
                 <div class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Uji Fitur Interaktif:</div>
                 <div class="grid grid-cols-2 gap-1.5">
                     <button type="button" onclick="app.triggerDemoPopupFeature()" id="dockFeaturePopupBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
-                        <span class="text-cyan-400">⚡</span>
-                        <span class="truncate" id="dockPopupFeatureLabel">Booking VIP</span>
+                        <span class="text-amber-400">⚡</span>
+                        <span class="truncate" id="dockPopupFeatureLabel">Struk Barista</span>
                     </button>
                     <button type="button" onclick="app.triggerDemoQrisFeature()" id="dockFeatureQrisBtn" class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 transition-all text-left">
                         <span class="text-cyan-400">💳</span>
@@ -444,7 +640,7 @@
             }
         });
 
-        // 2. Data Catalog for the 4 Distinct Architectures
+        // 2. Data Catalog for the 4 Distinct Architectures (Enriched with Category Soul Metadata)
         const THEMES_DB = {
             harth: {
                 storeTitle: "HARTH SPECIALTY COFFEE",
@@ -452,10 +648,10 @@
                 variantLabel: "Barista Customizer (Shot / Milk / Sugar):",
                 variants: ["Normal Espresso • Oat Milk", "Double Shot • Fresh Milk", "Less Sugar • Iced", "Hot Ceramic Cup (Meja)"],
                 items: [
-                    { id: "h1", cat: "COFFEE", name: "Classic Latte", desc: "Rich, Smooth, Timeless.", price: 28000, available: true, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" },
-                    { id: "h2", cat: "COLD BREW", name: "Iced Vanilla", desc: "Cool, Creamy, Refreshing.", price: 32000, available: true, img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=700&q=80" },
-                    { id: "h3", cat: "ALL DAY", name: "Avocado Toast", desc: "Fresh, Wholesome, Delicious.", price: 48000, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" },
-                    { id: "h4", cat: "BAKERY", name: "Almond Croissant", desc: "Buttery, Flaky, Irresistible.", price: 34000, available: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" }
+                    { id: "h1", cat: "COFFEE", flavorTag: "nutty", originBadge: "Gayo Highland • 92°C Pour", sweet: 86, body: 90, aroma: 94, name: "Classic Latte", desc: "Rich, Smooth, Timeless.", price: 28000, available: true, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h2", cat: "COLD BREW", flavorTag: "floral", originBadge: "16H Cold Steep • Madagascar Bean", sweet: 92, body: 68, aroma: 96, name: "Iced Vanilla", desc: "Cool, Creamy, Refreshing.", price: 32000, available: true, img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h3", cat: "ALL DAY", flavorTag: "bakery", originBadge: "Artisan Sourdough • Fresh Hass", sweet: 55, body: 88, aroma: 85, name: "Avocado Toast", desc: "Fresh, Wholesome, Delicious.", price: 48000, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=80" },
+                    { id: "h4", cat: "BAKERY", flavorTag: "bakery", originBadge: "French AOC Butter • 190°C Bake", sweet: 90, body: 84, aroma: 98, name: "Almond Croissant", desc: "Buttery, Flaky, Irresistible.", price: 34000, available: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" }
                 ]
             },
             hush: {
@@ -464,10 +660,10 @@
                 variantLabel: "Pilih Tingkat Kematangan / Saus Meja:",
                 variants: ["Signature Aburi Torch", "Extra Truffle Ponzu", "Spicy Mayo Terpisah", "Kids Friendly (Tanpa Wasabi)"],
                 items: [
-                    { id: "u1", cat: "CHEF SPECIAL", name: "Salmon Aburi Mentai Platter", desc: "8 pcs seared Norwegian salmon belly, tobiko, truffle oil & house tare.", price: 68000, available: true, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=700&q=80" },
-                    { id: "u2", cat: "NIGIRI SELECTION", name: "Toro & Uni Gold Nigiri Set", desc: "Bluefin fatty tuna & Hokkaido sea urchin served on warm akazu shari.", price: 95000, available: true, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=700&q=80" },
-                    { id: "u3", cat: "HOT ROBATAYAKI", name: "Wagyu A5 Yakitori Skewers", desc: "Charcoal-grilled Miyazaki Wagyu glazed with smoked sweet soy & scallions.", price: 82000, available: true, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" },
-                    { id: "u4", cat: "ARTISAN ROLL", name: "Crispy Dragon Tempura Roll", desc: "Prawn tempura, unagi kabayaki, avocado crown, and roasted sesame.", price: 59000, available: true, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=700&q=80" }
+                    { id: "u1", cat: "CHEF SPECIAL", courseTag: "aburi", heatTemp: "820°C Binchotan Torch", smokeLevel: 4, umamiScore: "9.8/10", pairing: "Cold Yuzu Highball", name: "Salmon Aburi Mentai Platter", desc: "8 pcs seared Norwegian salmon belly, tobiko, truffle oil & house tare.", price: 68000, available: true, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u2", cat: "NIGIRI SELECTION", courseTag: "raw", heatTemp: "4°C Aged Akazu Shari", smokeLevel: 2, umamiScore: "9.9/10", pairing: "Junmai Daiginjo Sake", name: "Toro & Uni Gold Nigiri Set", desc: "Bluefin fatty tuna & Hokkaido sea urchin served on warm akazu shari.", price: 95000, available: true, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u3", cat: "HOT ROBATAYAKI", courseTag: "robata", heatTemp: "850°C White Binchotan", smokeLevel: 5, umamiScore: "9.9/10", pairing: "Smoked Oolong Highball", name: "Wagyu A5 Yakitori Skewers", desc: "Charcoal-grilled Miyazaki Wagyu glazed with smoked sweet soy & scallions.", price: 82000, available: true, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" },
+                    { id: "u4", cat: "ARTISAN ROLL", courseTag: "aburi", heatTemp: "185°C Crisp Tempura", smokeLevel: 3, umamiScore: "9.6/10", pairing: "Iced Matcha Sencha", name: "Crispy Dragon Tempura Roll", desc: "Prawn tempura, unagi kabayaki, avocado crown, and roasted sesame.", price: 59000, available: true, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=700&q=80" }
                 ]
             },
             cedar: {
@@ -476,14 +672,14 @@
                 variantLabel: "Pilih Ukuran Sepatu (EU) & Warna Kulit:",
                 variants: ["Size 40 • Pull-Up Cognac", "Size 41 • Pull-Up Cognac", "Size 42 • Oxblood Vintage", "Size 43 • Matte Black"],
                 items: [
-                    { id: "c1", cat: "HERITAGE BOOTS", name: "Garrison Goodyear-Welt Boot", desc: "Full-grain crazy horse leather", price: 685000, available: true, img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c2", cat: "CHUKKA BOOTS", name: "ironwood Suede Chukka", desc: "Hand-stitched crepe outsole", price: 590000, available: true, img: "https://images.unsplash.com/photo-1542280756-74b2f55e73ab?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c3", cat: "DRESS SHOES", name: "Kensington Wingtip Brogue", desc: "Burnished chestnut calfskin", price: 640000, available: true, img: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c4", cat: "DESERT BOOTS", name: "Sahara Waxed Canvas Boot", desc: "Water-resistant beeswax finish", price: 520000, available: true, img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c5", cat: "DRESS OXFORD", name: "Savile Row Cap-Toe Oxford", desc: "Vegetable-tanned leather sole", price: 660000, available: true, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c6", cat: "LOAFERS", name: " Verona Penny Loafer", desc: "Unlined soft nubuck leather", price: 540000, available: true, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c7", cat: "WORK BOOTS", name: "Timberline Moc-Toe Boot", desc: "Triple-stitched Vibram lug", price: 720000, available: true, img: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=600&q=80" },
-                    { id: "c8", cat: "CHELSEA BOOTS", name: "Camden Jodphur Chelsea", desc: "Single-piece espresso hide", price: 650000, available: true, img: "https://images.unsplash.com/photo-1605812860427-4024433a70fd?auto=format&fit=crop&w=600&q=80" }
+                    { id: "c1", cat: "HERITAGE BOOTS", weltSpec: "360° Storm Goodyear-Welt", hideSpec: "2.0mm Pull-Up Hide", soleSpec: "Vibram® Commando Lug", name: "Garrison Goodyear-Welt Boot", desc: "Full-grain crazy horse leather", price: 685000, available: true, img: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c2", cat: "CHUKKA BOOTS", weltSpec: "270° Stitchdown Construction", hideSpec: "1.8mm Reverse Suede", soleSpec: "Natural Plantation Crepe", name: "ironwood Suede Chukka", desc: "Hand-stitched crepe outsole", price: 590000, available: true, img: "https://images.unsplash.com/photo-1542280756-74b2f55e73ab?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c3", cat: "DRESS SHOES", weltSpec: "270° Flat Goodyear-Welt", hideSpec: "1.7mm Burnished Calf", soleSpec: "Dainite® Studded Rubber", name: "Kensington Wingtip Brogue", desc: "Burnished chestnut calfskin", price: 640000, available: true, img: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c4", cat: "DESERT BOOTS", weltSpec: "360° Storm Welt", hideSpec: "14oz Beeswax Canvas", soleSpec: "Micro-Ripple EVA + Cork", name: "Sahara Waxed Canvas Boot", desc: "Water-resistant beeswax finish", price: 520000, available: true, img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c5", cat: "DRESS OXFORD", weltSpec: "Closed-Channel Welt", hideSpec: "1.8mm Box Calfskin", soleSpec: "Oak-Bark Tanned Leather", name: "Savile Row Cap-Toe Oxford", desc: "Vegetable-tanned leather sole", price: 660000, available: true, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c6", cat: "LOAFERS", weltSpec: "Handsewn Moccasin Stitch", hideSpec: "1.6mm Soft Nubuck", soleSpec: "Flex Leather + Heel Tap", name: " Verona Penny Loafer", desc: "Unlined soft nubuck leather", price: 540000, available: true, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c7", cat: "WORK BOOTS", weltSpec: "360° Norwegian Split-Welt", hideSpec: "2.2mm Oil-Tanned Hide", soleSpec: "Vibram® Christy Wedge", name: "Timberline Moc-Toe Boot", desc: "Triple-stitched Vibram lug", price: 720000, available: true, img: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=600&q=80" },
+                    { id: "c8", cat: "CHELSEA BOOTS", weltSpec: "270° Goodyear-Welt", hideSpec: "1.9mm Wholecut Espresso", soleSpec: "Half-Lug Heritage Rubber", name: "Camden Jodphur Chelsea", desc: "Single-piece espresso hide", price: 650000, available: true, img: "https://images.unsplash.com/photo-1605812860427-4024433a70fd?auto=format&fit=crop&w=600&q=80" }
                 ]
             },
             barbearia: {
@@ -492,12 +688,12 @@
                 variantLabel: "Pilih Slot Jam & Master Barber:",
                 variants: ["11:00 WIB • Master Rafael", "14:30 WIB • Master Lucas", "17:00 WIB • Master Diego", "19:30 WIB • VIP Night Slot"],
                 items: [
-                    { id: "b1", cat: "CABELO / HAIR", name: "Corte Premium Visagista", desc: "Konsultasi anatomi wajah, potong presisi, keramas & pomade matte.", price: 65000, available: true, img: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=700&q=80" },
-                    { id: "b2", cat: "CABELO / HAIR", name: "Acabamento & Selagem", desc: "Perapian kontur leher, jambang, dan nutrisi pelurusan rambut pria.", price: 55000, available: true, img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80" },
-                    { id: "b3", cat: "BARBA / BEARD", name: "Barbaterapia Hot Towel", desc: "Ritual handuk panas aromaterapi, pisau cukur klasik & balm organik.", price: 50000, available: true, img: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=700&q=80" },
-                    { id: "b4", cat: "BARBA / BEARD", name: "Design de Barba & Mustache", desc: "Sculpting garis jenggot simetris & perawatan minyak cedarwood.", price: 45000, available: true, img: "https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=700&q=80" },
-                    { id: "b5", cat: "ESTÉTICA / SPA", name: "Skin Care Black Mask & Vapor", desc: "Detoks pori wajah dengan uap ozon hangat dan masker charcoal.", price: 60000, available: true, img: "https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=700&q=80" },
-                    { id: "b6", cat: "ESTÉTICA / SPA", name: "Combo VIP: Corte + Barba + Spa", desc: "Paket transformasi penuh 90 menit + kopi espresso gratis.", price: 135000, available: true, img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=700&q=80" }
+                    { id: "b1", cat: "CABELO / HAIR", faces: ["round", "oval", "diamond"], visagismoBadge: "Ideal untuk Wajah Bulat & Oval (Ilusi Rahang Tegas)", name: "Corte Premium Visagista", desc: "Konsultasi anatomi wajah, potong presisi, keramas & pomade matte.", price: 65000, available: true, img: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b2", cat: "CABELO / HAIR", faces: ["square", "diamond"], visagismoBadge: "Ideal untuk Wajah Persegi & Berlian (Kontur Rapi)", name: "Acabamento & Selagem", desc: "Perapian kontur leher, jambang, dan nutrisi pelurusan rambut pria.", price: 55000, available: true, img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b3", cat: "BARBA / BEARD", faces: ["square", "oval"], visagismoBadge: "Relaksasi Pori & Garis Rahang Klasik", name: "Barbaterapia Hot Towel", desc: "Ritual handuk panas aromaterapi, pisau cukur klasik & balm organik.", price: 50000, available: true, img: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b4", cat: "BARBA / BEARD", faces: ["round", "diamond"], visagismoBadge: "Sculpting Janggut Meruncing (Mempertegas Dagu)", name: "Design de Barba & Mustache", desc: "Sculpting garis jenggot simetris & perawatan minyak cedarwood.", price: 45000, available: true, img: "https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b5", cat: "ESTÉTICA / SPA", faces: ["oval", "square"], visagismoBadge: "Detoks Kulit Wajah & Uap Ozon Hangat", name: "Skin Care Black Mask & Vapor", desc: "Detoks pori wajah dengan uap ozon hangat dan masker charcoal.", price: 60000, available: true, img: "https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=700&q=80" },
+                    { id: "b6", cat: "ESTÉTICA / SPA", faces: ["round", "square", "oval", "diamond"], visagismoBadge: "👑 Rekomendasi Utama: Transformasi Penuh Semua Bentuk Wajah", name: "Combo VIP: Corte + Barba + Spa", desc: "Paket transformasi penuh 90 menit + kopi espresso gratis.", price: 135000, available: true, img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=700&q=80" }
                 ]
             }
         };
@@ -524,6 +720,20 @@
                 this.courierFee = 22000;
                 this.customerName = 'Yasin (Pelanggan)';
                 this.particleAnimId = null;
+                this.heroMood = 'day'; // 'day' | 'night' interactive ambience toggle
+                this.socialProofTimer = null;
+                this.socialProofHideTimer = null;
+                this.socialProofIdx = 0;
+                this.currentToastItemId = null;
+
+                // Category-Specific Soul States (Unique per UMKM Category!)
+                this.harthFlavorFilter = 'all'; // 'all' | 'nutty' | 'floral' | 'bakery'
+                this.harthVinylPlaying = true;
+                this.hushCourseFilter = 'all'; // 'all' | 'robata' | 'aburi' | 'raw'
+                this.cedarPatinaYears = 0; // 0 (Baru) | 1 (1 Thn) | 5 (5 Thn Vintage Patina)
+                this.cedarFootCm = 26.5; // 24.5 - 28.5 cm interactive EU size matcher
+                this.barberFaceShape = 'round'; // 'all' | 'round' | 'square' | 'oval' | 'diamond'
+                this.barberMaster = '17:00 WIB • Master Diego';
 
                 this.init();
             }
@@ -838,8 +1048,10 @@
                     cancelAnimationFrame(this.particleAnimId);
                     this.particleAnimId = null;
                 }
+                this.stopSocialProofCycle();
 
                 const vp = document.getElementById('themeViewport');
+                const progWrap = document.getElementById('completeScrollProgressWrap');
 
                 const customBanner = this.customClientData ? `
                     <div class="bg-gradient-to-r from-[#05070F] via-[#0B1020] to-[#05070F] border-b border-[#00E5FF]/50 text-[#F5F7FF] px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-2 z-50 relative">
@@ -855,28 +1067,109 @@
 
                 // If Starter Tier (Rp 499.000) is selected, render the Aesthetic Bespoke Starter Showcase
                 if (this.tier === 'starter') {
+                    if (progWrap) progWrap.classList.add('hidden');
                     vp.innerHTML = customBanner + this.buildStarterEditionHTML();
                     this.applyCustomClientDOMOverrides();
                     this.updateFloatingCart();
                     return;
                 }
 
-                // Complete Tier (Rp 899.000 All-In) unlocks 100% of all flagship interactive features & canvas particles!
+                if (progWrap) progWrap.classList.remove('hidden');
+                const progBar = document.getElementById('completeScrollProgress');
+
+                // Complete Tier (Rp 899.000 All-In) unlocks 100% of all flagship interactive features, marquee, 3D tilt & canvas particles!
                 if (this.theme === 'harth') {
+                    if (progBar) progBar.setAttribute('style', 'background: linear-gradient(90deg, #7C4D2B 0%, #D97706 50%, #F5EFE6 100%); box-shadow: 0 0 12px rgba(217,119,6,0.55);');
                     vp.innerHTML = customBanner + this.buildHarthHTML();
                     this.startCanvasParticles('steam');
                 } else if (this.theme === 'hush') {
+                    if (progBar) progBar.setAttribute('style', 'background: linear-gradient(90deg, #991B1B 0%, #E85D3F 55%, #FBBF24 100%); box-shadow: 0 0 14px rgba(232,93,63,0.75);');
                     vp.innerHTML = customBanner + this.buildHushHTML();
                     this.startCanvasParticles('smoke');
                 } else if (this.theme === 'cedar') {
+                    if (progBar) progBar.setAttribute('style', 'background: linear-gradient(90deg, #8C3B2B 0%, #B45309 55%, #D97706 100%); box-shadow: 0 0 12px rgba(140,59,43,0.55);');
                     vp.innerHTML = customBanner + this.buildCedarHTML();
+                    this.startCanvasParticles('craft');
                 } else {
+                    if (progBar) progBar.setAttribute('style', 'background: linear-gradient(90deg, #8C2D2D 0%, #C59B6D 55%, #F5EFE6 100%); box-shadow: 0 0 14px rgba(197,155,109,0.65);');
                     vp.innerHTML = customBanner + this.buildBarbeariaHTML();
+                    this.startCanvasParticles('gold');
                 }
 
                 this.applyCustomClientDOMOverrides();
                 this.initScrollRevealFallback();
+                this.init3DTiltCards();
+                this.startSocialProofCycle();
                 this.updateFloatingCart();
+            }
+
+            buildCompleteMarqueeHTML() {
+                const marqueeConfigs = {
+                    harth: {
+                        bg: 'bg-[#1D1612] text-[#F5EFE6] border-b border-[#3A2B22]',
+                        accent: 'text-amber-300',
+                        pillBg: 'bg-amber-400 text-[#1D1612]',
+                        items: [
+                            '🟢 LIVE ROASTERY: PROBAT BATCH #14 BARU SAJA SELESAI DISANGRAI',
+                            `🍽️ SMART QR MEJA AKTIF (${this.tableNumber}) — PESAN DARI KURSI TANPA ANTRE KASIR`,
+                            '⚡ FIBER WI-FI 165 MBPS & 14/18 MEJA STOPKONTAK TERSEDIA UNTUK WFC',
+                            '🎟️ KLAIM VOUCHER HEMAT20 UNTUK DISKON 20% LANGSUNG DI STRUK WA'
+                        ]
+                    },
+                    hush: {
+                        bg: 'bg-[#0B0E12] text-white border-b border-[#E85D3F]/30',
+                        accent: 'text-[#FF8A70]',
+                        pillBg: 'bg-[#E85D3F] text-white',
+                        items: [
+                            '🔥 BINCHOTAN ROBATA GRILL MENYALA (900°C) — SIAP PANGGANG KE MEJA ANDA',
+                            `🍣 TIKET PESANAN ${this.tableNumber.toUpperCase()} TERHUBUNG LANGSUNG KE DAPUR CHEF`,
+                            '❄️ PENGIRIMAN KURIR INSTAN DENGAN THERMAL ICE-PACK BOX TERSEDIA',
+                            '🎟️ GUNAKAN KODE HEMAT20 UNTUK POTONGAN 20% HARI INI'
+                        ]
+                    },
+                    cedar: {
+                        bg: 'bg-[#2B2118] text-[#F3ECE0] border-b border-[#8C3B2B]',
+                        accent: 'text-amber-300',
+                        pillBg: 'bg-[#9E3B2E] text-white',
+                        items: [
+                            '🥾 100% HANDCRAFTED GOODYEAR-WELT LEATHER CONSTRUCTION — BANDUNG HERITAGE',
+                            '🔥 GRATIS UKIR INISIAL MONOGRAM KULIT ASLI (MAKS 3 HURUF)',
+                            '📏 PANDUAN UKURAN KAKI PRESISI (EU 39–44) & GARANSI TUKAR SIZE GRATIS',
+                            '🎟️ KLAIM VOUCHER HEMAT20 UNTUK POTONGAN 20% PRE-ORDER & READY STOCK'
+                        ]
+                    },
+                    barbearia: {
+                        bg: 'bg-[#090807] text-[#F5EFE6] border-b border-[#C59B6D]/40',
+                        accent: 'text-[#C59B6D]',
+                        pillBg: 'bg-[#C59B6D] text-[#11100F]',
+                        items: [
+                            '💈 VIP GENTLEMEN\'S GROOMING CLUB SENOPATI — TANPA ANTRE DENGAN BOOKING SLOT',
+                            '👑 JADWAL HARI INI TERSEDIA: MASTER RAFAEL, MASTER LUCAS & MASTER DIEGO',
+                            '☕ GRATIS COMPLIMENTARY HOT ESPRESSO / COLD BREW DI LOUNGE TUNGGU',
+                            '🎟️ GUNAKAN VOUCHER HEMAT20 PADA SAAT KUNCI PASS RESERVASI WA'
+                        ]
+                    }
+                };
+                const cfg = marqueeConfigs[this.theme] || marqueeConfigs.harth;
+                const stripContent = cfg.items.map(text => `
+                    <span class="inline-flex items-center gap-3 px-6 text-[11px] font-bold tracking-wider uppercase">
+                        <span>${text}</span>
+                        <span class="${cfg.accent}">&bull;</span>
+                    </span>
+                `).join('') + `
+                    <button type="button" onclick="app.applyVoucher('HEMAT20')" class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full ${cfg.pillBg} text-[10px] font-extrabold uppercase tracking-wider mx-4 hover:scale-105 transition-transform">
+                        🎟️ Pakai HEMAT20 Sekarang &rarr;
+                    </button>
+                `;
+
+                return `
+                    <div class="w-full overflow-hidden py-2.5 select-none relative z-30 ${cfg.bg}">
+                        <div class="complete-marquee-track items-center">
+                            <div class="flex items-center shrink-0">${stripContent}${stripContent}</div>
+                            <div class="flex items-center shrink-0" aria-hidden="true">${stripContent}${stripContent}</div>
+                        </div>
+                    </div>
+                `;
             }
 
             /* =================================================================
@@ -1112,130 +1405,214 @@
             buildHarthHTML() {
                 const store = THEMES_DB.harth;
                 const isEn = this.lang === 'en';
+                const isNight = this.heroMood === 'night';
                 return `
-                <div class="bg-[#F5EFE6] text-[#1D1612] font-sans">
-                    <!-- HERO SECTION (Full-Bleed Warm Sunlit Cafe + Steam Canvas) -->
+                <div class="${isNight ? 'bg-[#17120E] text-[#F5EFE6]' : 'bg-[#F5EFE6] text-[#1D1612]'} font-sans transition-colors duration-700">
+                    ${this.buildCompleteMarqueeHTML()}
+                    <!-- HERO SECTION (Full-Bleed Warm Sunlit Cafe + Steam Canvas + Interactive Mood Switcher) -->
                     <section class="relative min-h-[600px] lg:min-h-[660px] flex flex-col justify-between overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1800&q=85" alt="Harth Coffee Interior" class="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-r from-[#F5EFE6] via-[#F5EFE6]/85 to-stone-950/45"></div>
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1800&q=85" alt="Harth Coffee Interior" class="parallax-hero-bg absolute inset-0 w-full h-full object-cover object-center scale-105 transition-all duration-1000 ${isNight ? 'brightness-50 contrast-125 sepia-[.25]' : ''}">
+                        <div class="absolute inset-0 transition-all duration-700 ${isNight ? 'bg-gradient-to-r from-[#120D0A]/95 via-[#1A120D]/85 to-stone-950/70' : 'bg-gradient-to-r from-[#F5EFE6] via-[#F5EFE6]/85 to-stone-950/45'}"></div>
                         <div class="absolute inset-0 dappled-light pointer-events-none"></div>
 
                         <!-- Interactive Rising Coffee Steam Canvas -->
                         <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
                         <!-- Harth Editorial Top Nav -->
-                        <nav class="relative z-20 max-w-7xl w-full mx-auto px-6 lg:px-12 pt-7 flex items-center justify-between">
-                            <div class="font-serif font-bold text-2xl tracking-[0.22em] uppercase text-[#1D1612]">
+                        <nav class="relative z-20 max-w-7xl w-full mx-auto px-6 lg:px-12 pt-7 flex flex-wrap items-center justify-between gap-3">
+                            <div class="font-serif font-bold text-2xl tracking-[0.22em] uppercase ${isNight ? 'text-[#F5EFE6]' : 'text-[#1D1612]'}">
                                 HARTH<span class="block text-xs tracking-[0.35em] font-sans font-normal -mt-1 opacity-75">COFFEE</span>
                             </div>
-                            <div class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-stone-800">
-                                <a href="#harth-menu" class="hover:text-amber-800">Menu</a>
-                                <a href="#harth-story" class="hover:text-amber-800">Our Story</a>
-                                <button type="button" onclick="app.openQRStandeeModal()" class="text-amber-900 underline font-extrabold">Pesan dari Meja (${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]})</button>
+                            <div class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase ${isNight ? 'text-stone-300' : 'text-stone-800'}">
+                                <a href="#harth-menu" class="hover:text-amber-500">Menu</a>
+                                <a href="#harth-story" class="hover:text-amber-500">Our Story</a>
+                                <button type="button" onclick="app.openQRStandeeModal()" class="${isNight ? 'text-amber-300' : 'text-amber-900'} underline font-extrabold">Pesan dari Meja (${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]})</button>
                             </div>
-                            <button type="button" onclick="app.openQRStandeeModal()" class="px-5 py-2.5 rounded-full bg-[#FAF6F0] text-[#1D1612] text-xs font-bold shadow-md hover:bg-white transition-all flex items-center gap-2">
-                                <span>🪪</span> <span>${isEn ? 'Table QR Concierge' : 'Scan QR Meja #07'}</span>
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="app.toggleHeroMood()" class="px-3.5 py-2 rounded-full border ${isNight ? 'bg-amber-400/20 border-amber-400/50 text-amber-200' : 'bg-[#1D1612]/10 border-[#1D1612]/25 text-[#1D1612]'} text-[11px] font-extrabold transition-all flex items-center gap-1.5 shadow-sm hover:scale-105">
+                                    <span>${isNight ? '🌙 Evening Jazz Roastery' : '☀️ Morning Sunlit Brew'}</span>
+                                </button>
+                                <button type="button" onclick="app.openQRStandeeModal()" class="px-4 py-2 rounded-full bg-[#FAF6F0] text-[#1D1612] text-xs font-bold shadow-md hover:bg-white transition-all flex items-center gap-1.5">
+                                    <span>🪪</span> <span>${isEn ? 'Table QR' : 'Scan QR #07'}</span>
+                                </button>
+                            </div>
                         </nav>
 
                         <!-- Hero Center Split -->
                         <div class="relative z-20 max-w-7xl w-full mx-auto px-6 lg:px-12 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
                             <div class="lg:col-span-7 space-y-5">
-                                <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase text-stone-700">
+                                <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase ${isNight ? 'text-amber-200/90' : 'text-stone-700'}">
                                     <span>SPECIALTY COFFEE &bull; A WARMER TODAY</span>
-                                    <span class="px-2.5 py-0.5 rounded-full bg-amber-800/15 text-amber-950 font-extrabold">🍽️ ${this.tableNumber}</span>
+                                    <span class="px-2.5 py-0.5 rounded-full ${isNight ? 'bg-amber-400/20 text-amber-200' : 'bg-amber-800/15 text-amber-950'} font-extrabold">🍽️ ${this.tableNumber}</span>
                                 </div>
 
-                                <h1 class="font-serif text-6xl sm:text-7xl lg:text-[84px] leading-[0.94] tracking-tight text-[#1D1612]">
-                                    More<br>than just<br><span class="italic font-normal text-[#7C4D2B]">coffee.</span>
+                                <h1 class="font-serif text-6xl sm:text-7xl lg:text-[84px] leading-[0.94] tracking-tight ${isNight ? 'text-[#F5EFE6]' : 'text-[#1D1612]'}">
+                                    More<br>than just<br><span class="italic font-normal ${isNight ? 'text-amber-400' : 'text-[#7C4D2B]'}">coffee.</span>
                                 </h1>
 
-                                <p class="text-sm sm:text-base text-stone-700 max-w-md leading-relaxed">
+                                <p class="text-sm sm:text-base ${isNight ? 'text-stone-300' : 'text-stone-700'} max-w-md leading-relaxed">
                                     ${isEn
                                         ? 'Thoughtfully sourced beans, seasonal flavours and a cozy space to slow down. Order directly from your table via QR.'
                                         : 'Biji kopi pilihan yang disangrai hangat setiap hari. Duduk santai di meja Anda, pilih menu, dan pesanan langsung diantar barista kami.'}
                                 </p>
 
                                 <div class="pt-2 flex flex-wrap items-center gap-4">
-                                    <a href="#harth-menu" class="px-6 py-3.5 rounded-full bg-[#1D1612] text-[#F5EFE6] text-xs font-bold tracking-wider uppercase hover:bg-stone-800 transition-all shadow-lg">
+                                    <a href="#harth-menu" class="px-6 py-3.5 rounded-full ${isNight ? 'bg-amber-400 text-[#1D1612] hover:bg-amber-300' : 'bg-[#1D1612] text-[#F5EFE6] hover:bg-stone-800'} text-xs font-bold tracking-wider uppercase transition-all shadow-lg">
                                         Explore Our Menu &rarr;
                                     </a>
-                                    <button type="button" onclick="app.openQRStandeeModal()" class="inline-flex items-center gap-2.5 text-xs font-bold text-[#1D1612] hover:opacity-75">
-                                        <span class="w-10 h-10 rounded-full border border-stone-400 bg-white/80 flex items-center justify-center shadow-sm">&#9654;</span>
+                                    <button type="button" onclick="app.openQRStandeeModal()" class="inline-flex items-center gap-2.5 text-xs font-bold ${isNight ? 'text-amber-200' : 'text-[#1D1612]'} hover:opacity-75">
+                                        <span class="w-10 h-10 rounded-full border border-stone-400 bg-white/90 text-[#1D1612] flex items-center justify-center shadow-sm">&#9654;</span>
                                         <span>Simulasi Scan QR Meja</span>
                                     </button>
                                 </div>
 
                                 <!-- Metrics Strip (Exact match to Harth Ref) -->
-                                <div class="pt-6 flex items-center gap-8 border-t border-stone-400/40 max-w-md">
+                                <div class="pt-6 flex items-center gap-8 border-t ${isNight ? 'border-white/15' : 'border-stone-400/40'} max-w-md">
                                     <div>
-                                        <div class="text-xl font-extrabold text-[#1D1612]">10K+</div>
-                                        <div class="text-xs text-stone-600">Happy Customers</div>
+                                        <div class="text-xl font-extrabold ${isNight ? 'text-white' : 'text-[#1D1612]'}">10K+</div>
+                                        <div class="text-xs ${isNight ? 'text-stone-400' : 'text-stone-600'}">Happy Customers</div>
                                     </div>
-                                    <div class="h-8 w-px bg-stone-400/40"></div>
+                                    <div class="h-8 w-px ${isNight ? 'bg-white/15' : 'bg-stone-400/40'}"></div>
                                     <div>
-                                        <div class="text-xl font-extrabold text-[#1D1612]">4.8 &#9733;</div>
-                                        <div class="text-xs text-stone-600">Average Rating</div>
+                                        <div class="text-xl font-extrabold ${isNight ? 'text-amber-300' : 'text-[#1D1612]'}">4.8 &#9733;</div>
+                                        <div class="text-xs ${isNight ? 'text-stone-400' : 'text-stone-600'}">Average Rating</div>
                                     </div>
-                                    <div class="h-8 w-px bg-stone-400/40"></div>
+                                    <div class="h-8 w-px ${isNight ? 'bg-white/15' : 'bg-stone-400/40'}"></div>
                                     <div>
-                                        <div class="text-xl font-extrabold text-[#1D1612]">0%</div>
-                                        <div class="text-xs text-stone-600">Komisi Ojol</div>
+                                        <div class="text-xl font-extrabold ${isNight ? 'text-emerald-400' : 'text-[#1D1612]'}">0%</div>
+                                        <div class="text-xs ${isNight ? 'text-stone-400' : 'text-stone-600'}">Komisi Ojol</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Handwritten Script Accent on Bottom Right of Hero -->
                             <div class="lg:col-span-5 flex justify-end items-end">
-                                <div class="font-script text-4xl sm:text-5xl text-[#F5EFE6] drop-shadow-lg -rotate-6 select-none pr-4">
+                                <div class="parallax-float-badge animate-float-bob font-script text-4xl sm:text-5xl text-[#F5EFE6] drop-shadow-lg -rotate-6 select-none pr-4">
                                     Good Coffee<br>Brighter Days
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <!-- SECTION 2: SEASONAL FAVOURITES (Frameless Portrait Cards) -->
+                    <!-- SECTION 2: SEASONAL FAVOURITES + CAFE SENSORY EXTRACTION & WFC VINYL SOUL -->
                     <section id="harth-menu" class="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 scroll-reveal">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 scroll-reveal">
                             <div>
-                                <div class="text-xs font-bold tracking-[0.2em] uppercase text-stone-500">OUR MENU &bull; DINE-IN &amp; TAKEAWAY</div>
-                                <h2 class="font-serif text-4xl sm:text-5xl text-[#1D1612] mt-1">Seasonal favourites.</h2>
+                                <div class="text-xs font-bold tracking-[0.2em] uppercase ${isNight ? 'text-amber-400' : 'text-stone-500'}">☕ SENSORY EXTRACTION BAR &bull; DINE-IN &amp; TAKEAWAY</div>
+                                <h2 class="font-serif text-4xl sm:text-5xl ${isNight ? 'text-[#F5EFE6]' : 'text-[#1D1612]'} mt-1">Seasonal favourites.</h2>
                             </div>
-                            <p class="text-xs sm:text-sm text-stone-600 max-w-sm leading-relaxed">
-                                Crafted with care, using the finest ingredients. Klik tombol <strong>+</strong> pada kartu untuk memesan langsung dari <strong>${this.tableNumber}</strong>.
+                            <p class="text-xs sm:text-sm ${isNight ? 'text-stone-300' : 'text-stone-600'} max-w-sm leading-relaxed">
+                                Pilih profil karakter seduhan kopi atau klik kursi WFC Anda di bawah. Setiap kartu menampilkan <strong>bar ekstraksi rasa barista</strong> langsung dari meja <strong>${this.tableNumber}</strong>.
                             </p>
-                            <button type="button" onclick="app.applyVoucher('HEMAT20')" class="self-start md:self-auto px-5 py-2.5 rounded-full border border-stone-400 text-xs font-bold hover:bg-[#1D1612] hover:text-white transition-all">
+                            <button type="button" onclick="app.applyVoucher('HEMAT20')" class="self-start md:self-auto px-5 py-2.5 rounded-full border border-amber-500/50 text-xs font-bold hover:bg-amber-400 hover:text-[#1D1612] transition-all">
                                 🎟️ Klaim Voucher HEMAT20 &rarr;
                             </button>
                         </div>
 
-                        <!-- 4 Frameless Full-Bleed Portrait Cards (Exact Harth Coffee Card Layout) -->
+                        <!-- HARTH CAFE SOUL WIDGET: SENSORY FLAVOR DIAL + ACOUSTIC VINYL & WFC SEAT RADAR -->
+                        <div class="mb-10 p-5 rounded-3xl border ${isNight ? 'bg-[#1F1713] border-amber-500/25' : 'bg-[#EFE7DA] border-[#D8CBB8]'} shadow-md grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                            <div class="lg:col-span-7 space-y-2.5">
+                                <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider ${isNight ? 'text-amber-300' : 'text-[#7C4D2B]'}">
+                                    <span>☕ Barista Sensory Flavor Tuner (Klik untuk Filter Karakter Rasa):</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${[
+                                        { id: 'all', label: '✨ Semua Seduhan (4)' },
+                                        { id: 'nutty', label: '🍫 Nutty & Creamy Espresso' },
+                                        { id: 'floral', label: '🌸 Floral & Cold Steep' },
+                                        { id: 'bakery', label: '🥐 Artisanal Bakery & Toast' }
+                                    ].map(f => `
+                                        <button type="button" onclick="app.setHarthFlavorFilter('${f.id}')"
+                                            class="px-3.5 py-2 rounded-full text-xs font-bold border transition-all ${this.harthFlavorFilter === f.id
+                                                ? (isNight ? 'bg-amber-400 text-[#1D1612] border-amber-300 shadow-md scale-105' : 'bg-[#1D1612] text-[#F5EFE6] border-[#1D1612] shadow-md scale-105')
+                                                : (isNight ? 'bg-black/30 text-stone-300 border-white/15 hover:border-amber-400/50' : 'bg-[#F8F4EC] text-stone-700 border-[#D8CBB8] hover:border-[#1D1612]')}">
+                                            ${f.label}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-2xl ${isNight ? 'bg-black/40 border border-white/10' : 'bg-[#FAF6F0] border border-[#DFD3C3]'}">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-full bg-stone-900 border-2 border-amber-400/60 flex items-center justify-center shrink-0 harth-vinyl-spin shadow-inner">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-amber-400 block"></span>
+                                    </div>
+                                    <div class="text-xs">
+                                        <div class="font-extrabold ${isNight ? 'text-amber-300' : 'text-[#1D1612]'}">🎵 Cipete Morning Bossa Vinyl</div>
+                                        <div class="${isNight ? 'text-stone-400' : 'text-stone-500'}">Klik Meja WFC Anda: <strong class="underline">${this.tableNumber}</strong></div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    ${[
+                                        { seat: 'Meja #04 (Dekat Stopkontak)', short: '🔌 #04 WFC' },
+                                        { seat: 'Meja #07 (VIP Lounge)', short: '🌿 #07 Taman' },
+                                        { seat: 'Meja #11 (Quiet Roastery)', short: '🤫 #11 Quiet' }
+                                    ].map(s => `
+                                        <button type="button" onclick="app.selectHarthSeat('${s.seat}')"
+                                            class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${this.tableNumber === s.seat
+                                                ? 'bg-amber-500 text-stone-950 border-amber-400 shadow'
+                                                : (isNight ? 'bg-white/5 text-stone-300 border-white/10 hover:bg-white/15' : 'bg-white text-stone-700 border-stone-300 hover:bg-stone-100')}">
+                                            ${s.short}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 Frameless Full-Bleed Portrait Cards (Sensory Extraction Bars + Rising Cup Steam) -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            ${store.items.map(item => `
-                                <article class="scroll-curtain group relative h-[410px] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer" onclick="app.openItemModal('${item.id}')">
-                                    <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-[#1a120b]/95 via-[#1a120b]/25 to-transparent"></div>
+                            ${store.items.filter(it => this.harthFlavorFilter === 'all' || it.flavorTag === this.harthFlavorFilter).map(item => `
+                                <article style="view-transition-name: card-${item.id}" class="harth-soul-card soul-transition-card group relative h-[445px] rounded-2xl overflow-hidden shadow-md cursor-pointer" onclick="app.openItemModal('${item.id}')">
+                                    <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#160F0A] via-[#160F0A]/55 to-transparent"></div>
+
+                                    <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between gap-2 z-10">
+                                        <span class="px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md border border-amber-300/35 text-[11px] font-bold text-amber-200">
+                                            ${item.originBadge || 'Single Origin • 92°C'}
+                                        </span>
+                                        <span class="w-8 h-8 rounded-full bg-amber-950/75 border border-amber-400/40 flex items-center justify-center text-amber-200 text-xs harth-steam-wisp">♨</span>
+                                    </div>
 
                                     ${!item.available ? `
-                                        <div class="absolute inset-0 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center">
+                                        <div class="absolute inset-0 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center z-20">
                                             <span class="px-4 py-1.5 rounded-full bg-rose-600 text-white text-xs font-bold uppercase tracking-widest">Sold Out</span>
                                         </div>
                                     ` : ''}
 
-                                    <div class="absolute bottom-0 inset-x-0 p-5 flex items-end justify-between text-[#F5EFE6]">
-                                        <div>
-                                            <div class="text-xs font-bold tracking-[0.18em] uppercase text-amber-300/90">${item.cat}</div>
-                                            <h3 class="font-serif text-2xl font-semibold mt-0.5">${item.name}</h3>
-                                            <p class="text-xs text-stone-300 mt-0.5">${item.desc}</p>
-                                            <div class="text-sm font-bold mt-2 text-amber-200">${this.formatRp(item.price)}</div>
+                                    <div class="absolute bottom-0 inset-x-0 p-5 text-[#F5EFE6] space-y-3">
+                                        <div class="flex items-end justify-between gap-2">
+                                            <div>
+                                                <div class="text-xs font-bold tracking-[0.18em] uppercase text-amber-300/90">${item.cat}</div>
+                                                <h3 class="font-serif text-2xl font-semibold mt-0.5">${item.name}</h3>
+                                                <p class="text-xs text-stone-300 mt-0.5">${item.desc}</p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                aria-label="Tambah ${item.name}"
+                                                class="w-10 h-10 rounded-full bg-[#F5EFE6] text-[#1D1612] font-bold text-lg flex items-center justify-center shadow-lg group-hover:bg-amber-400 group-hover:scale-110 transition-all shrink-0"
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button
-                                            type="button"
-                                            aria-label="Tambah ${item.name}"
-                                            class="w-10 h-10 rounded-full bg-[#F5EFE6] text-[#1D1612] font-bold text-lg flex items-center justify-center shadow-lg group-hover:bg-amber-400 group-hover:scale-110 transition-all"
-                                        >
-                                            +
-                                        </button>
+
+                                        <div class="pt-2.5 border-t border-white/15 space-y-1.5 text-[11px]">
+                                            <div>
+                                                <div class="flex justify-between text-stone-300"><span>Sweetness &amp; Notes</span><span class="font-bold text-amber-300">${item.sweet || 85}%</span></div>
+                                                <div class="h-1.5 rounded-full bg-white/15 overflow-hidden mt-0.5">
+                                                    <div class="h-full bg-gradient-to-r from-amber-600 to-amber-300 transition-all duration-700" style="width:${item.sweet || 85}%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex justify-between text-stone-300"><span>Body &amp; Crema Texture</span><span class="font-bold text-amber-300">${item.body || 88}%</span></div>
+                                                <div class="h-1.5 rounded-full bg-white/15 overflow-hidden mt-0.5">
+                                                    <div class="h-full bg-gradient-to-r from-orange-600 to-yellow-300 transition-all duration-700" style="width:${item.body || 88}%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center justify-between pt-1">
+                                                <span class="text-sm font-extrabold text-amber-200">${this.formatRp(item.price)}</span>
+                                                <span class="text-[11px] text-amber-300/90 font-semibold group-hover:translate-x-1 transition-transform">Kustomisasi Shot &amp; Susu &rarr;</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </article>
                             `).join('')}
@@ -1385,16 +1762,18 @@
             ================================================================== */
             buildHushHTML() {
                 const store = THEMES_DB.hush;
+                const isNight = this.heroMood === 'night';
                 return `
-                <div class="bg-white text-slate-900 font-sans">
+                <div class="${isNight ? 'bg-[#090B0E] text-slate-100' : 'bg-white text-slate-900'} font-sans transition-colors duration-700">
+                    ${this.buildCompleteMarqueeHTML()}
                     <!-- DARK CHALKBOARD HERO WITH RISING GRILL SMOKE CANVAS -->
-                    <section class="relative bg-[#12161B] text-white pt-8 pb-24 overflow-hidden bg-noise">
+                    <section class="relative ${isNight ? 'bg-gradient-to-b from-[#200B08] via-[#12161B] to-[#090B0E]' : 'bg-[#12161B]'} text-white pt-8 pb-24 overflow-hidden bg-noise transition-colors duration-700">
                         <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
                         <!-- Top Nav -->
-                        <nav class="relative z-20 max-w-6xl mx-auto px-6 flex items-center justify-between mb-12">
+                        <nav class="relative z-20 max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-3 mb-12">
                             <div class="flex items-center gap-2 font-display font-bold text-xl">
-                                <span class="w-3.5 h-3.5 rounded-full bg-[#E85D3F] inline-block"></span>
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#E85D3F] inline-block animate-pulse"></span>
                                 <span>Hush.</span>
                             </div>
                             <div class="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-300">
@@ -1402,9 +1781,14 @@
                                 <a href="#hush-bento" class="hover:text-white">Chef Craft</a>
                                 <a href="#hush-map" class="hover:text-white">Lokasi &amp; Delivery</a>
                             </div>
-                            <button type="button" onclick="app.openQRStandeeModal()" class="px-4 py-2 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold shadow-lg transition-all">
-                                🍽️ Pesan dari ${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]}
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="app.toggleHeroMood()" class="px-3.5 py-2 rounded-full border ${isNight ? 'bg-amber-500/20 border-amber-400/50 text-amber-200' : 'bg-white/10 border-white/20 text-orange-200'} text-[11px] font-extrabold transition-all flex items-center gap-1.5 hover:scale-105">
+                                    <span>${isNight ? '🍶 Midnight Izakaya Noir' : '🔥 Robata Charcoal Glow'}</span>
+                                </button>
+                                <button type="button" onclick="app.openQRStandeeModal()" class="px-4 py-2 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold shadow-lg transition-all">
+                                    🍽️ Pesan ${this.tableNumber.split(' ')[0]} ${this.tableNumber.split(' ')[1]}
+                                </button>
+                            </div>
                         </nav>
 
                         <!-- Hero Grid -->
@@ -1414,7 +1798,7 @@
                                     <span>🔥 DINE-IN TABLE ORDER AKTIF &bull; ${this.tableNumber}</span>
                                 </div>
                                 <h1 class="font-display text-5xl sm:text-6xl font-bold leading-[1.08]">
-                                    Hush Modern<br>Restaurant
+                                    Hush Modern<br><span class="text-[#FF8A70]">Restaurant</span>
                                 </h1>
                                 <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md">
                                     Nikmati hidangan aburi sushi &amp; robatayaki hangat langsung di meja Anda. Pilih menu dari HP, atur urutan keluar makanan, dan pesanan langsung masuk ke WhatsApp dapur kami!
@@ -1431,43 +1815,73 @@
 
                             <!-- Right Top-Down Plated Sushi Platter -->
                             <div class="lg:col-span-6 relative flex justify-center">
-                                <div class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-3xl rotate-3 overflow-hidden shadow-2xl border-4 border-white/10">
-                                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=85" alt="Sushi Platter" class="w-full h-full object-cover">
+                                <div class="parallax-float-badge relative w-80 h-80 sm:w-96 sm:h-96 rounded-3xl rotate-3 overflow-hidden shadow-2xl border-4 border-white/15 group">
+                                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=85" alt="Sushi Platter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                 </div>
                             </div>
                         </div>
 
                         <!-- TORN BRUSH-STROKE ORGANIC DIVIDER (Exact match to Hush Ref) -->
-                        <svg class="absolute bottom-0 left-0 w-full h-14 text-white fill-current z-20" viewBox="0 0 1440 80" preserveAspectRatio="none">
+                        <svg class="absolute bottom-0 left-0 w-full h-14 ${isNight ? 'text-[#090B0E]' : 'text-white'} fill-current z-20 transition-colors duration-700" viewBox="0 0 1440 80" preserveAspectRatio="none">
                             <path d="M0,42 C180,78 340,8 540,38 C740,68 920,14 1140,44 C1280,62 1380,28 1440,36 L1440,80 L0,80 Z"></path>
                         </svg>
                     </section>
 
-                    <!-- SECTION 2: WHITE CLEAN MENU SHOWCASE -->
+                    <!-- SECTION 2: MENU SHOWCASE WITH BINCHOTAN EMBER UNDERGLOW & OMAKASE PAIRING SOUL -->
                     <section id="hush-popular" class="max-w-6xl mx-auto px-6 py-16">
-                        <div class="text-center max-w-xl mx-auto mb-12 scroll-reveal">
-                            <span class="text-xs font-extrabold uppercase tracking-widest text-[#E85D3F]">DIRECT KITCHEN TICKET</span>
-                            <h2 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 mt-1">Hidangan Favorit Meja</h2>
-                            <p class="text-xs sm:text-sm text-slate-500 mt-2">Klik tombol tambah untuk memasukkan hidangan ke tiket pesanan <strong>${this.tableNumber}</strong>.</p>
+                        <div class="text-center max-w-2xl mx-auto mb-8 scroll-reveal">
+                            <span class="text-xs font-extrabold uppercase tracking-widest text-[#E85D3F]">🔥 BINCHOTAN ROBATA &amp; OMAKASE BAR</span>
+                            <h2 class="font-display text-3xl sm:text-4xl font-bold ${isNight ? 'text-white' : 'text-slate-900'} mt-1">Hidangan Favorit Meja</h2>
+                            <p class="text-xs sm:text-sm ${isNight ? 'text-slate-400' : 'text-slate-500'} mt-2">Arahkan kursor pada kartu untuk merasakan <strong>pijar bara arang Binchotan 850°C</strong>, indikator tingkat asap/umami, &amp; rekomendasi minuman dari Chef untuk <strong>${this.tableNumber}</strong>.</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+                            ${[
+                                { id: 'all', label: '🔥 Semua Hidangan Chef (4)' },
+                                { id: 'robata', label: '🥩 Binchotan Charcoal Grill' },
+                                { id: 'aburi', label: '🔥 Signature Aburi Torch' },
+                                { id: 'raw', label: '🍣 Aged Sashimi & Nigiri' }
+                            ].map(c => `
+                                <button type="button" onclick="app.setHushCourseFilter('${c.id}')"
+                                    class="px-4 py-2 rounded-full text-xs font-bold border transition-all ${this.hushCourseFilter === c.id
+                                        ? 'bg-[#E85D3F] text-white border-[#E85D3F] shadow-lg shadow-[#E85D3F]/35 scale-105'
+                                        : (isNight ? 'bg-[#141921] text-slate-300 border-white/10 hover:border-[#E85D3F]/50' : 'bg-slate-100 text-slate-700 border-slate-200 hover:border-[#E85D3F]')}">
+                                    ${c.label}
+                                </button>
+                            `).join('')}
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            ${store.items.map(item => `
-                                <article class="scroll-reveal bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+                            ${store.items.filter(it => this.hushCourseFilter === 'all' || it.courseTag === this.hushCourseFilter).map(item => `
+                                <article style="view-transition-name: card-${item.id}" class="hush-soul-card soul-transition-card relative ${isNight ? 'bg-[#141921] border-white/10' : 'bg-white border-slate-200/90'} rounded-2xl border shadow-sm overflow-hidden flex flex-col justify-between group cursor-pointer" onclick="app.openItemModal('${item.id}')">
                                     <div>
                                         <div class="relative h-44 overflow-hidden">
-                                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-2 transition-transform duration-700">
                                             <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-950/85 text-white text-xs font-bold">${item.cat}</span>
+                                            <span class="absolute bottom-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-[#E85D3F]/95 text-white text-[11px] font-extrabold shadow">
+                                                🔥 ${item.heatTemp || '820°C Binchotan'}
+                                            </span>
                                         </div>
                                         <div class="p-4">
-                                            <h3 class="font-display font-bold text-base text-slate-900">${item.name}</h3>
-                                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">${item.desc}</p>
+                                            <h3 class="font-display font-bold text-base ${isNight ? 'text-white' : 'text-slate-900'} group-hover:text-[#E85D3F] transition-colors">${item.name}</h3>
+                                            <p class="text-xs ${isNight ? 'text-slate-400' : 'text-slate-500'} mt-1 leading-relaxed">${item.desc}</p>
+
+                                            <div class="mt-3 p-2.5 rounded-xl ${isNight ? 'bg-black/45 border border-white/10' : 'bg-orange-50/70 border border-orange-200/60'} text-[11px] space-y-1">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="${isNight ? 'text-slate-400' : 'text-slate-600'}">Smokiness &amp; Umami:</span>
+                                                    <span class="font-bold text-[#E85D3F]">${'🔥'.repeat(item.smokeLevel || 4)} &bull; ${item.umamiScore || '9.8/10'}</span>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <span class="${isNight ? 'text-slate-400' : 'text-slate-600'}">🍶 Omakase Pairing:</span>
+                                                    <span class="font-bold ${isNight ? 'text-amber-300' : 'text-amber-900'}">${item.pairing || 'Cold Yuzu Highball'}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="px-4 pb-4 pt-2 flex items-center justify-between border-t border-slate-100">
+                                    <div class="px-4 pb-4 pt-2 flex items-center justify-between border-t ${isNight ? 'border-white/10' : 'border-slate-100'}">
                                         <span class="font-extrabold text-sm text-[#E85D3F]">${this.formatRp(item.price)}</span>
-                                        <button type="button" onclick="app.openItemModal('${item.id}')" class="px-3.5 py-1.5 rounded-full bg-[#12161B] hover:bg-[#E85D3F] text-white text-xs font-bold transition-colors">
-                                            + Pesan Meja
+                                        <button type="button" class="px-3.5 py-1.5 rounded-full bg-[#E85D3F] hover:bg-[#d44d30] text-white text-xs font-bold transition-colors shadow">
+                                            + Tiket Dapur
                                         </button>
                                     </div>
                                 </article>
@@ -1591,49 +2005,65 @@
             ================================================================== */
             buildCedarHTML() {
                 const store = THEMES_DB.cedar;
+                const isNight = this.heroMood === 'night';
                 return `
-                <div class="bg-[#F7F4EE] text-[#2B2118] font-sans">
+                <div class="${isNight ? 'bg-[#1D1611] text-[#F3ECE0]' : 'bg-[#F7F4EE] text-[#2B2118]'} font-sans transition-colors duration-700">
+                    ${this.buildCompleteMarqueeHTML()}
                     <!-- STITCHED LEATHER HEADER (Exact match to Cedar Ref) -->
-                    <div class="bg-[#FAF7F2] border-b-2 border-dashed border-[#C7B299] sticky top-0 z-30 shadow-sm">
-                        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                    <div class="${isNight ? 'bg-[#261D17] border-[#8C3B2B]' : 'bg-[#FAF7F2] border-[#C7B299]'} border-b-2 border-dashed sticky top-0 z-30 shadow-sm transition-colors duration-700">
+                        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3">
                             <div class="flex items-center gap-2">
-                                <span class="text-amber-800">&bull;</span>
-                                <span class="font-script text-4xl text-[#3A2618]">Cedar</span>
-                                <span class="text-amber-800">&bull;</span>
-                                <span class="text-xs font-condensed tracking-[0.25em] uppercase text-stone-500 ml-1">SHOE CO.</span>
+                                <span class="text-amber-700">&bull;</span>
+                                <span class="font-script text-4xl ${isNight ? 'text-amber-200' : 'text-[#3A2618]'}">Cedar</span>
+                                <span class="text-amber-700">&bull;</span>
+                                <span class="text-xs font-condensed tracking-[0.25em] uppercase ${isNight ? 'text-stone-400' : 'text-stone-500'} ml-1">SHOE CO.</span>
                             </div>
-                            <div class="hidden md:flex items-center gap-6 font-condensed text-xs tracking-[0.18em] uppercase text-stone-600">
-                                <a href="#cedar-products" class="hover:text-[#8C3B2B]">BOOTS</a>
-                                <a href="#cedar-products" class="hover:text-[#8C3B2B]">DRESS SHOES</a>
-                                <a href="#cedar-map" class="hover:text-[#8C3B2B]">WORKSHOP &amp; SHIPPING</a>
+                            <div class="hidden md:flex items-center gap-6 font-condensed text-xs tracking-[0.18em] uppercase ${isNight ? 'text-stone-300' : 'text-stone-600'}">
+                                <a href="#cedar-products" class="hover:text-amber-500">BOOTS</a>
+                                <a href="#cedar-products" class="hover:text-amber-500">DRESS SHOES</a>
+                                <a href="#cedar-map" class="hover:text-amber-500">WORKSHOP &amp; SHIPPING</a>
                             </div>
-                            <button type="button" onclick="app.openCheckoutModal()" class="px-3.5 py-1.5 rounded bg-[#E8E0D2] border border-[#C7B299] text-xs font-condensed tracking-wider uppercase font-bold text-[#3A2618]">
-                                MY ORDER SHEET (${this.cart.reduce((s, c) => s + c.qty, 0)} PAIRS)
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="app.toggleHeroMood()" class="px-3 py-1.5 rounded border ${isNight ? 'bg-amber-500/20 border-amber-400/50 text-amber-200' : 'bg-[#3A2618]/10 border-[#3A2618]/30 text-[#3A2618]'} text-[11px] font-condensed tracking-wider uppercase font-bold transition-all hover:scale-105">
+                                    ${isNight ? '🌲 Heritage Campfire Dusk' : '☀️ Artisan Daylight Studio'}
+                                </button>
+                                <button type="button" onclick="app.openCheckoutModal()" class="px-3.5 py-1.5 rounded bg-[#9E3B2E] text-white text-xs font-condensed tracking-wider uppercase font-bold shadow">
+                                    MY ORDER SHEET (${this.cart.reduce((s, c) => s + c.qty, 0)} PAIRS)
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- HERO WORKSHOP WITH GIANT CONDENSED "HANDMADE" -->
+                    <!-- HERO WORKSHOP WITH GIANT CONDENSED "HANDMADE" + ARTISAN DUST CANVAS -->
                     <section class="relative h-[470px] flex items-center justify-center text-center overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1800&q=85" alt="Handmade Leather Boots Workshop" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-stone-950/50"></div>
+                        <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1800&q=85" alt="Handmade Leather Boots Workshop" class="parallax-hero-bg absolute inset-0 w-full h-full object-cover scale-105 transition-all duration-1000 ${isNight ? 'brightness-50 contrast-125 sepia-[.35]' : ''}">
+                        <div class="absolute inset-0 ${isNight ? 'bg-gradient-to-b from-black/75 via-[#2B1911]/65 to-[#1D1611]' : 'bg-stone-950/50'} transition-all duration-700"></div>
+                        <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
-                        <div class="relative z-10 px-4 max-w-2xl mx-auto text-[#FAF7F2]">
+                        <div class="relative z-20 px-4 max-w-2xl mx-auto text-[#FAF7F2]">
+                            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/45 border border-amber-300/40 text-[11px] font-condensed tracking-[0.22em] uppercase text-amber-200 mb-3">
+                                🥾 GOODYEAR-WELT CRAFTSMANSHIP &bull; BANDUNG HERITAGE
+                            </span>
                             <h1 class="font-condensed text-7xl sm:text-8xl font-bold tracking-[0.08em] uppercase drop-shadow-lg">
                                 HANDMADE
                             </h1>
                             <p class="font-serif italic text-xl sm:text-2xl tracking-wide text-amber-100 -mt-1">
                                 QUALITY BOOTS &amp; DRESS SHOES
                             </p>
-                            <a href="#cedar-products" class="mt-5 inline-block px-7 py-2.5 bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed text-xs tracking-[0.22em] uppercase font-bold shadow-lg transition-all">
-                                BROWSE THE SHOP
-                            </a>
+                            <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+                                <a href="#cedar-products" class="px-7 py-2.5 bg-[#9E3B2E] hover:bg-[#822d22] text-white font-condensed text-xs tracking-[0.22em] uppercase font-bold shadow-lg transition-all">
+                                    BROWSE THE SHOP &rarr;
+                                </a>
+                                <button type="button" onclick="app.triggerDemoPopupFeature()" class="px-5 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-white font-condensed text-xs tracking-[0.2em] uppercase font-bold transition-all">
+                                    📏 CEK TABEL UKURAN KAKI (CM)
+                                </button>
+                            </div>
                         </div>
                     </section>
 
                     <!-- OVERLAPPING STITCHED PARCHMENT CARD ("About our Company") -->
                     <section class="max-w-4xl mx-auto px-6 -mt-14 relative z-20 scroll-reveal">
-                        <div class="bg-[#F3ECE0] stitched-box p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="bg-[#F3ECE0] text-[#2B2118] stitched-box p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                             <div class="md:col-span-3 border-b md:border-b-0 md:border-r border-[#D3C2AA] pb-4 md:pb-0 md:pr-6 text-center md:text-left">
                                 <div class="font-script text-3xl text-[#8C3B2B] leading-none">About our<br>Company</div>
                                 <button type="button" onclick="app.applyVoucher('HEMAT20')" class="mt-3 inline-block text-xs font-condensed tracking-[0.2em] uppercase font-bold text-[#3A2618] border-b border-[#3A2618]">
@@ -1646,32 +2076,108 @@
                         </div>
                     </section>
 
-                    <!-- SECTION 2: ISOLATED FLOATING PRODUCT GRID (NO BOXY CARDS) -->
+                    <!-- SECTION 2: LEATHER PATINA TIME-LAPSE SIMULATOR + FOOT CM TO EU MATCHER + BLUEPRINT CARDS -->
                     <section id="cedar-products" class="max-w-6xl mx-auto px-6 py-20 text-center">
-                        <h2 class="font-condensed text-2xl tracking-[0.18em] uppercase text-[#8C3B2B] font-bold mb-14 scroll-reveal">
-                            OUR FEATURED PRODUCTS
+                        <h2 class="font-condensed text-2xl tracking-[0.18em] uppercase ${isNight ? 'text-amber-300' : 'text-[#8C3B2B]'} font-bold mb-3 scroll-reveal">
+                            OUR FEATURED HANDCRAFTED PRODUCTS
                         </h2>
+                        <p class="text-xs ${isNight ? 'text-stone-400' : 'text-stone-600'} max-w-xl mx-auto mb-8">
+                            Uji langsung <strong>Simulator Penuaan Kulit (Patina Time-Lapse)</strong> &amp; <strong>Pengukur Panjang Kaki (CM ke EU)</strong> di bawah ini sebelum memilih sepatu kulit buatan tangan kami:
+                        </p>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-14">
-                            ${store.items.map(item => `
-                                <article class="scroll-reveal group cursor-pointer flex flex-col items-center" onclick="app.openItemModal('${item.id}')">
-                                    <!-- Clean Isolated Product Photography with Hover Levitation -->
-                                    <div class="relative w-full h-44 flex items-center justify-center p-2">
-                                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover rounded-xl shadow-md group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-500">
-                                        ${!item.available ? `<span class="absolute top-2 right-2 px-2.5 py-0.5 bg-rose-700 text-white text-xs font-condensed uppercase">SOLD OUT</span>` : ''}
-                                    </div>
-                                    <h3 class="font-condensed text-sm tracking-[0.14em] uppercase font-bold text-[#2B2118] mt-4 group-hover:text-[#8C3B2B] transition-colors">
-                                        ${item.name}
-                                    </h3>
-                                    <p class="text-xs text-stone-500 mt-0.5">${item.desc}</p>
-                                    <div class="text-xs font-serif italic text-[#8C3B2B] font-bold mt-1">
-                                        our price ${this.formatRp(item.price)}
-                                    </div>
-                                    <span class="mt-2 px-3 py-1 rounded border border-[#C7B299] text-xs font-condensed uppercase tracking-wider text-stone-700 group-hover:bg-[#9E3B2E] group-hover:text-white group-hover:border-[#9E3B2E] transition-all">
-                                        Custom Size &amp; Monogram
+                        <!-- CEDAR FOOTWEAR SOUL WIDGET: LEATHER PATINA SIMULATOR + FOOT CM TO EU CALCULATOR -->
+                        <div class="mb-12 p-5 rounded-2xl ${isNight ? 'bg-[#261D17] border-2 border-dashed border-amber-500/40' : 'bg-[#F3ECE0] stitched-box'} text-left grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                            <div class="lg:col-span-7 space-y-2.5">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-condensed text-xs tracking-[0.2em] uppercase font-bold ${isNight ? 'text-amber-300' : 'text-[#8C3B2B]'}">
+                                        🕰️ SIMULATOR USIA KULIT ASLI (PULL-UP LEATHER PATINA):
                                     </span>
+                                    <span class="px-2.5 py-0.5 rounded bg-[#9E3B2E] text-white text-xs font-condensed uppercase font-bold">
+                                        ${this.cedarPatinaYears === 0 ? 'Kulit Baru (0 Bln)' : this.cedarPatinaYears === 1 ? 'Pemakaian 1 Tahun' : '5 Tahun Vintage Patina'}
+                                    </span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    ${[
+                                        { yr: 0, title: '✨ Baru (0 Bln)', sub: 'Rona asli meja potong' },
+                                        { yr: 1, title: '🥾 Pakai 1 Tahun', sub: 'Kilau minyak pull-up' },
+                                        { yr: 5, title: '🕰️ 5 Thn Patina', sub: 'Gradasi vintage pekat' }
+                                    ].map(p => `
+                                        <button type="button" onclick="app.setCedarPatina(${p.yr})"
+                                            class="p-2.5 rounded-xl border text-left transition-all ${this.cedarPatinaYears === p.yr
+                                                ? 'bg-[#9E3B2E] text-white border-[#9E3B2E] shadow-md scale-[1.02]'
+                                                : (isNight ? 'bg-black/30 text-stone-300 border-white/10 hover:border-amber-400/50' : 'bg-[#FAF7F2] text-[#2B2118] border-[#C7B299] hover:border-[#8C3B2B]')}">
+                                            <div class="font-condensed text-xs uppercase font-bold tracking-wider">${p.title}</div>
+                                            <div class="text-[11px] opacity-80 mt-0.5">${p.sub}</div>
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div class="lg:col-span-5 p-4 rounded-xl ${isNight ? 'bg-black/40 border border-white/10' : 'bg-[#FAF7F2] border border-[#C7B299]'} space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-condensed uppercase tracking-wider font-bold ${isNight ? 'text-stone-300' : 'text-stone-700'}">📐 Panjang Kaki Anda: <strong>${this.cedarFootCm} cm</strong></span>
+                                    <span class="px-2.5 py-0.5 rounded bg-emerald-700 text-white font-condensed font-bold uppercase">
+                                        &rarr; Ukuran Ideal: EU ${this.getCedarRecommendedEU()}
+                                    </span>
+                                </div>
+                                <input type="range" min="24.5" max="28.5" step="0.5" value="${this.cedarFootCm}"
+                                    oninput="app.setCedarFootCm(this.value)"
+                                    class="w-full accent-[#9E3B2E] cursor-pointer" />
+                                <div class="flex justify-between text-[11px] ${isNight ? 'text-stone-400' : 'text-stone-500'}">
+                                    <span>24.5 cm (EU 39)</span>
+                                    <span>26.5 cm (EU 42)</span>
+                                    <span>28.5 cm (EU 44)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-7 gap-y-12">
+                            ${store.items.map(item => {
+                                const patinaFilter = this.cedarPatinaYears === 0
+                                    ? 'none'
+                                    : this.cedarPatinaYears === 1
+                                        ? 'sepia(24%) contrast(110%) brightness(95%)'
+                                        : 'sepia(48%) contrast(122%) brightness(88%)';
+                                const recEu = this.getCedarRecommendedEU();
+                                return `
+                                <article style="view-transition-name: card-${item.id}" class="cedar-soul-card soul-transition-card relative p-3.5 rounded-2xl ${isNight ? 'bg-[#261D17]/95 border border-amber-500/25' : 'bg-white/85 border border-[#DFD6C7]'} group cursor-pointer flex flex-col justify-between shadow-sm" onclick="app.openItemModal('${item.id}')">
+                                    <svg class="absolute inset-1.5 w-[calc(100%-12px)] h-[calc(100%-12px)] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                                        <rect class="cedar-stitch-rect" x="2" y="2" width="98%" height="98%" rx="12" fill="none" stroke="#9E3B2E" stroke-width="1.8"/>
+                                    </svg>
+
+                                    <div>
+                                        <div class="relative w-full h-44 flex items-center justify-center p-1 overflow-hidden rounded-xl">
+                                            <img src="${item.img}" alt="${item.name}" style="filter:${patinaFilter}" class="w-full h-full object-cover rounded-xl shadow-md group-hover:scale-105 transition-all duration-500">
+                                            <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/75 text-amber-200 text-[10px] font-condensed uppercase tracking-wider font-bold">
+                                                ${this.cedarPatinaYears === 0 ? '✨ Fresh Hide' : this.cedarPatinaYears + 'Yr Patina'}
+                                            </span>
+                                            <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-emerald-800/90 text-white text-[10px] font-condensed uppercase tracking-wider font-bold">
+                                                📐 EU ${recEu} Ready
+                                            </span>
+                                        </div>
+
+                                        <h3 class="font-condensed text-sm tracking-[0.14em] uppercase font-bold ${isNight ? 'text-[#F3ECE0] group-hover:text-amber-300' : 'text-[#2B2118] group-hover:text-[#8C3B2B]'} mt-3.5 transition-colors">
+                                            ${item.name}
+                                        </h3>
+                                        <p class="text-xs ${isNight ? 'text-stone-400' : 'text-stone-500'} mt-0.5">${item.desc}</p>
+
+                                        <div class="mt-2.5 p-2 rounded-xl ${isNight ? 'bg-black/40 border border-white/10' : 'bg-[#F7F4EE] border border-[#DFD6C7]'} text-left text-[11px] space-y-0.5">
+                                            <div class="truncate"><strong class="text-[#9E3B2E]">╭ Upper:</strong> ${item.hideSpec || '2.0mm Pull-Up Hide'}</div>
+                                            <div class="truncate"><strong class="text-[#9E3B2E]">├ Welt:</strong> ${item.weltSpec || '360° Goodyear-Welt'}</div>
+                                            <div class="truncate"><strong class="text-[#9E3B2E]">╰ Sole:</strong> ${item.soleSpec || 'Vibram® Commando'}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3 pt-2.5 border-t ${isNight ? 'border-white/10' : 'border-[#E6DEC8]'} flex items-center justify-between">
+                                        <span class="text-xs font-serif italic ${isNight ? 'text-amber-300' : 'text-[#8C3B2B]'} font-bold">
+                                            ${this.formatRp(item.price)}
+                                        </span>
+                                        <span class="px-2.5 py-1 rounded bg-[#9E3B2E] text-white text-[11px] font-condensed uppercase tracking-wider font-bold">
+                                            Ukir Inisial &rarr;
+                                        </span>
+                                    </div>
                                 </article>
-                            `).join('')}
+                            `}).join('')}
                         </div>
                     </section>
 
@@ -1773,33 +2279,47 @@
                 const col1 = store.items.slice(0, 2);
                 const col2 = store.items.slice(2, 4);
                 const col3 = store.items.slice(4, 6);
+                const isNight = this.heroMood === 'night';
 
                 return `
                 <div class="bg-[#11100F] text-[#F5EFE6] font-sans">
-                    <!-- DARK LUXURY BARBEARIA HERO (Exact match to Image 1) -->
-                    <section class="relative min-h-[540px] flex flex-col justify-between overflow-hidden border-b border-[#C59B6D]/25">
-                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1800&q=85" alt="Barbearia Classic Chair" class="absolute inset-0 w-full h-full object-cover opacity-40">
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-[#11100F]"></div>
+                    ${this.buildCompleteMarqueeHTML()}
+                    <!-- DARK LUXURY BARBEARIA HERO + 24K GOLD BOKEH CANVAS -->
+                    <section class="relative min-h-[560px] flex flex-col justify-between overflow-hidden border-b border-[#C59B6D]/25">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1800&q=85" alt="Barbearia Classic Chair" class="parallax-hero-bg absolute inset-0 w-full h-full object-cover scale-105 transition-all duration-1000 ${isNight ? 'opacity-25 contrast-125 sepia-[.4]' : 'opacity-45'}">
+                        <div class="absolute inset-0 ${isNight ? 'bg-gradient-to-b from-[#1F140A]/90 via-black/75 to-[#090807]' : 'bg-gradient-to-b from-black/75 via-black/45 to-[#11100F]'} transition-all duration-700"></div>
+                        <canvas id="heroParticleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
-                        <div class="relative z-10 max-w-5xl mx-auto px-6 pt-20 pb-12 text-center space-y-4">
-                            <div class="inline-flex items-center justify-center w-12 h-14 rounded-full border border-[#C59B6D] text-[#C59B6D] text-xl mb-1">
+                        <!-- Top Mood Toggle Bar inside Hero -->
+                        <div class="relative z-20 max-w-5xl w-full mx-auto px-6 pt-6 flex items-center justify-between">
+                            <span class="text-[11px] font-bold tracking-[0.22em] uppercase text-[#C59B6D]">💈 SENOPATI GENTLEMEN'S CLUB</span>
+                            <button type="button" onclick="app.toggleHeroMood()" class="px-3.5 py-1.5 rounded-full border border-[#C59B6D]/50 bg-[#181512]/90 text-[#C59B6D] text-[11px] font-bold tracking-wider uppercase hover:bg-[#C59B6D] hover:text-[#11100F] transition-all">
+                                ${isNight ? '🥃 Gentlemen Whiskey Noir' : '👑 Classic Royal Gold'}
+                            </button>
+                        </div>
+
+                        <div class="relative z-20 max-w-5xl mx-auto px-6 pt-8 pb-10 text-center space-y-4">
+                            <div class="animate-float-bob inline-flex items-center justify-center w-14 h-16 rounded-full border-2 border-[#C59B6D] bg-[#181512]/80 text-[#C59B6D] text-2xl mb-1 shadow-[0_0_25px_rgba(197,155,109,0.35)]">
                                 &#9986;
                             </div>
-                            <h1 class="font-serif text-5xl sm:text-6xl tracking-[0.18em] uppercase text-[#C59B6D]">
+                            <h1 class="font-serif text-5xl sm:text-6xl tracking-[0.18em] uppercase text-[#C59B6D] drop-shadow-lg">
                                 BARBEARIA
                             </h1>
                             <p class="text-xs sm:text-sm text-stone-300 max-w-md mx-auto leading-relaxed">
                                 Di Barbearia, tradisi dan ketampanan maskulin tidak pernah lekang oleh waktu. Pilih paket perawatan &amp; kunci jam kedatangan Anda tanpa antre.
                             </p>
-                            <div class="pt-3">
+                            <div class="pt-3 flex flex-wrap items-center justify-center gap-3">
                                 <a href="#barber-services" class="inline-block px-8 py-3 bg-[#C59B6D] hover:bg-[#b58958] text-[#11100F] font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-lg">
                                     AGENDAR HORÁRIO / BOOKING JADWAL
                                 </a>
+                                <button type="button" onclick="app.triggerDemoPopupFeature()" class="px-6 py-3 border border-[#C59B6D]/60 hover:border-[#C59B6D] bg-black/50 text-[#C59B6D] font-bold text-xs tracking-[0.16em] uppercase transition-all">
+                                    ⚡ CEK SLOT MASTER BARBER
+                                </button>
                             </div>
                         </div>
 
                         <!-- 3-Column Info Footer inside Hero (Address | Phone | Hours) -->
-                        <div class="relative z-10 max-w-5xl w-full mx-auto px-6 py-5 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-xs">
+                        <div class="relative z-20 max-w-5xl w-full mx-auto px-6 py-5 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-xs">
                             <div>
                                 <div class="text-stone-400 uppercase tracking-widest">ENDEREÇO / LOKASI</div>
                                 <div class="font-semibold text-stone-200 mt-0.5">Jl. Senopati Heritage No. 88, Jakarta</div>
@@ -1894,25 +2414,77 @@
                         </div>
 
                         <div class="max-w-5xl mx-auto relative z-20">
-                            <div class="text-center max-w-lg mx-auto mb-14 scroll-reveal">
-                                <h2 class="font-serif text-3xl sm:text-4xl tracking-[0.14em] uppercase text-[#F5EFE6]">
+                            <div class="text-center max-w-xl mx-auto mb-8 scroll-reveal">
+                                <span class="text-xs font-bold uppercase tracking-[0.22em] text-[#C59B6D]">💈 SARTORIAL VISAGISMO &amp; GOLD MIRROR LOUNGE</span>
+                                <h2 class="font-serif text-3xl sm:text-4xl tracking-[0.14em] uppercase text-[#F5EFE6] mt-1">
                                     LISTA DE <span class="text-[#C59B6D]">SERVIÇOS</span>
                                 </h2>
                                 <p class="text-xs text-stone-400 mt-2">
-                                    Klik pada layanan di dalam bingkai emas untuk memilih jadwal jam kedatangan &amp; kapster Anda.
+                                    Pilih <strong>Bentuk Wajah Anda (Konsultasi Visagismo)</strong> di bawah ini agar Master Barber kami menyorot potongan rambut &amp; janggut yang paling tegas untuk rahang Anda:
                                 </p>
                             </div>
 
-                            <!-- 3 Gold-Framed Service Columns (Exact match to Image 1) -->
+                            <!-- BARBEARIA SOUL WIDGET: VISAGISMO FACE-SHAPE ANALYZER & MASTER BARBER SELECTOR -->
+                            <div class="mb-10 p-5 rounded-2xl bg-[#181512] border border-[#C59B6D]/50 shadow-2xl space-y-4">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3.5 border-b border-white/10">
+                                    <div class="text-xs">
+                                        <span class="font-extrabold uppercase tracking-wider text-[#C59B6D]">📐 1. Pilih Bentuk Wajah Anda (Visagismo Analyzer):</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${[
+                                            { id: 'round', label: '⚪ Wajah Bulat (Round)' },
+                                            { id: 'square', label: '🟦 Wajah Persegi (Square)' },
+                                            { id: 'oval', label: '📐 Wajah Oval' },
+                                            { id: 'diamond', label: '💎 Wajah Berlian (Diamond)' },
+                                            { id: 'all', label: '✨ Semua Gaya' }
+                                        ].map(f => `
+                                            <button type="button" onclick="app.setBarberFaceShape('${f.id}')"
+                                                class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${this.barberFaceShape === f.id
+                                                    ? 'bg-[#C59B6D] text-[#11100F] border-[#C59B6D] shadow-md scale-105'
+                                                    : 'bg-black/40 text-stone-300 border-white/10 hover:border-[#C59B6D]/60'}">
+                                                ${f.label}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center text-xs">
+                                    <div class="lg:col-span-7 p-3 rounded-xl bg-black/50 border border-[#C59B6D]/35">
+                                        <div class="font-bold text-[#C59B6D] uppercase tracking-wider">
+                                            👑 Analisis Master Visagist (${this.getBarberFaceRecommendation().title}):
+                                        </div>
+                                        <p class="text-stone-300 mt-1 leading-relaxed">${this.getBarberFaceRecommendation().advice}</p>
+                                    </div>
+                                    <div class="lg:col-span-5 space-y-1.5">
+                                        <div class="text-stone-400 font-semibold">💈 2. Kunci Kursi &amp; Master Kapster Pilihan:</div>
+                                        <div class="grid grid-cols-3 gap-1.5">
+                                            ${[
+                                                { val: '11:00 WIB • Master Rafael', name: 'Master Rafael', slot: '11:00 WIB' },
+                                                { val: '14:30 WIB • Master Lucas', name: 'Master Lucas', slot: '14:30 WIB' },
+                                                { val: '17:00 WIB • Master Diego', name: 'Master Diego', slot: '17:00 WIB' }
+                                            ].map(b => `
+                                                <button type="button" onclick="app.setBarberMaster('${b.val}')"
+                                                    class="p-2 rounded-lg border text-center transition-all ${this.barberMaster === b.val
+                                                        ? 'bg-[#C59B6D]/25 border-[#C59B6D] text-[#C59B6D] font-bold'
+                                                        : 'bg-black/40 border-white/10 text-stone-300 hover:border-[#C59B6D]/40'}">
+                                                    <div class="text-[11px] font-bold truncate">✂️ ${b.name}</div>
+                                                    <div class="text-[10px] text-emerald-400">${b.slot} Ready</div>
+                                                </button>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3 Gold-Framed Service Columns (24K Gold Mirror Shimmer + Visagismo Highlight) -->
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 ${[
                                     { title: "CABELO & VISAGISMO", list: col1 },
                                     { title: "BARBATERAPIA RITUAL", list: col2 },
                                     { title: "ESTÉTICA & VIP COMBO", list: col3 }
                                 ].map(group => `
-                                    <div class="scroll-curtain border border-[#C59B6D]/65 rounded-xl p-6 bg-[#181512]/90 flex flex-col justify-between hover:border-[#C59B6D] transition-all">
+                                    <div class="barber-mirror-card border border-[#C59B6D]/65 rounded-xl p-6 bg-[#181512]/95 flex flex-col justify-between hover:border-[#C59B6D] transition-all">
                                         <div>
-                                            <!-- Minimalist Gentleman Silhouette Icon -->
                                             <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-[#C59B6D]/40 bg-[#C59B6D]/10 flex items-center justify-center text-[#C59B6D]">
                                                 <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
                                                     <path d="M12 2C9.24 2 7 4.24 7 7c0 1.38.56 2.63 1.46 3.54C6.55 11.68 5 13.68 5 16v2h14v-2c0-2.32-1.55-4.32-3.46-5.46C16.44 9.63 17 8.38 17 7c0-2.76-2.24-5-5-5zm0 18c-2.67 0-5.18-.67-7-2v2c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-2c-1.82 1.33-4.33 2-7 2z"/>
@@ -1923,20 +2495,29 @@
                                             </h3>
 
                                             <div class="space-y-4">
-                                                ${group.list.map(item => `
-                                                    <div onclick="app.openItemModal('${item.id}')" class="p-3 rounded-lg bg-black/40 border border-white/5 hover:border-[#C59B6D]/60 cursor-pointer transition-all group">
+                                                ${group.list.map(item => {
+                                                    const isRecommended = this.barberFaceShape !== 'all' && Array.isArray(item.faces) && item.faces.includes(this.barberFaceShape);
+                                                    return `
+                                                    <div onclick="app.openItemModal('${item.id}')" class="p-3.5 rounded-lg ${isRecommended ? 'bg-[#C59B6D]/15 border-2 border-[#C59B6D] shadow-lg' : 'bg-black/40 border border-white/10'} hover:border-[#C59B6D] cursor-pointer transition-all group relative overflow-hidden">
+                                                        ${isRecommended ? `<div class="barber-pole-bar h-1 w-full absolute top-0 left-0"></div>` : ''}
+                                                        ${isRecommended ? `
+                                                            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#C59B6D] text-[#11100F] text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+                                                                👑 Cocok untuk Wajah Anda
+                                                            </div>
+                                                        ` : ''}
                                                         <div class="flex items-center justify-between gap-2">
                                                             <span class="text-xs font-bold text-white group-hover:text-[#C59B6D]">&#9986; ${item.name}</span>
                                                             <span class="text-xs font-extrabold text-[#C59B6D]">${this.formatRp(item.price)}</span>
                                                         </div>
                                                         <p class="text-xs text-stone-400 mt-1 leading-relaxed">${item.desc}</p>
+                                                        ${item.visagismoBadge ? `<div class="text-[11px] text-[#C59B6D] font-semibold mt-1.5">✦ ${item.visagismoBadge}</div>` : ''}
                                                     </div>
-                                                `).join('')}
+                                                `}).join('')}
                                             </div>
                                         </div>
 
                                         <button type="button" onclick="app.openItemModal('${group.list[0].id}')" class="mt-6 w-full py-2.5 border border-[#C59B6D] text-[#C59B6D] hover:bg-[#C59B6D] hover:text-[#11100F] text-xs font-bold tracking-[0.18em] uppercase transition-all rounded">
-                                            PILIH JADWAL &amp; BARBER
+                                            BOOKING BERSAMA ${this.barberMaster.split('•')[1] ? this.barberMaster.split('•')[1].trim().toUpperCase() : 'MASTER BARBER'}
                                         </button>
                                     </div>
                                 `).join('')}
@@ -2007,7 +2588,7 @@
             }
 
             /* =================================================================
-               SENSORY CANVAS ENGINE (RISING COFFEE STEAM & GRILL SMOKE/EMBERS)
+               SENSORY CANVAS ENGINE (4 BESPOKE ATMOSPHERES + CURSOR REACTIVITY)
             ================================================================== */
             startCanvasParticles(mode) {
                 const canvas = document.getElementById('heroParticleCanvas');
@@ -2015,41 +2596,88 @@
                 const ctx = canvas.getContext('2d');
 
                 const resize = () => {
+                    if (!canvas.parentElement) return;
                     const rect = canvas.parentElement.getBoundingClientRect();
                     canvas.width = rect.width;
                     canvas.height = rect.height;
                 };
                 resize();
 
-                const particles = Array.from({ length: 42 }, () => ({
+                let mouseX = -9999;
+                let mouseY = -9999;
+                const heroSec = canvas.parentElement;
+                if (heroSec) {
+                    heroSec.addEventListener('mousemove', (e) => {
+                        const r = canvas.getBoundingClientRect();
+                        mouseX = e.clientX - r.left;
+                        mouseY = e.clientY - r.top;
+                    }, { passive: true });
+                    heroSec.addEventListener('mouseleave', () => {
+                        mouseX = -9999;
+                        mouseY = -9999;
+                    }, { passive: true });
+                }
+
+                const count = mode === 'gold' || mode === 'craft' ? 48 : 44;
+                const particles = Array.from({ length: count }, () => ({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    r: mode === 'steam' ? (18 + Math.random() * 34) : (12 + Math.random() * 26),
-                    vy: -(0.35 + Math.random() * 0.65),
-                    vx: (Math.random() - 0.5) * 0.4,
+                    r: mode === 'steam'
+                        ? (16 + Math.random() * 34)
+                        : mode === 'smoke'
+                            ? (12 + Math.random() * 26)
+                            : (2.2 + Math.random() * 5.5),
+                    vy: -(0.35 + Math.random() * 0.7),
+                    vx: (Math.random() - 0.5) * 0.45,
                     life: Math.random() * 140,
                     maxLife: 130 + Math.random() * 90,
-                    isEmber: mode === 'smoke' && Math.random() < 0.25
+                    isSpark: (mode === 'smoke' && Math.random() < 0.32) || (mode === 'steam' && Math.random() < 0.28) || mode === 'craft' || mode === 'gold'
                 }));
 
                 const loop = () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     for (const p of particles) {
                         p.life++;
-                        p.x += p.vx + Math.sin(p.life * 0.03) * 0.3;
+                        let dx = p.x - mouseX;
+                        let dy = p.y - mouseY;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+                        let pushX = (dist < 130 && dist > 1) ? (dx / dist) * 0.9 : 0;
+
+                        p.x += p.vx + Math.sin(p.life * 0.03) * 0.35 + pushX;
                         p.y += p.vy;
                         if (p.life >= p.maxLife || p.y < -40) {
-                            p.x = canvas.width * (0.25 + Math.random() * 0.65);
+                            p.x = canvas.width * (0.1 + Math.random() * 0.8);
                             p.y = canvas.height + 20;
                             p.life = 0;
                         }
                         const ratio = p.life / p.maxLife;
-                        const alpha = ratio < 0.3 ? (ratio / 0.3) * 0.16 : (1 - (ratio - 0.3) / 0.7) * 0.16;
+                        const alpha = ratio < 0.3 ? (ratio / 0.3) * 0.22 : (1 - (ratio - 0.3) / 0.7) * 0.22;
 
-                        if (p.isEmber) {
-                            ctx.fillStyle = `rgba(232, 93, 63, ${alpha * 2.4})`;
+                        if (mode === 'smoke' && p.isSpark) {
+                            ctx.fillStyle = `rgba(255, 105, 65, ${Math.min(0.95, alpha * 3.2)})`;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else if (mode === 'steam' && p.isSpark) {
+                            ctx.fillStyle = `rgba(255, 215, 140, ${Math.min(0.85, alpha * 2.6)})`;
                             ctx.beginPath();
                             ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else if (mode === 'craft') {
+                            const grad = ctx.createRadialGradient(p.x, p.y, 0.5, p.x, p.y, p.r * 2.4);
+                            grad.addColorStop(0, `rgba(245, 200, 125, ${Math.min(0.85, alpha * 2.6)})`);
+                            grad.addColorStop(1, 'rgba(245, 200, 125, 0)');
+                            ctx.fillStyle = grad;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r * 2.4, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else if (mode === 'gold') {
+                            const grad = ctx.createRadialGradient(p.x, p.y, 0.5, p.x, p.y, p.r * 2.6);
+                            grad.addColorStop(0, `rgba(218, 175, 112, ${Math.min(0.9, alpha * 2.8)})`);
+                            grad.addColorStop(1, 'rgba(197, 155, 109, 0)');
+                            ctx.fillStyle = grad;
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.r * 2.6, 0, Math.PI * 2);
                             ctx.fill();
                         } else {
                             const grad = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.r);
@@ -2067,36 +2695,396 @@
             }
 
             /* =================================================================
-               SCROLL REVEAL FALLBACK & FLOATING PROP PARALLAX
+               INTERACTIVE HERO AMBIENCE / MOOD SWITCHER & 4 CATEGORY SOUL METHODS
+            ================================================================== */
+            rerenderWithViewTransition() {
+                const currentScroll = window.scrollY;
+                if (document.startViewTransition) {
+                    document.startViewTransition(() => {
+                        this.renderTheme();
+                        window.scrollTo({ top: currentScroll, behavior: 'instant' });
+                    });
+                } else {
+                    this.renderTheme();
+                    window.scrollTo({ top: currentScroll, behavior: 'instant' });
+                }
+            }
+
+            toggleHeroMood() {
+                this.heroMood = this.heroMood === 'day' ? 'night' : 'day';
+                this.rerenderWithViewTransition();
+            }
+
+            // 1. HARTH CAFE SOUL METHODS: Flavor Tuner & WFC Seat Picker
+            setHarthFlavorFilter(tag) {
+                this.harthFlavorFilter = tag;
+                this.rerenderWithViewTransition();
+            }
+
+            selectHarthSeat(seatName) {
+                this.setTableNumber(seatName);
+            }
+
+            // 2. HUSH RESTO SOUL METHODS: Omakase & Robata Fire Course Filter
+            setHushCourseFilter(tag) {
+                this.hushCourseFilter = tag;
+                this.rerenderWithViewTransition();
+            }
+
+            // 3. CEDAR FOOTWEAR SOUL METHODS: Patina Time-Lapse & Foot CM to EU Calculator
+            setCedarPatina(years) {
+                this.cedarPatinaYears = Number(years);
+                this.rerenderWithViewTransition();
+            }
+
+            setCedarFootCm(cmVal) {
+                this.cedarFootCm = parseFloat(cmVal) || 26.5;
+                const currentScroll = window.scrollY;
+                this.renderTheme();
+                window.scrollTo({ top: currentScroll, behavior: 'instant' });
+            }
+
+            getCedarRecommendedEU() {
+                const cm = this.cedarFootCm;
+                if (cm <= 25.0) return 40;
+                if (cm <= 25.8) return 41;
+                if (cm <= 26.7) return 42;
+                if (cm <= 27.6) return 43;
+                return 44;
+            }
+
+            // 4. BARBEARIA SOUL METHODS: Visagismo Face-Shape Analyzer & Master Kapster Lock
+            setBarberFaceShape(shape) {
+                this.barberFaceShape = shape;
+                this.rerenderWithViewTransition();
+            }
+
+            getBarberFaceRecommendation() {
+                const map = {
+                    round: {
+                        title: '⚪ Wajah Bulat (Round Face)',
+                        advice: 'Rekomendasi: Potongan ber-volume vertikal di bagian atas (Pompadour / Textured Crop) dengan High Fade tipis di samping & sculpting janggut meruncing untuk menciptakan ilusi rahang lebih tegas.'
+                    },
+                    square: {
+                        title: '🟦 Wajah Persegi (Square Jaw)',
+                        advice: 'Rekomendasi: Pertahankan garis rahang maskulin alami Anda dengan Executive Side-Part atau Tapered Scissor Cut dipadukan ritual handuk panas Barbaterapia.'
+                    },
+                    oval: {
+                        title: '📐 Wajah Oval (Proporsional)',
+                        advice: 'Rekomendasi: Proporsi wajah paling fleksibel — sangat ideal untuk gaya Slick Back klasik, Pompadour, maupun perawatan penuh VIP Combo.'
+                    },
+                    diamond: {
+                        title: '💎 Wajah Berlian (Tulang Pipi Tegas)',
+                        advice: 'Rekomendasi: Biarkan tekstur natural di bagian atas dan jambang proporsional (Acabamento & Design de Barba) untuk menyeimbangkan tulang pipi.'
+                    },
+                    all: {
+                        title: '✨ Semua Karakter Wajah Pria',
+                        advice: 'Klik salah satu bentuk wajah di atas untuk melihat layanan yang disorot khusus dengan pita Barber Pole oleh Master Visagist kami.'
+                    }
+                };
+                return map[this.barberFaceShape] || map.round;
+            }
+
+            setBarberMaster(masterVal) {
+                this.barberMaster = masterVal;
+                this.rerenderWithViewTransition();
+            }
+
+            /* =================================================================
+               3D MAGNETIC CARD HOVER TILT + SPECULAR GLARE (COMPLETE EXCLUSIVE)
+            ================================================================== */
+            init3DTiltCards() {
+                if (this.tier !== 'complete') return;
+                const cards = document.querySelectorAll('.complete-tilt-card');
+                cards.forEach(card => {
+                    const glare = card.querySelector('.card-specular-glare');
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const cx = rect.width / 2;
+                        const cy = rect.height / 2;
+                        const rotY = ((x - cx) / cx) * 7.5;
+                        const rotX = -((y - cy) / cy) * 7.5;
+                        card.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-6px) scale3d(1.02, 1.02, 1.02)`;
+                        if (glare) {
+                            const px = ((x / rect.width) * 100).toFixed(1);
+                            const py = ((y / rect.height) * 100).toFixed(1);
+                            glare.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255, 255, 255, 0.36), transparent 60%)`;
+                        }
+                    }, { passive: true });
+
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)';
+                    }, { passive: true });
+                });
+            }
+
+            /* =================================================================
+               LIVE SOCIAL PROOF / REAL-TIME ORDER TOAST (COMPLETE EXCLUSIVE)
+               - 4 Bespoke Category-Authentic Shapes, Textures, Fonts & Elements
+               - Cycles every 8s, visible for 4.2s, click opens item modal
+            ================================================================== */
+            buildCategoryToastHTML(entry, targetItem) {
+                const imgUrl = targetItem ? targetItem.img : 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=200&q=80';
+                const isNight = this.heroMood === 'night';
+
+                // 1. HARTH SPECIALTY COFFEE: Perforated Kraft Paper Barista Slip & Brew Temperature Stamp
+                if (this.theme === 'harth') {
+                    return `
+                        <div class="relative rounded-r-2xl rounded-l-sm ${isNight ? 'bg-[#221913]/95 text-[#F5EFE6] border-[#5A4232]' : 'bg-[#FAF5EC]/95 text-[#1D1612] border-[#D8CBB8]'} border border-l-[6px] border-l-[#7C4D2B] shadow-[0_18px_42px_rgba(29,22,18,0.35)] backdrop-blur-md p-3.5 pr-9">
+                            <button type="button" onclick="app.dismissSocialProofToast(event)" aria-label="Tutup notifikasi"
+                                class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full ${isNight ? 'bg-white/10 hover:bg-white/20 text-stone-300' : 'bg-[#1D1612]/10 hover:bg-[#1D1612]/20 text-[#1D1612]'} text-xs font-bold flex items-center justify-center transition-colors">&times;</button>
+                            <div class="flex items-center gap-3">
+                                <div class="relative shrink-0">
+                                    <img src="${imgUrl}" alt="Harth Brew" class="w-12 h-12 rounded-full object-cover border-2 border-[#7C4D2B] shadow-sm">
+                                    <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#7C4D2B] text-[#FAF5EC] text-[10px] font-mono font-bold shadow">${entry.stamp || '92°C'}</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider ${isNight ? 'text-amber-300 border-white/15' : 'text-[#7C4D2B] border-[#D8CBB8]'} border-b border-dashed pb-0.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0"></span>
+                                        <span class="truncate">${entry.badge}</span>
+                                    </div>
+                                    <div class="font-serif font-bold text-sm ${isNight ? 'text-[#F5EFE6]' : 'text-[#1D1612]'} truncate mt-1">
+                                        ${entry.main}
+                                    </div>
+                                    <div class="text-[11px] ${isNight ? 'text-stone-300' : 'text-[#6E5A4F]'} truncate font-medium">
+                                        ${entry.sub}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 2. HUSH MODERN IZAKAYA: Charred Binchotan Wood Plaque & 850°C Ember Top Bar
+                if (this.theme === 'hush') {
+                    return `
+                        <div class="relative rounded-xl bg-[#14181F]/95 text-white border border-[#E85D3F]/65 border-t-4 border-t-[#E85D3F] shadow-[0_18px_45px_rgba(232,93,63,0.38)] backdrop-blur-md p-3.5 pr-9 overflow-hidden">
+                            <button type="button" onclick="app.dismissSocialProofToast(event)" aria-label="Tutup notifikasi"
+                                class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white text-xs font-bold flex items-center justify-center transition-colors">&times;</button>
+                            <div class="flex items-center gap-3">
+                                <div class="relative shrink-0">
+                                    <img src="${imgUrl}" alt="Hush Dish" class="w-12 h-12 rounded-xl object-cover border border-[#E85D3F]/70 rotate-2 shadow-md">
+                                    <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#E85D3F] text-white text-[10px] font-extrabold shadow">${entry.stamp || '🔥 850°C'}</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#FF8A70]">
+                                        <span class="w-2 h-2 rounded-full bg-[#E85D3F] animate-ping shrink-0"></span>
+                                        <span class="truncate">${entry.badge}</span>
+                                    </div>
+                                    <div class="font-display font-bold text-xs text-white truncate mt-0.5">
+                                        ${entry.main}
+                                    </div>
+                                    <div class="text-[11px] text-amber-300/95 truncate mt-0.5 font-medium">
+                                        ${entry.sub}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 3. CEDAR HANDMADE SHOE CO.: Goodyear-Welt Stitched Leather Tag with Brass Rivet Eyelet
+                if (this.theme === 'cedar') {
+                    return `
+                        <div class="relative rounded-lg ${isNight ? 'bg-[#261D17]/95 text-[#F3ECE0] border-amber-500/40' : 'bg-[#F3ECE0]/95 text-[#2B2118] border-[#C7B299]'} p-1.5 shadow-[0_18px_42px_rgba(43,33,24,0.45)] border backdrop-blur-md">
+                            <div class="border-2 border-dashed ${isNight ? 'border-amber-400/60' : 'border-[#8C3B2B]/80'} rounded-md p-2.5 pr-8 pl-3 flex items-center gap-3 relative">
+                                <!-- Authentic Brass Rivet Eyelet on Left of Leather Tag -->
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#2B2118] border-2 border-[#B45309] shadow-inner shrink-0" title="Brass Rivet"></span>
+                                <button type="button" onclick="app.dismissSocialProofToast(event)" aria-label="Tutup notifikasi"
+                                    class="absolute top-1.5 right-1.5 w-5 h-5 rounded ${isNight ? 'bg-white/10 text-amber-200' : 'bg-[#2B2118]/10 text-[#2B2118]'} hover:opacity-80 text-xs font-bold flex items-center justify-center transition-opacity">&times;</button>
+                                <div class="relative shrink-0">
+                                    <img src="${imgUrl}" alt="Cedar Boot" class="w-11 h-11 rounded object-cover border border-[#8C3B2B] shadow-sm">
+                                    <span class="absolute -bottom-1 -right-1 px-1.5 py-0.2 rounded bg-[#9E3B2E] text-white text-[10px] font-condensed uppercase font-bold shadow">${entry.stamp || 'EU 42'}</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="font-condensed text-[11px] font-bold uppercase tracking-[0.14em] ${isNight ? 'text-amber-300' : 'text-[#8C3B2B]'} truncate">
+                                        ${entry.badge}
+                                    </div>
+                                    <div class="font-condensed text-xs font-bold uppercase tracking-wide ${isNight ? 'text-[#F3ECE0]' : 'text-[#2B2118]'} truncate mt-0.5">
+                                        ${entry.main}
+                                    </div>
+                                    <div class="font-serif italic text-[11px] ${isNight ? 'text-stone-300' : 'text-stone-600'} truncate">
+                                        ${entry.sub}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 4. BARBEARIA HERITAGE CLUB: 24K Gold-Framed Gentlemen's Plaque & Animated Barber Pole Ribbon
+                return `
+                    <div class="relative rounded-xl bg-[#141210]/95 text-[#F5EFE6] border-2 border-[#C59B6D] shadow-[0_18px_45px_rgba(197,155,109,0.3)] backdrop-blur-md overflow-hidden">
+                        <div class="h-1.5 w-full barber-pole-bar"></div>
+                        <div class="p-3 pr-9 relative flex items-center gap-3">
+                            <button type="button" onclick="app.dismissSocialProofToast(event)" aria-label="Tutup notifikasi"
+                                class="absolute top-2 right-2 w-6 h-6 rounded-full border border-[#C59B6D]/40 bg-black/40 hover:bg-[#C59B6D] text-[#C59B6D] hover:text-[#11100F] text-xs font-bold flex items-center justify-center transition-colors">&times;</button>
+                            <div class="relative shrink-0">
+                                <img src="${imgUrl}" alt="Barbearia" class="w-12 h-12 rounded-full object-cover border-2 border-[#C59B6D] shadow-md">
+                                <span class="absolute -bottom-1 -right-1 px-1.5 py-0.2 rounded-full bg-[#C59B6D] text-[#11100F] text-[10px] font-extrabold shadow">${entry.stamp || '✂️ VIP'}</span>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="font-serif text-[10px] font-bold uppercase tracking-[0.16em] text-[#C59B6D] truncate">
+                                    ${entry.badge}
+                                </div>
+                                <div class="text-xs font-bold text-white truncate mt-0.5">
+                                    ${entry.main}
+                                </div>
+                                <div class="text-[11px] text-[#E5C195] truncate mt-0.5">
+                                    ${entry.sub}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            startSocialProofCycle() {
+                this.stopSocialProofCycle();
+                if (this.tier !== 'complete') return;
+
+                const feeds = {
+                    harth: [
+                        { badge: '☕ BARISTA SLIP • MEJA #04 (WFC)', stamp: '92°C', main: '2x Classic Oat Latte baru diseduh', sub: 'Biji Gayo Highland • Klik lihat resep →', itemIdx: 0 },
+                        { badge: '🌸 COLD STEEP BAR • MEJA #07', stamp: '16H', main: '1x Iced Vanilla & Almond Croissant', sub: 'Diantar ke Taman • Klik kustomisasi →', itemIdx: 1 },
+                        { badge: '🥐 ARTISAN BAKERY • MEJA #11', stamp: '190°C', main: 'Nadia memesan Sourdough Avocado Toast', sub: 'Voucher HEMAT20 aktif • Klik menu →', itemIdx: 2 }
+                    ],
+                    hush: [
+                        { badge: '🔥 ROBATA PASS • MEJA VIP #02', stamp: '🔥 820°C', main: 'Salmon Aburi Mentai Platter (8 pcs)', sub: '🍶 Pairing: Cold Yuzu • Klik tiket dapur →', itemIdx: 0 },
+                        { badge: '🥩 BINCHOTAN GRILL • MEJA #09', stamp: '🔥 850°C', main: 'Wagyu A5 Yakitori Skewers disajikan', sub: '🍶 Pairing: Oolong Highball • Klik pesan →', itemIdx: 2 },
+                        { badge: '🍣 AGED OMAKASE • SCBD VIP', stamp: '4°C', main: 'Toro & Uni Gold Nigiri Set (Akazu Shari)', sub: '🍶 Pairing: Daiginjo • Klik pesan meja →', itemIdx: 1 }
+                    ],
+                    cedar: [
+                        { badge: '🥾 WORKSHOP TAG • BRAGA #088', stamp: 'EU 42', main: 'Garrison Goodyear-Welt Boot (Inisial B.S)', sub: '🔨 Kulit Pull-Up Cognac • Cek ukuran CM →', itemIdx: 0 },
+                        { badge: '📦 PACKING KAYU • JNE YES', stamp: 'EU 41', main: 'Kensington Wingtip Brogue dikirim', sub: '🔨 Garansi Tukar Size • Klik detail sol →', itemIdx: 2 },
+                        { badge: '🕰️ VINTAGE PATINA • BANDUNG', stamp: 'EU 43', main: 'Timberline Moc-Toe Boot (Vibram Lug)', sub: '🔨 Jahitan 360° Storm Welt • Klik lihat →', itemIdx: 6 }
+                    ],
+                    barbearia: [
+                        { badge: '💈 VIP CHAIR PASS • SENOPATI', stamp: '✂️ 17:00', main: 'Adrian mengunci kursi Master Diego', sub: '🥃 Free Cold Brew • Klik pilih jadwal →', itemIdx: 0 },
+                        { badge: '👑 VISAGISMO CLUB • KURSI #01', stamp: '👑 VIP', main: 'Reza memilih Combo Corte + Hot Towel', sub: '🥃 Sisa 2 slot sore ini • Klik booking →', itemIdx: 5 },
+                        { badge: '🪒 BARBATERAPIA • KURSI #03', stamp: '14:30', main: 'Dimas memesan jadwal Master Lucas', sub: '🥃 Handuk hangat aromaterapi • Klik lihat →', itemIdx: 2 }
+                    ]
+                };
+
+                const showToastOnce = () => {
+                    if (this.tier !== 'complete') return;
+                    const toast = document.getElementById('liveSocialProofToast');
+                    if (!toast) return;
+                    const store = this.getStore();
+                    const list = feeds[this.theme] || feeds.harth;
+                    const entry = list[this.socialProofIdx % list.length];
+                    this.socialProofIdx++;
+
+                    const targetItem = store.items[entry.itemIdx] || store.items[0];
+                    this.currentToastItemId = targetItem ? targetItem.id : null;
+
+                    toast.innerHTML = this.buildCategoryToastHTML(entry, targetItem);
+
+                    toast.classList.remove('opacity-0', 'translate-x-10', 'pointer-events-none');
+                    toast.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+
+                    if (this.socialProofHideTimer) clearTimeout(this.socialProofHideTimer);
+                    this.socialProofHideTimer = setTimeout(() => {
+                        this.hideSocialProofToast();
+                    }, 4200);
+                };
+
+                // Initial trigger after 2.4 seconds, then every 8 seconds
+                this.socialProofInitialTimer = setTimeout(() => {
+                    showToastOnce();
+                    this.socialProofTimer = setInterval(showToastOnce, 8000);
+                }, 2400);
+            }
+
+            hideSocialProofToast() {
+                const toast = document.getElementById('liveSocialProofToast');
+                if (!toast) return;
+                toast.classList.add('opacity-0', 'translate-x-10', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            }
+
+            stopSocialProofCycle() {
+                if (this.socialProofInitialTimer) {
+                    clearTimeout(this.socialProofInitialTimer);
+                    this.socialProofInitialTimer = null;
+                }
+                if (this.socialProofTimer) {
+                    clearInterval(this.socialProofTimer);
+                    this.socialProofTimer = null;
+                }
+                if (this.socialProofHideTimer) {
+                    clearTimeout(this.socialProofHideTimer);
+                    this.socialProofHideTimer = null;
+                }
+                this.hideSocialProofToast();
+            }
+
+            dismissSocialProofToast(e) {
+                if (e) e.stopPropagation();
+                this.stopSocialProofCycle();
+            }
+
+            handleSocialProofClick() {
+                this.hideSocialProofToast();
+                if (this.currentToastItemId) {
+                    this.openItemModal(this.currentToastItemId);
+                }
+            }
+
+            /* =================================================================
+               STAGGERED 3D SCROLL CHOREOGRAPHY & MULTI-LAYER PARALLAX
+               - Uses native CSS view() timeline when supported, with IO fallback
             ================================================================== */
             initScrollRevealFallback() {
+                const els = document.querySelectorAll('.scroll-reveal, .scroll-curtain');
+                els.forEach((el) => {
+                    const parent = el.parentElement;
+                    if (parent) {
+                        const siblings = Array.from(parent.children).filter(c => c.classList.contains('scroll-reveal') || c.classList.contains('scroll-curtain'));
+                        const idx = siblings.indexOf(el);
+                        el.style.setProperty('--stagger-idx', idx >= 0 ? String(idx % 6) : '0');
+                    }
+                });
+
                 if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
-                    const els = document.querySelectorAll('.scroll-reveal, .scroll-curtain');
+                    els.forEach(el => el.classList.add('io-hidden'));
                     const obs = new IntersectionObserver((entries) => {
                         entries.forEach(e => {
                             if (e.isIntersecting) {
                                 e.target.classList.add('io-visible');
                             }
                         });
-                    }, { threshold: 0.12 });
-                    els.forEach(el => {
-                        el.classList.add('io-hidden');
-                        obs.observe(el);
-                    });
+                    }, { threshold: 0.1 });
+                    els.forEach(el => obs.observe(el));
                 }
             }
 
             setupScrollParallax() {
                 window.addEventListener('scroll', () => {
                     const y = window.scrollY;
+                    const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+                    const pct = Math.min(100, Math.max(0, (y / docH) * 100));
+                    const prog = document.getElementById('completeScrollProgress');
+                    if (prog) prog.style.width = `${pct.toFixed(1)}%`;
+
+                    if (this.tier !== 'complete') return;
+
+                    document.querySelectorAll('.parallax-hero-bg').forEach(el => {
+                        el.style.transform = `translate3d(0, ${(y * 0.22).toFixed(1)}px, 0) scale(1.08)`;
+                    });
+                    document.querySelectorAll('.parallax-float-badge').forEach(el => {
+                        el.style.transform = `translate3d(0, ${(y * -0.1).toFixed(1)}px, 0)`;
+                    });
                     document.querySelectorAll('.parallax-plate').forEach(el => {
-                        el.style.transform = `rotate(${(y * 0.04) % 360}deg)`;
+                        el.style.transform = `rotate(${(y * 0.05) % 360}deg)`;
                     });
                     document.querySelectorAll('.parallax-prop-fast').forEach(el => {
-                        el.style.transform = `translateY(${Math.sin(y * 0.005) * -18}px)`;
+                        el.style.transform = `translateY(${Math.sin(y * 0.006) * -22}px)`;
                     });
                     document.querySelectorAll('.parallax-prop-slow').forEach(el => {
-                        el.style.transform = `translateY(${Math.cos(y * 0.005) * 16}px)`;
+                        el.style.transform = `translateY(${Math.cos(y * 0.006) * 20}px)`;
                     });
                 }, { passive: true });
             }
@@ -2146,7 +3134,15 @@
                 if (!item || !item.available) return;
 
                 this.modalItem = item;
-                this.modalVariant = store.variants[0];
+                if (this.theme === 'cedar') {
+                    const recEu = this.getCedarRecommendedEU();
+                    const matched = store.variants.find(v => v.includes(`Size ${recEu}`));
+                    this.modalVariant = matched || store.variants[0];
+                } else if (this.theme === 'barbearia' && this.barberMaster) {
+                    this.modalVariant = this.barberMaster;
+                } else {
+                    this.modalVariant = store.variants[0];
+                }
                 this.modalExtra = this.getDefaultExtra();
                 this.modalQty = 1;
                 this.renderItemModalContent();
@@ -2879,6 +3875,10 @@
                 else if (event.data.feature === 'qris') window.app.triggerDemoQrisFeature();
                 else if (event.data.feature === 'standee') window.app.triggerDemoStandeeFeature();
                 else if (event.data.feature === 'sheet') window.app.triggerDemoSheetFeature();
+                else if (event.data.feature === 'mood') {
+                    if (window.app.tier !== 'complete') window.app.switchTier('complete');
+                    setTimeout(() => window.app.toggleHeroMood(), 150);
+                }
             }
         });
     </script>
