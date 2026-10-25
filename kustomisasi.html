@@ -35,6 +35,73 @@
             background-color: #0B1020;
             color: #F5F7FF;
         }
+        /* Ambient colour wash + dot grid so the page is not a flat black void */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 26px 26px,
+                radial-gradient(900px 520px at 6% -4%, rgba(0, 229, 255, 0.17), transparent 62%),
+                radial-gradient(820px 620px at 104% 14%, rgba(139, 92, 246, 0.22), transparent 62%),
+                radial-gradient(760px 520px at 40% 108%, rgba(236, 72, 153, 0.12), transparent 62%),
+                linear-gradient(180deg, #0D1329 0%, #090D1C 100%);
+        }
+
+        /* Section cards: tinted glass with a coloured accent bar per section */
+        .card {
+            --c1: #00E5FF; --c2: #3B82F6;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, rgba(24, 34, 68, 0.88) 0%, rgba(12, 18, 38, 0.92) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.7), 0 0 60px -30px var(--c1);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--c1), var(--c2));
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -90px; right: -90px;
+            width: 260px; height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--c1) 0%, transparent 68%);
+            opacity: 0.13;
+            pointer-events: none;
+        }
+        .card > * { position: relative; z-index: 1; }
+        .card-a { --c1: #00E5FF; --c2: #3B82F6; }
+        .card-b { --c1: #A78BFA; --c2: #EC4899; }
+        .card-c { --c1: #34D399; --c2: #00E5FF; }
+        .card-d { --c1: #FBBF24; --c2: #F472B6; }
+        .card-pay { --c1: #00E5FF; --c2: #8B5CF6; border-color: rgba(0, 229, 255, 0.35); }
+        /* inner boxes become soft translucent panels instead of near-black */
+        .card .bg-\[\#0B1020\] { background-color: rgba(255, 255, 255, 0.045); }
+        .card .bg-\[\#05070F\] { background-color: rgba(5, 7, 15, 0.45); }
+
+        .step-chip {
+            width: 2.25rem; height: 2.25rem;
+            flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 0.75rem;
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #05070F;
+            box-shadow: 0 6px 18px -6px var(--c1);
+        }
+        .step-chip-a { background: linear-gradient(135deg, #00E5FF, #3B82F6); --c1: #00E5FF; }
+        .step-chip-b { background: linear-gradient(135deg, #A78BFA, #EC4899); --c1: #A78BFA; }
+        .step-chip-c { background: linear-gradient(135deg, #34D399, #00E5FF); --c1: #34D399; }
+        .step-chip-d { background: linear-gradient(135deg, #FBBF24, #F472B6); --c1: #FBBF24; }
+        .step-chip-pay { background: linear-gradient(135deg, #00E5FF, #8B5CF6); --c1: #00E5FF; }
         .text-gradient-digitra {
             background: linear-gradient(90deg, #00E5FF 0%, #8B5CF6 100%);
             -webkit-background-clip: text;
@@ -68,23 +135,32 @@
             header, footer, .no-print {
                 display: none !important;
             }
+            body::before, .card::before, .card::after {
+                display: none !important;
+            }
+            .card {
+                background: #ffffff !important;
+                box-shadow: none !important;
+            }
             body {
                 background: #ffffff !important;
                 color: #000000 !important;
             }
         }
+    svg.di{margin-right:.28em;display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+        svg.di:only-child{margin-right:0}
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol><symbol id="i-concierge" viewBox="0 0 24 24"><path d="M3 20a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1Z"/><path d="M20 16a8 8 0 1 0-16 0"/><path d="M12 4v4"/><path d="M10 4h4"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol><symbol id="i-landmark" viewBox="0 0 24 24"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol><symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol><symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol><symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol><symbol id="i-wand" viewBox="0 0 24 24"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></symbol><symbol id="i-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></symbol></svg>
 
     <!-- =======================================================================
-         1. UNIFIED SLEEK HEADER & 3-STEP PROGRESS STEPPER (IDENTICAL TO STEPS 1 & 2)
+         1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
     ======================================================================== -->
     <header class="sticky top-0 z-40 bg-[#05070F]/90 backdrop-blur-xl border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
-            <!-- Brand Logo -->
-            <a href="index.html" class="flex items-center gap-3 group shrink-0">
-                <svg width="36" height="36" style="width: 36px; height: 36px; min-width: 36px;" class="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <a href="index.html" class="flex items-center gap-3">
+                <svg class="w-9 h-9 shrink-0" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                     <path d="M8 7H25L35 17L28 24L21 17H16V24L8 32V7Z" fill="#00E5FF"/>
                     <path d="M28 10L42 24L25 41H8L16 33H22L31 24L23 16L28 10Z" fill="#8B5CF6"/>
                 </svg>
@@ -94,31 +170,23 @@
                 </div>
             </a>
 
-            <!-- Sleek 3-Step Progress Stepper -->
-            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-2.5 text-xs font-display font-bold">
-                <!-- Step 1: Completed -->
-                <a href="pilih-desain.html" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-300 hover:text-white border border-white/10 transition-colors">
-                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-[10px] font-extrabold">✓</span>
-                    <span>1. Desain Terpilih</span>
+            <!-- 3-Step Progress Stepper -->
+            <nav aria-label="Tahapan Pemesanan Website" class="hidden md:flex items-center gap-3 text-xs font-display font-bold">
+                <a href="pilih-desain.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
+                    ✓ ① Pilih Desain
                 </a>
-                <span class="text-slate-600 font-bold">&rarr;</span>
-                <!-- Step 2: Completed -->
-                <a id="stepBackPaketLink" href="pilih-paket.html" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/5 text-slate-300 hover:text-white border border-white/10 transition-colors">
-                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-[10px] font-extrabold">✓</span>
-                    <span>2. Paket Terpilih</span>
+                <span class="text-slate-600">&rarr;</span>
+                <a id="stepBackPaketLink" href="pilih-paket.html" class="px-3.5 py-1.5 rounded-xl bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30">
+                    ✓ ② Pilih Paket &amp; Cek Demo
                 </a>
-                <span class="text-slate-600 font-bold">&rarr;</span>
-                <!-- Step 3: ACTIVE -->
-                <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow-lg shadow-[#00E5FF]/20">
-                    <span class="w-5 h-5 rounded-full bg-[#05070F] text-[#00E5FF] flex items-center justify-center text-[11px] font-extrabold">3</span>
-                    <span>Kustomisasi UMKM</span>
-                </div>
+                <span class="text-slate-600">&rarr;</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-gradient-digitra text-[#05070F] shadow">
+                    ③ Kustomisasi &amp; Upload Foto
+                </span>
             </nav>
 
-            <!-- Navigation Back to Step 2 -->
-            <a id="topBackPaketBtn" href="pilih-paket.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center gap-1.5">
-                <span>&larr;</span>
-                <span>Kembali ke Paket</span>
+            <a id="topBackPaketBtn" href="pilih-paket.html" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300">
+                &larr; Kembali ke Paket
             </a>
         </div>
     </header>
@@ -127,163 +195,91 @@
          2. MAIN CONTENT: PREFERENCES, UMKM PHOTO UPLOAD, COMPANY INFO & CHECKOUT
     ======================================================================== -->
     <main class="flex-1 py-10 sm:py-14">
-        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-8">
 
-            <!-- Centered Hero Title (Consistent with Step 1 & Step 2) -->
-            <div class="text-center space-y-3 max-w-3xl mx-auto mb-12">
-                <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20 text-xs font-bold tracking-wider uppercase">
-                    <span class="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse"></span>
-                    Langkah 3 dari 3 &bull; Kustomisasi Brand &amp; Materi Usaha
-                </span>
-                <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
-                    Sesuaikan Identitas &amp; <span class="text-gradient-digitra">Materi Bisnis Anda</span>
+            <!-- Page Title -->
+            <div class="max-w-3xl mb-10">
+                <span class="inline-block px-3 py-1 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-xs font-bold uppercase tracking-[0.2em] text-[#00E5FF]">Langkah 3 dari 3 &bull; Kustomisasi &amp; Materi Usaha</span>
+                <h1 class="font-display font-bold text-3xl sm:text-4xl text-white mt-3">
+                    Lengkapi Preferensi, Upload Foto UMKM &amp; <span class="text-gradient-digitra">Informasi Bisnis</span>
                 </h1>
-                <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
-                    Kustomisasi minor seperti ganti warna brand, font, logo, dan foto produk sudah <strong class="text-emerald-400">GRATIS (Rp 0)</strong>. Butuh perombakan struktur masif &amp; terima beres? Aktifkan opsi <strong class="text-[#00E5FF]">👑 Upgrade Paket Pro</strong> di bawah.
+                <p class="text-sm text-slate-400 mt-1.5">
+                    Anda juga dapat menekan tombol <strong class="text-[#00E5FF]">"<svg class="di" aria-hidden="true"><use href="#i-wand"/></svg> Simulasikan Foto &amp; Nama Usaha Saya di Website"</strong> setelah meng-upload foto untuk melihat langsung tampilan website dengan identitas usaha Anda!
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- SINGLE COLUMN FLOW: A (Desain) → B (Upload) → C (Data Usaha) → D (Pembayaran, paling bawah) -->
+            <div>
+                <div class="space-y-7">
 
-                <!-- LEFT 7 COLS: STEP-BY-STEP CUSTOMIZATION & UPLOAD -->
-                <div class="lg:col-span-7 space-y-7">
-
-                    <!-- CARD A: RINGKASAN DESAIN & TINGKAT KUSTOMISASI (MINOR GRATIS vs PAKET PRO MASIF) -->
-                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-6">
+                    <!-- CARD A: RINGKASAN DESAIN & PREFERENSI TAMPILAN -->
+                    <section class="card card-a rounded-3xl p-6 space-y-5">
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                            <div>
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian A &bull; Tingkat Kustomisasi &amp; Identitas Brand</span>
-                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Pilih Cakupan Kustomisasi Website</h2>
-                            </div>
-                            <a id="changePackageTopLink" href="pilih-paket.html" class="text-xs font-semibold text-purple-300 hover:underline">&larr; Ubah Paket Template</a>
-                        </div>
-
-                        <!-- 2 Pilihan Utama Tingkat Kustomisasi: Minor Gratis (Rp 0) vs Upgrade Paket Pro (+Rp 590.000) -->
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-3">Pilih Tingkat Kustomisasi Pengerjaan:</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Pilihan 1: Kustomisasi Minor & Brand (GRATIS Rp 0) -->
-                                <button type="button" onclick="customApp.setMode('minor')" data-mode="minor" class="mode-btn p-4 rounded-2xl border text-left transition-all flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex items-center justify-between gap-2 mb-1.5">
-                                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">✓ Termasuk di Paket</span>
-                                            <span class="font-display font-bold text-sm text-emerald-400">GRATIS (Rp 0)</span>
-                                        </div>
-                                        <div class="font-display font-bold text-sm text-white">🎨 1. Kustomisasi Minor &amp; Brand</div>
-                                        <p class="text-[11px] text-slate-400 mt-1 leading-relaxed">
-                                            Penyesuaian identitas usaha mengikuti struktur template pilihan Anda:
-                                        </p>
-                                    </div>
-                                    <ul class="mt-3 pt-2.5 border-t border-white/10 space-y-1 text-[11px] text-slate-300">
-                                        <li>✓ Gratis Ganti Skema Warna &amp; Font Brand</li>
-                                        <li>✓ Gratis Pasang Logo, Banner &amp; Foto Produk</li>
-                                        <li>✓ Gratis Setel Nomor WA &amp; Peta Lokasi</li>
-                                    </ul>
-                                </button>
-
-                                <!-- Pilihan 2: Upgrade Paket Pro — Kustomisasi Masif & Terima Beres (+Rp 590.000) -->
-                                <button type="button" onclick="customApp.setMode('pro')" data-mode="pro" class="mode-btn p-4 rounded-2xl border text-left transition-all flex flex-col justify-between relative">
-                                    <div>
-                                        <div class="flex items-center justify-between gap-2 mb-1.5">
-                                            <span class="px-2.5 py-0.5 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40 text-[10px] font-extrabold uppercase">👑 Terima Beres VIP</span>
-                                            <span class="font-display font-bold text-sm text-[#00E5FF]">+Rp 590.000</span>
-                                        </div>
-                                        <div class="font-display font-bold text-sm text-white">👑 2. Upgrade Paket Pro (Kustom Masif)</div>
-                                        <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-                                            Untuk bisnis yang membutuhkan perombakan layout besar, alur khusus &amp; layanan terima beres penuh:
-                                        </p>
-                                    </div>
-                                    <ul class="mt-3 pt-2.5 border-t border-white/10 space-y-1 text-[11px] text-slate-200">
-                                        <li class="text-[#00E5FF] font-semibold">🔥 Rombak Struktur Section &amp; Alur Form Khusus</li>
-                                        <li class="text-[#00E5FF] font-semibold">🌐 Gratis Domain Resmi (.com / .id) 1 Tahun</li>
-                                        <li>✓ Bantuan Input s/d 50 Menu/Produk Terima Beres</li>
-                                        <li>✓ Gratis Seluruh Add-On Satuan di Bawah!</li>
-                                    </ul>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Pilihan Palet Warna & Gaya Font (Gratis di Kedua Mode!) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-white/10">
-                            <div>
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <label for="brandPaletteSelect" class="block text-xs font-semibold text-slate-300">Skema Warna Brand:</label>
-                                    <span class="text-[10px] font-bold text-emerald-400">GRATIS</span>
+                            <div class="flex items-center gap-3">
+                                <span class="step-chip step-chip-a">A</span>
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian A &bull; Preferensi Desain &amp; Warna</span>
+                                    <h2 class="font-display font-bold text-lg text-white mt-0.5">Kustomisasi Tampilan Website</h2>
                                 </div>
+                            </div>
+                            <a href="pilih-desain.html" class="text-xs font-semibold text-purple-300 hover:underline">Ubah Template / Paket</a>
+                        </div>
+
+                        <!-- Mode Kustomisasi -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Pilih Tingkat Kustomisasi Desain:</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                <button type="button" onclick="customApp.setMode('ready')" data-mode="ready" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">1. Sesuai Template</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Hanya ganti teks, menu &amp; foto</div>
+                                </button>
+                                <button type="button" onclick="customApp.setMode('modify')" data-mode="modify" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">2. Kustom Warna &amp; Fitur</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Sesuaikan palet warna &amp; form</div>
+                                </button>
+                                <button type="button" onclick="customApp.setMode('scratch')" data-mode="scratch" class="mode-btn p-3 rounded-2xl border text-left transition-all">
+                                    <div class="font-display font-bold text-xs text-white">3. Desain Baru dari Nol</div>
+                                    <div class="text-[11px] text-slate-400 mt-0.5">Kustom bebas — otomatis termasuk Kustom Web (Paket Pro)</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Palet Warna & Gaya Font -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="brandPaletteSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Skema Warna Brand:</label>
                                 <select id="brandPaletteSelect" onchange="customApp.palette = this.value; customApp.renderSummary()"
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
-                                    <option value="Sesuai Warna Template Asli">✨ Sesuai Warna Template Asli</option>
-                                    <option value="Warm Espresso & Cream (#F5EFE6)">☕ Warm Espresso &amp; Cream</option>
-                                    <option value="Midnight Obsidian & Gold (#C59B6D)">👑 Midnight Obsidian &amp; Gold</option>
-                                    <option value="Emerald Nature & Alabaster">🌿 Emerald Nature &amp; Alabaster</option>
-                                    <option value="Terracotta & Heritage Parchment">🥾 Terracotta &amp; Parchment</option>
-                                    <option value="Custom Warna Brand Sendiri">🎨 Gunakan Kode Warna Logo Kami</option>
+                                    <option value="Sesuai Warna Template Asli">Sesuai Warna Template Asli</option>
+                                    <option value="Warm Espresso & Cream (#F5EFE6)">Warm Espresso &amp; Cream</option>
+                                    <option value="Midnight Obsidian & Gold (#C59B6D)">Midnight Obsidian &amp; Gold</option>
+                                    <option value="Emerald Nature & Alabaster">Emerald Nature &amp; Alabaster</option>
+                                    <option value="Terracotta & Heritage Parchment">Terracotta &amp; Parchment</option>
+                                    <option value="Custom Warna Brand Sendiri">Gunakan Kode Warna Logo Kami</option>
                                 </select>
                             </div>
                             <div>
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <label for="fontStyleSelect" class="block text-xs font-semibold text-slate-300">Karakter Tipografi (Font):</label>
-                                    <span class="text-[10px] font-bold text-emerald-400">GRATIS</span>
-                                </div>
+                                <label for="fontStyleSelect" class="block text-xs font-semibold text-slate-300 mb-1.5">Karakter Tipografi (Font):</label>
                                 <select id="fontStyleSelect" onchange="customApp.fontStyle = this.value; customApp.renderSummary()"
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold">
-                                    <option value="Rekomendasi Bawaan Template">✨ Rekomendasi Bawaan Template</option>
-                                    <option value="Editorial Klasik & Elegan (Serif)">📖 Editorial Klasik &amp; Elegan (Serif)</option>
-                                    <option value="Modern Bersih & Minimalis (Sans)">⚡ Modern Bersih &amp; Minimalis (Sans)</option>
-                                    <option value="Tegas & Maskulin (Condensed)">🔥 Tegas &amp; Maskulin (Condensed)</option>
+                                    <option value="Rekomendasi Bawaan Template">Rekomendasi Bawaan Template</option>
+                                    <option value="Editorial Klasik & Elegan (Serif)">Editorial Klasik &amp; Elegan (Serif)</option>
+                                    <option value="Modern Bersih & Minimalis (Sans)">Modern Bersih &amp; Minimalis (Sans)</option>
+                                    <option value="Tegas & Maskulin (Condensed)">Tegas &amp; Maskulin (Condensed)</option>
                                 </select>
-                            </div>
-                        </div>
-
-                        <!-- Modular A-La-Carte Add-Ons (Optional for Minor, Included FREE in Pro!) -->
-                        <div class="pt-3 border-t border-white/10 space-y-2.5">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <label class="block text-xs font-semibold text-slate-300">Fitur Tambahan Satuan (Opsional untuk Kustomisasi Minor):</label>
-                                <span id="proIncludedBadge" class="hidden px-2.5 py-0.5 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30 text-[10px] font-bold">
-                                    👑 Sudah Termasuk GRATIS di Paket Pro!
-                                </span>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
-                                    <input type="checkbox" id="chkAddonDomain" onchange="customApp.toggleAddon('domainCom', 185000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
-                                    <span>
-                                        <strong class="block text-white leading-snug">🌐 Domain Resmi (.com / .id) 1 Tahun</strong>
-                                        <span id="priceAddonDomain" class="text-[#00E5FF] font-semibold text-[11px]">+Rp 185.000</span>
-                                    </span>
-                                </label>
-                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
-                                    <input type="checkbox" id="chkAddonPopup" onchange="customApp.toggleAddon('customPopup', 150000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
-                                    <span>
-                                        <strong class="block text-white leading-snug">🛠️ Kustom Field Pop-Up Pesanan</strong>
-                                        <span id="priceAddonPopup" class="text-[#00E5FF] font-semibold text-[11px]">+Rp 150.000</span>
-                                    </span>
-                                </label>
-                                <label class="addon-card flex items-start gap-2.5 p-3 rounded-xl bg-[#0B1020] border border-white/10 cursor-pointer transition-all">
-                                    <input type="checkbox" id="chkAddonBranch" onchange="customApp.toggleAddon('multiBranch', 200000, this.checked)" class="mt-0.5 accent-[#00E5FF]">
-                                    <span>
-                                        <strong class="block text-white leading-snug">🏢 Fitur Multi-Cabang &amp; Multi-WA</strong>
-                                        <span id="priceAddonBranch" class="text-purple-300 font-semibold text-[11px]">+Rp 200.000</span>
-                                    </span>
-                                </label>
-                            </div>
-
-                            <!-- Smart Upsell Tip when user selects multiple individual add-ons -->
-                            <div id="smartProUpsellTip" class="hidden p-3 rounded-xl bg-[#8B5CF6]/15 border border-[#8B5CF6]/40 text-xs text-purple-200 flex items-center justify-between gap-3">
-                                <span>💡 <strong>Tips Hemat:</strong> Dengan menambah sedikit ke <strong>👑 Upgrade Paket Pro (+Rp 590rb)</strong>, Anda sudah mendapatkan ketiga fitur di atas + rombak layout kustom + input 50 produk terima beres!</span>
-                                <button type="button" onclick="customApp.setMode('pro')" class="px-3 py-1.5 rounded-lg bg-[#00E5FF] text-[#05070F] font-bold text-[11px] shrink-0">
-                                    Upgrade ke Pro &rarr;
-                                </button>
                             </div>
                         </div>
                     </section>
 
                     <!-- CARD B: UPLOAD FOTO-FOTO UMKM (LOGO, BANNER TEMPAT, & PRODUK) -->
-                    <section class="rounded-3xl bg-[#05070F] border-2 border-[#00E5FF]/40 p-6 space-y-5 shadow-xl">
+                    <section class="card card-b rounded-3xl p-6 space-y-5">
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                            <div>
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian B &bull; Upload Materi Visual UMKM</span>
-                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Upload Foto Tempat &amp; Produk Usaha Anda</h2>
+                            <div class="flex items-center gap-3">
+                                <span class="step-chip step-chip-b">B</span>
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-purple-300">Bagian B &bull; Upload Materi Visual UMKM</span>
+                                    <h2 class="font-display font-bold text-lg text-white mt-0.5">Upload Foto Tempat &amp; Produk Usaha Anda</h2>
+                                </div>
                             </div>
                             <span class="px-2.5 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] text-[11px] font-bold">
                                 Bisa Disimulasikan Langsung!
@@ -303,7 +299,7 @@
                                         Logo
                                     </div>
                                     <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold">
-                                        📁 Pilih File Logo
+                                        <svg class="di" aria-hidden="true"><use href="#i-folder"/></svg> Pilih File Logo
                                         <input type="file" accept="image/*" class="hidden" onchange="customApp.handleLogoUpload(this)">
                                     </label>
                                 </div>
@@ -321,7 +317,7 @@
                                         Banner
                                     </div>
                                     <label class="cursor-pointer px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold">
-                                        🖼️ Pilih Foto Tempat
+                                        <svg class="di" aria-hidden="true"><use href="#i-image"/></svg> Pilih Foto Tempat
                                         <input type="file" accept="image/*" class="hidden" onchange="customApp.handleBannerUpload(this)">
                                     </label>
                                 </div>
@@ -359,21 +355,24 @@
                         <!-- LIVE PREVIEW WITH CLIENT PHOTOS BUTTON -->
                         <div class="p-4 rounded-2xl bg-gradient-to-r from-[#0B1020] via-[#131C38] to-[#0B1020] border border-[#00E5FF]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div class="text-xs space-y-0.5">
-                                <div class="font-display font-bold text-white">🪄 Ingin Melihat Foto &amp; Nama Usaha Anda Terpasang di Website?</div>
+                                <div class="font-display font-bold text-white"><svg class="di" aria-hidden="true"><use href="#i-wand"/></svg> Ingin Melihat Foto &amp; Nama Usaha Anda Terpasang di Website?</div>
                                 <p class="text-slate-300">Klik tombol di samping untuk membuka simulasi website dengan foto dan nama usaha yang baru Anda isi.</p>
                             </div>
                             <button type="button" onclick="customApp.openLiveCustomPreview()"
                                 class="shrink-0 px-4 py-3 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs shadow-lg hover:scale-[1.02] transition-all">
-                                🪄 Simulasikan di Website &nearr;
+                                <svg class="di" aria-hidden="true"><use href="#i-wand"/></svg> Simulasikan di Website &nearr;
                             </button>
                         </div>
                     </section>
 
                     <!-- CARD C: INFORMASI PERUSAHAAN & KONTAK UMKM -->
-                    <section class="rounded-3xl bg-[#05070F] border border-white/10 p-6 space-y-4">
-                        <div class="pb-3 border-b border-white/10">
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian C &bull; Data Perusahaan &amp; Lokasi</span>
-                            <h2 class="font-display font-bold text-lg text-white mt-0.5">Informasi yang Ditampilkan di Website Anda</h2>
+                    <section class="card card-c rounded-3xl p-6 space-y-4">
+                        <div class="pb-3 border-b border-white/10 flex items-center gap-3">
+                            <span class="step-chip step-chip-c">C</span>
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-300">Bagian C &bull; Data Perusahaan &amp; Lokasi</span>
+                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Informasi yang Ditampilkan di Website Anda</h2>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -391,7 +390,7 @@
                                     oninput="customApp.bizName = this.value; customApp.renderSummary()"
                                     class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold"
                                 >
-                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1">❌ Mohon isi nama usaha minimal 3 karakter.</div>
+                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1"><svg class="di" aria-hidden="true"><use href="#i-x-circle"/></svg> Mohon isi nama usaha minimal 3 karakter.</div>
                             </div>
 
                             <div>
@@ -408,7 +407,7 @@
                                     oninput="customApp.waPhone = this.value; customApp.renderSummary()"
                                     class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs font-semibold"
                                 >
-                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1">❌ Gunakan nomor WA valid diawali 08 atau 628.</div>
+                                <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1"><svg class="di" aria-hidden="true"><use href="#i-x-circle"/></svg> Gunakan nomor WA valid diawali 08 atau 628.</div>
                             </div>
                         </div>
 
@@ -423,7 +422,7 @@
                             <div>
                                 <label for="clientAddress" class="block text-xs font-semibold text-white mb-1">Alamat Lengkap / Titik Google Maps</label>
                                 <input type="text" id="clientAddress" value="Jl. Cipete Raya No. 42, Jakarta Selatan"
-                                    oninput="customApp.address = this.value; customApp.renderSummary()"
+                                    oninput="customApp.address = this.value; customApp.syncShip()"
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-[#0B1020] border border-white/15 text-white text-xs">
                             </div>
                             <div>
@@ -434,6 +433,44 @@
                             </div>
                         </div>
 
+                        <!-- Mode layanan (khusus Complete & Pro) -->
+                        <div id="serviceModeBox" class="p-4 rounded-2xl bg-[#0B1020] border border-white/10 space-y-2.5">
+                            <div class="text-xs font-bold text-white"><svg class="di" aria-hidden="true"><use href="#i-concierge"/></svg> Mode Layanan yang Diaktifkan di Website</div>
+                            <p class="text-[11px] text-slate-400">Pelanggan memilih salah satu mode ini saat memesan (untuk usaha F&amp;B / retail).</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 cursor-pointer"><input type="checkbox" checked onchange="customApp.toggleService('dinein', this.checked)" class="accent-[#34D399]"> <svg class="di" aria-hidden="true"><use href="#i-utensils"/></svg> Makan di Tempat</label>
+                                <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 cursor-pointer"><input type="checkbox" checked onchange="customApp.toggleService('pickup', this.checked)" class="accent-[#34D399]"> <svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Ambil Sendiri</label>
+                                <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 cursor-pointer"><input type="checkbox" checked onchange="customApp.toggleService('delivery', this.checked)" class="accent-[#34D399]"> <svg class="di" aria-hidden="true"><use href="#i-truck"/></svg> Diantar</label>
+                            </div>
+                        </div>
+
+                        <!-- Pengiriman papan / stiker QR fisik -->
+                        <div class="p-4 rounded-2xl bg-[#0B1020] border border-emerald-400/30 space-y-3">
+                            <div>
+                                <div class="text-xs font-bold text-white"><svg class="di" aria-hidden="true"><use href="#i-package"/></svg> Alamat Pengiriman Papan QR</div>
+                                <p class="text-[11px] text-slate-400">Akan dikirim: <strong id="shipItemLabel" class="text-emerald-300"></strong>. Pelunasan 50% ditagih setelah papan diterima.</p>
+                            </div>
+                            <label class="flex items-center gap-2 text-[11px] text-slate-300 cursor-pointer">
+                                <input type="checkbox" onchange="customApp.setShipSame(this.checked)" class="accent-[#34D399]"> Sama dengan alamat usaha di atas
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label for="shipName" class="block text-xs font-semibold text-white mb-1">Nama Penerima *</label>
+                                    <input type="text" id="shipName" required minlength="3" placeholder="Nama pemilik / penanggung jawab"
+                                        oninput="customApp.shipName = this.value; customApp.renderSummary()"
+                                        class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#05070F] border border-white/15 text-white text-xs font-semibold">
+                                    <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1"><svg class="di" aria-hidden="true"><use href="#i-x-circle"/></svg> Isi nama penerima minimal 3 karakter.</div>
+                                </div>
+                                <div>
+                                    <label for="shipAddr" class="block text-xs font-semibold text-white mb-1">Alamat Lengkap Pengiriman *</label>
+                                    <input type="text" id="shipAddr" required minlength="10" placeholder="Jalan, nomor, kota, kode pos"
+                                        oninput="customApp.shipAddr = this.value; customApp.renderSummary()"
+                                        class="digitra-input w-full px-3.5 py-2.5 rounded-xl bg-[#05070F] border border-white/15 text-white text-xs font-semibold">
+                                    <div class="error-msg text-[11px] text-rose-400 font-semibold mt-1"><svg class="di" aria-hidden="true"><use href="#i-x-circle"/></svg> Isi alamat lengkap minimal 10 karakter.</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
                             <label for="clientExtraNotes" class="block text-xs font-semibold text-white mb-1">Catatan Tambahan untuk Tim Developer Digitra (Opsional)</label>
                             <textarea id="clientExtraNotes" rows="2" oninput="customApp.extraNotes = this.value; customApp.renderSummary()"
@@ -441,69 +478,89 @@
                                 placeholder="Contoh: Tolong pasang QRIS toko kami dan aktifkan opsi pengiriman kurir...">Pasang fitur pop-up pemesanan QRIS dan hubungkan ke nomor WhatsApp admin kami.</textarea>
                         </div>
                     </section>
-                </div>
 
-                <!-- RIGHT 5 COLS: STICKY SUMMARY, QRIS PAYMENT & SUBMIT BRIEF -->
-                <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
-                    <div class="rounded-3xl bg-[#05070F] border-2 border-[#00E5FF]/50 p-6 shadow-2xl space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                    <!-- CARD D: UPGRADE PRO & ADD-ON (opsional, dipilih bebas) -->
+                    <section class="card card-d rounded-3xl p-6 space-y-5">
+                        <div class="pb-3 border-b border-white/10 flex items-center gap-3">
+                            <span class="step-chip step-chip-d">D</span>
                             <div>
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]">CHECKOUT PEMESANAN WEBSITE</span>
-                                <h3 class="font-display font-bold text-lg text-white">Ringkasan Proyek &amp; Biaya</h3>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300">Bagian D &bull; Paket Pro &amp; Add-on (Opsional)</span>
+                                <h2 class="font-display font-bold text-lg text-white mt-0.5">Paket Pro &amp; Add-on Pilihan Anda</h2>
                             </div>
-                            <span id="summaryTierBadge" class="px-2.5 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] text-xs font-bold">
-                                👑 Pro Bespoke
+                        </div>
+                        <div id="upgradeBox" class="space-y-5"></div>
+                    </section>
+
+                    <!-- CARD E: RINGKASAN, PEMBAYARAN & KIRIM BRIEF (PALING BAWAH) -->
+                    <section id="checkoutSection" class="card card-pay rounded-3xl p-6 sm:p-8 space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                            <div class="flex items-center gap-3">
+                                <span class="step-chip step-chip-pay">E</span>
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-[#00E5FF]">Bagian E &bull; Checkout Pemesanan Website</span>
+                                    <h2 class="font-display font-bold text-lg sm:text-xl text-white mt-0.5">Ringkasan Proyek, Biaya &amp; Pembayaran</h2>
+                                </div>
+                            </div>
+                            <span id="summaryTierBadge" class="px-3 py-1.5 rounded-full bg-[#00E5FF]/15 border border-[#00E5FF]/30 text-[#00E5FF] text-xs font-bold">
+                                <svg class="di" aria-hidden="true"><use href="#i-crown"/></svg> Pro Bespoke
                             </span>
                         </div>
 
-                        <div id="summaryBreakdown" class="space-y-2 text-xs"></div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                            <!-- KIRI: RINGKASAN BIAYA + PEMBAYARAN -->
+                            <div class="space-y-4">
+                                <div id="summaryBreakdown" class="space-y-2 text-xs"></div>
 
-                        <!-- Payment Option (DP 50% or Full) -->
-                        <div class="p-4 rounded-2xl bg-[#0B1020] border border-white/10 space-y-3 no-print">
-                            <div class="flex items-center justify-between text-xs font-semibold">
-                                <span class="text-slate-300">Termin Pembayaran:</span>
-                                <div class="flex gap-1.5">
-                                    <button type="button" onclick="customApp.setPayTerm('dp50')" id="btnDp50" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">DP 50%</button>
-                                    <button type="button" onclick="customApp.setPayTerm('full')" id="btnFull100" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">Lunas 100%</button>
+                                <!-- Payment Option (DP 50% or Full) -->
+                                <div class="p-4 rounded-2xl bg-[#0B1020] border border-white/10 space-y-3 no-print">
+                                    <div class="flex items-center justify-between text-xs font-semibold">
+                                        <span class="text-slate-300">Termin Pembayaran:</span>
+                                        <div class="flex gap-1.5">
+                                            <button type="button" onclick="customApp.setPayTerm('dp50')" id="btnDp50" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">DP 50%</button>
+                                            <button type="button" onclick="customApp.setPayTerm('full')" id="btnFull100" class="px-2.5 py-1 rounded-lg text-[11px] font-bold">Lunas 100%</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button type="button" onclick="customApp.setPayChannel('qris')" id="btnChanQris" class="py-2 px-3 rounded-xl text-xs font-bold border"><svg class="di" aria-hidden="true"><use href="#i-smartphone"/></svg> QRIS Digitra</button>
+                                        <button type="button" onclick="customApp.setPayChannel('bank')" id="btnChanBank" class="py-2 px-3 rounded-xl text-xs font-bold border"><svg class="di" aria-hidden="true"><use href="#i-landmark"/></svg> Transfer BCA</button>
+                                    </div>
+
+                                    <div id="paymentSimulatorBox"></div>
+                                    <p id="payTermNote" class="text-[11px] leading-relaxed text-slate-400 pt-1"></p>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-2">
-                                <button type="button" onclick="customApp.setPayChannel('qris')" id="btnChanQris" class="py-2 px-3 rounded-xl text-xs font-bold border">📱 QRIS Digitra</button>
-                                <button type="button" onclick="customApp.setPayChannel('bank')" id="btnChanBank" class="py-2 px-3 rounded-xl text-xs font-bold border">🏦 Transfer BCA</button>
-                            </div>
+                            <!-- KANAN: PREVIEW BRIEF + TOMBOL KIRIM -->
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+                                        <span class="text-slate-400">Preview Brief Otomatis ke Tim Digitra:</span>
+                                        <span id="payNowHighlight" class="text-[#00E5FF] font-bold"></span>
+                                    </div>
+                                    <pre id="waBriefPreview" class="p-3 rounded-xl bg-[#0B1020] border border-white/10 text-cyan-300 text-[11px] font-mono whitespace-pre-wrap max-h-72 overflow-y-auto leading-relaxed"></pre>
+                                </div>
 
-                            <div id="paymentSimulatorBox"></div>
-                        </div>
-
-                        <!-- WA Brief Preview -->
-                        <div>
-                            <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                                <span class="text-slate-400">Preview Brief Otomatis ke Tim Digitra:</span>
-                                <span id="payNowHighlight" class="text-[#00E5FF] font-bold"></span>
-                            </div>
-                            <pre id="waBriefPreview" class="p-3 rounded-xl bg-[#0B1020] border border-white/10 text-cyan-300 text-[11px] font-mono whitespace-pre-wrap max-h-40 overflow-y-auto leading-relaxed"></pre>
-                        </div>
-
-                        <div class="space-y-2.5 pt-1 no-print">
-                            <button type="button" onclick="customApp.submitOrderWA()"
-                                class="w-full py-4 rounded-2xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs uppercase tracking-wider shadow-xl shadow-[#00E5FF]/20 hover:opacity-95 transition-all">
-                                🚀 Kirim Brief &amp; Pesan Website via WhatsApp &rarr;
-                            </button>
-                            <div class="grid grid-cols-2 gap-2">
-                                <button type="button" onclick="customApp.openLiveCustomPreview()"
-                                    class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-[#00E5FF]">
-                                    🪄 Cek Simulasi Web &nearr;
-                                </button>
-                                <button type="button" onclick="window.print()"
-                                    class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-slate-300">
-                                    🖨️ Cetak PDF Brief
-                                </button>
+                                <div class="space-y-2.5 no-print">
+                                    <button type="button" onclick="customApp.submitOrderWA()"
+                                        class="w-full py-4 rounded-2xl bg-gradient-digitra text-[#05070F] font-display font-bold text-xs uppercase tracking-wider shadow-xl shadow-[#00E5FF]/20 hover:opacity-95 transition-all">
+                                        <svg class="di" aria-hidden="true"><use href="#i-send"/></svg> Kirim Brief &amp; Pesan Website via WhatsApp &rarr;
+                                    </button>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button type="button" onclick="customApp.openLiveCustomPreview()"
+                                            class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-[#00E5FF]">
+                                            <svg class="di" aria-hidden="true"><use href="#i-wand"/></svg> Cek Simulasi Web &nearr;
+                                        </button>
+                                        <button type="button" onclick="window.print()"
+                                            class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-slate-300">
+                                            <svg class="di" aria-hidden="true"><use href="#i-printer"/></svg> Cetak PDF Brief
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
-
             </div>
         </div>
     </main>
@@ -515,12 +572,13 @@
         Digitra — Web &amp; AI Solutions &bull; Langkah 3 dari 3: Kustomisasi, Upload Materi &amp; Checkout
     </footer>
 
+    <script src="digitra-config.js"></script>
     <script>
         const DESIGN_NAMES = {
-            harth: { label: '☕ Harth Specialty Coffee (Cafe & Bakery)', folder: 'harth-coffee' },
-            hush: { label: '🍣 Hush Modern Izakaya (Resto & Kuliner)', folder: 'hush-resto' },
-            cedar: { label: '🥾 Cedar Heritage Footwear (Retail & Sepatu)', folder: 'cedar-shoes' },
-            barbearia: { label: '💈 Barbearia Gentlemen’s Club (Barbershop VIP)', folder: 'barbearia-club' }
+            harth: { label: 'Harth Specialty Coffee (Cafe & Bakery)', folder: 'harth-coffee' },
+            hush: { label: 'Hush Modern Izakaya (Resto & Kuliner)', folder: 'hush-resto' },
+            cedar: { label: 'Cedar Heritage Footwear (Retail & Sepatu)', folder: 'cedar-shoes' },
+            barbearia: { label: 'Barbearia Gentlemen’s Club (Barbershop VIP)', folder: 'barbearia-club' }
         };
 
         class KustomisasiOrderApp {
@@ -531,21 +589,22 @@
                 const mParam = params.get('mode');
 
                 this.design = (dParam && DESIGN_NAMES[dParam]) ? dParam : 'harth';
-                this.tier = (tParam === 'starter') ? 'starter' : 'complete';
-                this.mode = (mParam === 'pro' || mParam === 'scratch') ? 'pro' : 'minor';
+                this.tier = (tParam && ['starter', 'complete'].includes(tParam)) ? tParam : 'complete'; // ?tier=pro (link lama) = Complete + Kustom Web + Kustom Domain
+                this.mode = (mParam && ['ready', 'modify', 'scratch'].includes(mParam)) ? mParam : (mParam === 'pro' ? 'scratch' : 'modify');
 
                 this.palette = 'Sesuai Warna Template Asli';
                 this.fontStyle = 'Rekomendasi Bawaan Template';
-                this.addons = { domainCom: 0, customPopup: 0, multiBranch: 0 };
+                this.addons = {}; // id add-on -> true/false (daftar di digitra-config.js)
+                this.proOpts = { customWeb: tParam === 'pro' || mParam === 'pro', customDomain: tParam === 'pro' || mParam === 'pro' }; // pilihan Paket Pro di Bagian D
 
                 // Uploaded Assets State
                 this.logoDataUrl = '';
                 this.logoName = '';
                 this.bannerDataUrl = '';
                 this.bannerName = '';
-                this.products = [
-                    { name: 'Menu / Produk Unggulan 1', price: 32000, desc: 'Produk favorit pelanggan kami', imgDataUrl: '' }
-                ];
+                this.products = [1, 2, 3, 4].map(n => ({
+                    name: 'Menu / Produk Unggulan ' + n, price: 32000 + ((n - 1) * 5000), desc: 'Produk favorit pelanggan kami', imgDataUrl: ''
+                }));
                 this.gdriveUrl = '';
 
                 // Business Info State
@@ -560,6 +619,12 @@
                 this.payChannel = 'qris';
                 this.payVerified = false;
 
+                // Mode layanan & pengiriman papan/stiker QR (SOP langkah 5)
+                this.services = { dinein: true, pickup: true, delivery: true };
+                this.shipName = '';
+                this.shipAddr = '';
+                this.shipSame = false;
+
                 this.init();
             }
 
@@ -567,11 +632,10 @@
                 const backUrl = `pilih-paket.html?design=${this.design}&tier=${this.tier}`;
                 document.getElementById('stepBackPaketLink').href = backUrl;
                 document.getElementById('topBackPaketBtn').href = backUrl;
-                const changeLink = document.getElementById('changePackageTopLink');
-                if (changeLink) changeLink.href = backUrl;
 
                 this.updateModeButtons();
                 this.renderProductsList();
+                this.renderUpgrade();
                 this.renderSummary();
                 this.setupAriaValidationSync();
             }
@@ -593,59 +657,148 @@
                 });
             }
 
+            /* Paket Pro = dua pilihan bebas (Kustom Web / Kustom Domain). Mode "Desain Baru dari Nol" otomatis menyalakan Kustom Web. */
+            proOn(id) {
+                return !!this.proOpts[id] || (id === 'customWeb' && this.mode === 'scratch');
+            }
+
+            proChosen() {
+                return DIGITRA.proOptions.filter(o => this.proOn(o.id));
+            }
+
+            proFee() {
+                return this.proChosen().reduce((sum, o) => sum + o.price, 0);
+            }
+
+            /* Domain & barang fisik efektif: domain mengikuti pilihan Kustom Domain */
+            effPkg() {
+                const base = DIGITRA.packages[this.tier];
+                const dom = DIGITRA.proOptions.find(o => o.id === 'customDomain');
+                return { ...base, domain: this.proOn('customDomain') ? dom.domain : base.domain };
+            }
+
+            setTier(t) {
+                this.tier = t;
+                if (t === 'starter') this.addons = {};
+                const backUrl = `pilih-paket.html?design=${this.design}&tier=${this.tier}`;
+                document.getElementById('stepBackPaketLink').href = backUrl;
+                document.getElementById('topBackPaketBtn').href = backUrl;
+                this.renderUpgrade();
+                this.renderSummary();
+            }
+
+            toggleProOption(id, checked) {
+                this.proOpts[id] = checked;
+                this.renderUpgrade();
+                this.renderSummary();
+            }
+
+            /* Bagian D: Paket Pro (Kustom Web / Kustom Domain) + Add-on, dirender ulang tiap state berubah */
+            renderUpgrade() {
+                const box = document.getElementById('upgradeBox');
+                if (!box) return;
+                const PK = DIGITRA.packages;
+                const starter = this.tier === 'starter';
+                const scratch = this.mode === 'scratch';
+                const diff = PK.complete.price - PK.starter.price;
+                const proTotal = this.proFee();
+
+                const proHtml = DIGITRA.proOptions.map(o => {
+                    const on = this.proOn(o.id);
+                    const forced = o.id === 'customWeb' && scratch;
+                    const icon = o.id === 'customWeb' ? '<svg class="di" aria-hidden="true"><use href="#i-palette"/></svg>' : '<svg class="di" aria-hidden="true"><use href="#i-globe"/></svg>';
+                    return `
+                        <label class="flex items-start gap-3 p-4 rounded-2xl border-2 ${on ? 'bg-[#FBBF24]/12 border-[#FBBF24]' : 'bg-white/5 border-white/15 hover:border-[#FBBF24]/60'} ${forced ? 'cursor-default' : 'cursor-pointer'} transition-all">
+                            <input type="checkbox" ${on ? 'checked' : ''} ${forced ? 'disabled' : ''} onchange="customApp.toggleProOption('${o.id}', this.checked)" class="mt-1 accent-[#FBBF24]">
+                            <span class="flex-1">
+                                <strong class="block text-sm text-white">${icon} ${o.name}</strong>
+                                <span class="block text-[11px] text-slate-300 mt-0.5">${o.desc}</span>
+                                ${forced ? `<span class="block text-[11px] text-emerald-300 font-semibold mt-1">✓ Otomatis aktif karena Anda memilih "Desain Baru dari Nol" di Bagian A.</span>` : ''}
+                                ${o.id === 'customDomain' ? `<span class="block text-[11px] text-slate-400 mt-1">Tanpa ini: ${PK[this.tier].domain} (gratis tahun pertama).</span>` : ''}
+                            </span>
+                            <span class="text-sm font-display font-bold text-amber-300 shrink-0">+${this.formatRp(o.price)}</span>
+                        </label>`;
+                }).join('');
+
+                const addonHtml = DIGITRA.addons.map(a => {
+                    const on = !!this.addons[a.id];
+                    return `
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border ${on ? 'bg-[#00E5FF]/10 border-[#00E5FF]/60' : 'bg-white/5 border-white/10'} ${starter ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-white/30'} transition-all">
+                            <input type="checkbox" ${on ? 'checked' : ''} ${starter ? 'disabled' : ''} onchange="customApp.toggleAddon('${a.id}', this.checked)" class="mt-1 accent-[#00E5FF]">
+                            <span class="flex-1">
+                                <strong class="block text-xs text-white">${a.name}</strong>
+                                <span class="block text-[11px] text-slate-400 mt-0.5">${a.desc}</span>
+                            </span>
+                            <span class="text-xs font-bold text-[#00E5FF] shrink-0">+${this.formatRp(a.price)}</span>
+                        </label>`;
+                }).join('');
+
+                box.innerHTML = `
+                    <!-- Paket Pro: dua pilihan bebas -->
+                    <div class="rounded-2xl border-2 ${proTotal > 0 ? 'border-[#FBBF24]' : 'border-[#FBBF24]/40'} bg-gradient-to-br from-[#2A2140]/80 to-[#0B1020]/80 p-5 space-y-4">
+                        <div class="flex flex-wrap items-start justify-between gap-3">
+                            <div>
+                                <span class="inline-block px-2.5 py-1 rounded-full bg-[#FBBF24]/15 border border-[#FBBF24]/40 text-amber-300 text-[11px] font-bold"><svg class="di" aria-hidden="true"><use href="#i-crown"/></svg> ${DIGITRA.proName} &mdash; Kustom Bebas</span>
+                                <p class="text-[11px] text-slate-300 mt-2 max-w-md">${DIGITRA.proTagline}. Pilih salah satu atau keduanya sesuai kebutuhan.</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[11px] text-slate-400">Pilihan Paket Pro Anda</div>
+                                <div class="font-display font-bold text-2xl text-amber-300">${proTotal > 0 ? '+' + this.formatRp(proTotal) : 'Belum dipilih'}</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${proHtml}</div>
+                    </div>
+
+                    <!-- Add-on opsional -->
+                    <div class="space-y-2.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="text-xs font-bold text-white"><svg class="di" aria-hidden="true"><use href="#i-plus"/></svg> Add-on Opsional <span class="font-normal text-slate-400">— pilih bebas sesuai kebutuhan</span></div>
+                            ${starter ? `<button type="button" onclick="customApp.setTier('complete')" class="px-3 py-1.5 rounded-lg bg-purple-500/25 hover:bg-purple-500/40 border border-purple-400/50 text-purple-200 text-[11px] font-bold"><svg class="di" aria-hidden="true"><use href="#i-star"/></svg> Butuh sistem pesanan? Naikkan ke Complete (+${this.formatRp(diff)})</button>` : ''}
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">${addonHtml}</div>
+                    </div>
+                `;
+            }
+
+            toggleService(key, checked) {
+                this.services[key] = checked;
+                this.renderSummary();
+            }
+
+            setShipSame(checked) {
+                this.shipSame = checked;
+                const addrEl = document.getElementById('shipAddr');
+                addrEl.readOnly = checked;
+                this.syncShip();
+            }
+
+            syncShip() {
+                if (this.shipSame) {
+                    this.shipAddr = this.address;
+                    document.getElementById('shipAddr').value = this.address;
+                }
+                this.renderSummary();
+            }
+
             setMode(m) {
-                this.mode = (m === 'pro') ? 'pro' : 'minor';
+                this.mode = m;
                 this.updateModeButtons();
+                this.renderUpgrade();
                 this.renderSummary();
             }
 
             updateModeButtons() {
                 document.querySelectorAll('.mode-btn').forEach(btn => {
-                    const m = btn.getAttribute('data-mode');
-                    const act = m === this.mode;
-                    if (m === 'pro') {
-                        btn.className = act
-                            ? 'mode-btn p-4 rounded-2xl border-2 border-[#00E5FF] bg-gradient-to-b from-[#111A36] to-[#0B1020] shadow-xl shadow-[#00E5FF]/15 text-left transition-all flex flex-col justify-between relative'
-                            : 'mode-btn p-4 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-[#00E5FF]/40 text-left transition-all flex flex-col justify-between relative';
-                    } else {
-                        btn.className = act
-                            ? 'mode-btn p-4 rounded-2xl border-2 border-emerald-400 bg-emerald-500/10 shadow-lg text-left transition-all flex flex-col justify-between'
-                            : 'mode-btn p-4 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/25 text-left transition-all flex flex-col justify-between';
-                    }
+                    const act = btn.getAttribute('data-mode') === this.mode;
+                    btn.className = act
+                        ? 'mode-btn p-3 rounded-2xl border-2 border-[#00E5FF] bg-[#00E5FF]/10 text-left transition-all'
+                        : 'mode-btn p-3 rounded-2xl border border-white/10 bg-[#0B1020] hover:border-white/25 text-left transition-all';
                 });
-
-                // Update add-on checkboxes & badges when Paket Pro is active
-                const isPro = this.mode === 'pro';
-                const proBadge = document.getElementById('proIncludedBadge');
-                if (proBadge) proBadge.classList.toggle('hidden', !isPro);
-
-                const chkDomain = document.getElementById('chkAddonDomain');
-                const chkPopup = document.getElementById('chkAddonPopup');
-                const chkBranch = document.getElementById('chkAddonBranch');
-
-                const pDomain = document.getElementById('priceAddonDomain');
-                const pPopup = document.getElementById('priceAddonPopup');
-                const pBranch = document.getElementById('priceAddonBranch');
-
-                if (isPro) {
-                    if (chkDomain) { chkDomain.checked = true; chkDomain.disabled = true; }
-                    if (chkPopup) { chkPopup.checked = true; chkPopup.disabled = true; }
-                    if (chkBranch) { chkBranch.checked = true; chkBranch.disabled = true; }
-                    if (pDomain) { pDomain.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
-                    if (pPopup) { pPopup.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
-                    if (pBranch) { pBranch.innerHTML = '<span class="text-emerald-400 font-bold">GRATIS (Termasuk Pro)</span>'; }
-                } else {
-                    if (chkDomain) { chkDomain.disabled = false; chkDomain.checked = this.addons.domainCom > 0; }
-                    if (chkPopup) { chkPopup.disabled = false; chkPopup.checked = this.addons.customPopup > 0; }
-                    if (chkBranch) { chkBranch.disabled = false; chkBranch.checked = this.addons.multiBranch > 0; }
-                    if (pDomain) { pDomain.innerHTML = '+Rp 185.000'; }
-                    if (pPopup) { pPopup.innerHTML = '+Rp 150.000'; }
-                    if (pBranch) { pBranch.innerHTML = '+Rp 200.000'; }
-                }
             }
 
-            toggleAddon(key, price, checked) {
-                this.addons[key] = checked ? price : 0;
+            toggleAddon(key, checked) {
+                this.addons[key] = checked;
+                this.renderUpgrade();
                 this.renderSummary();
             }
 
@@ -683,16 +836,15 @@
             handleProductPhotosUpload(input) {
                 const files = Array.from(input.files || []).slice(0, 4);
                 if (!files.length) return;
-                this.products = [];
                 files.forEach((file, idx) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        this.products.push({
+                        this.products[idx] = {
                             name: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
                             price: 35000 + (idx * 5000),
                             desc: 'Produk unggulan ' + this.bizName,
                             imgDataUrl: e.target.result
-                        });
+                        };
                         this.renderProductsList();
                         this.renderSummary();
                     };
@@ -771,10 +923,9 @@
             }
 
             getTotals() {
-                const tierMap = { starter: 499000, complete: 899000 };
-                const base = tierMap[this.tier] || 899000;
-                const proFee = this.mode === 'pro' ? 590000 : 0;
-                const addon = this.mode === 'pro' ? 0 : Object.values(this.addons).reduce((a, b) => a + b, 0);
+                const base = DIGITRA.packages[this.tier].price;
+                const proFee = this.proFee();
+                const addon = DIGITRA.addons.reduce((sum, a) => sum + (this.addons[a.id] ? a.price : 0), 0);
                 const total = base + proFee + addon;
                 const payNow = this.payTerm === 'dp50' ? Math.round(total * 0.5) : total;
                 return { base, proFee, addon, total, payNow };
@@ -783,25 +934,24 @@
             renderSummary() {
                 const { base, proFee, addon, total, payNow } = this.getTotals();
                 const dMeta = DESIGN_NAMES[this.design];
+                const PK = DIGITRA.packages;
                 const tierNames = {
-                    starter: 'Paket Starter (Rp 499rb)',
-                    complete: '✨ Paket Complete All-In (Rp 899rb)'
+                    starter: `Starter (${PK.starter.short})`,
+                    complete: `Complete (${PK.complete.short})`
                 };
+                const proChosen = this.proChosen();
+                const chosenAddons = DIGITRA.addons.filter(a => this.addons[a.id]);
+                const pkg = this.effPkg();
+                const svcLabels = { dinein: 'Makan di Tempat', pickup: 'Ambil Sendiri', delivery: 'Antar' };
+                const activeSvc = Object.keys(this.services).filter(k => this.services[k]).map(k => svcLabels[k]);
+                const showSvc = this.tier !== 'starter';
                 const modeNames = {
-                    minor: '🎨 Kustomisasi Minor & Brand (GRATIS Rp 0)',
-                    pro: '👑 Upgrade Paket Pro — Kustom Masif (+Rp 590rb)'
+                    ready: 'Sesuai Template Standar',
+                    modify: 'Template + Kustomisasi Brand',
+                    scratch: 'Desain Baru dari Nol (otomatis termasuk Kustom Web)'
                 };
 
-                // Smart upsell tip if user is on minor and selects 2+ add-ons
-                const upsellTip = document.getElementById('smartProUpsellTip');
-                if (upsellTip) {
-                    const checkedCount = Object.values(this.addons).filter(v => v > 0).length;
-                    upsellTip.classList.toggle('hidden', this.mode === 'pro' || checkedCount < 2);
-                }
-
-                document.getElementById('summaryTierBadge').innerText = this.mode === 'pro'
-                    ? `${this.tier === 'starter' ? 'Starter' : 'Complete'} + 👑 Pro`
-                    : (this.tier === 'starter' ? '1. Starter' : '✨ 2. Complete All-In');
+                document.getElementById('summaryTierBadge').innerText = tierNames[this.tier] + (proChosen.length ? ' + Pro' : '');
 
                 const uploadedCount = (this.logoDataUrl ? 1 : 0) + (this.bannerDataUrl ? 1 : 0) + this.products.filter(p => p.imgDataUrl).length;
 
@@ -811,33 +961,44 @@
                         <span class="font-semibold text-white text-right">${dMeta.label}</span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-slate-400">Paket Template:</span>
+                        <span class="text-slate-400">Paket &amp; Mode:</span>
                         <span class="font-semibold text-[#00E5FF] text-right">${tierNames[this.tier]}</span>
                     </div>
+                    ${proChosen.map(o => `
                     <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-slate-400">Tingkat Kustomisasi:</span>
-                        <span class="font-semibold ${this.mode === 'pro' ? 'text-[#00E5FF]' : 'text-emerald-400'} text-right">${this.mode === 'pro' ? '👑 Upgrade Paket Pro (+Rp 590.000)' : '✓ Kustomisasi Minor (GRATIS Rp 0)'}</span>
-                    </div>
+                        <span class="text-slate-400"><svg class="di" aria-hidden="true"><use href="#i-crown"/></svg> ${o.name} (Paket Pro):</span>
+                        <span class="font-semibold text-amber-300 text-right">+${this.formatRp(o.price)}</span>
+                    </div>`).join('')}
                     <div class="flex justify-between py-1.5 border-b border-white/10">
-                        <span class="text-slate-400">Skema Warna &amp; Font:</span>
-                        <span class="font-semibold text-slate-200 text-right">${this.palette} (Gratis)</span>
+                        <span class="text-slate-400">Skema Warna:</span>
+                        <span class="font-semibold text-slate-200 text-right">${this.palette}</span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-white/10">
                         <span class="text-slate-400">File Foto Di-upload:</span>
                         <span class="font-semibold text-purple-300 text-right">${uploadedCount} File Foto Siap Pakai</span>
                     </div>
-                    ${this.mode === 'pro' ? `
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Domain:</span>
+                        <span class="font-semibold text-slate-200 text-right">${pkg.domain}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Fisik Dikirim:</span>
+                        <span class="font-semibold text-slate-200 text-right">${pkg.physical}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Estimasi Pengerjaan:</span>
+                        <span class="font-semibold text-slate-200 text-right">${DIGITRA.leadTime}</span>
+                    </div>
+                    <div class="flex justify-between py-1.5 border-b border-white/10">
+                        <span class="text-slate-400">Biaya Tahun ke-2:</span>
+                        <span class="font-semibold text-amber-300 text-right">${this.formatRp(DIGITRA.renewalFee)}/tahun</span>
+                    </div>
+                    ${chosenAddons.map(a => `
                         <div class="flex justify-between py-1.5 border-b border-white/10">
-                            <span class="text-slate-400">Bonus Paket Pro:</span>
-                            <span class="font-semibold text-emerald-400 text-right">Domain .com + Input 50 Produk + Add-On Gratis</span>
+                            <span class="text-slate-400"><svg class="di" aria-hidden="true"><use href="#i-plus"/></svg> ${a.name}:</span>
+                            <span class="font-semibold text-purple-300 text-right">+${this.formatRp(a.price)}</span>
                         </div>
-                    ` : ''}
-                    ${addon > 0 ? `
-                        <div class="flex justify-between py-1.5 border-b border-white/10">
-                            <span class="text-slate-400">Add-On Satuan:</span>
-                            <span class="font-semibold text-purple-300">+${this.formatRp(addon)}</span>
-                        </div>
-                    ` : ''}
+                    `).join('')}
                     <div class="flex justify-between pt-2 text-sm">
                         <span class="font-bold text-white">Total Biaya Website:</span>
                         <span class="font-display font-bold text-lg text-[#00E5FF]">${this.formatRp(total)}</span>
@@ -858,6 +1019,13 @@
                     ? 'py-2 px-3 rounded-xl text-xs font-bold bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]'
                     : 'py-2 px-3 rounded-xl text-xs font-semibold bg-white/5 text-slate-400 border border-white/10';
 
+                const noteEl = document.getElementById('payTermNote');
+                if (noteEl) noteEl.innerText = DIGITRA.payNote + ' ' + DIGITRA.renewalNote;
+                const shipLbl = document.getElementById('shipItemLabel');
+                if (shipLbl) shipLbl.innerText = pkg.physical + ' + ' + pkg.domain;
+                const svcBox = document.getElementById('serviceModeBox');
+                if (svcBox) svcBox.classList.toggle('hidden', !showSvc);
+
                 document.getElementById('payNowHighlight').innerText = `${this.payTerm === 'dp50' ? 'DP 50%' : 'Lunas'}: ${this.formatRp(payNow)}`;
 
                 const simBox = document.getElementById('paymentSimulatorBox');
@@ -876,7 +1044,7 @@
                                 <div class="font-bold text-white">QRIS Resmi Digitra Studio</div>
                                 <div class="text-[#00E5FF] font-bold">${this.formatRp(payNow)}</div>
                                 <button type="button" onclick="customApp.simulatePay()" class="px-2.5 py-1 rounded bg-[#00E5FF] text-[#05070F] font-bold text-[11px]">
-                                    ${this.payVerified ? '✓ Pembayaran QRIS Terverifikasi' : '⚡ Simulasikan Sudah Bayar'}
+                                    ${this.payVerified ? '✓ Pembayaran QRIS Terverifikasi' : '<svg class="di" aria-hidden="true"><use href="#i-zap"/></svg> Simulasikan Sudah Bayar'}
                                 </button>
                             </div>
                         </div>
@@ -884,35 +1052,41 @@
                 } else {
                     simBox.innerHTML = `
                         <div class="p-3 rounded-xl bg-[#05070F] border border-white/10 text-xs space-y-1.5">
-                            <div class="font-bold text-white">🏦 BCA 8720-9918-22 (PT Digitra Solutions)</div>
+                            <div class="font-bold text-white"><svg class="di" aria-hidden="true"><use href="#i-landmark"/></svg> BCA 8720-9918-22 (PT Digitra Solutions)</div>
                             <div class="text-[#00E5FF] font-bold">Nominal: ${this.formatRp(payNow)}</div>
                             <button type="button" onclick="customApp.simulatePay()" class="w-full py-1.5 rounded bg-[#00E5FF] text-[#05070F] font-bold text-[11px]">
-                                ${this.payVerified ? '✓ Bukti Transfer Terlampir' : '⚡ Tandai Sudah Transfer'}
+                                ${this.payVerified ? '✓ Bukti Transfer Terlampir' : '<svg class="di" aria-hidden="true"><use href="#i-zap"/></svg> Tandai Sudah Transfer'}
                             </button>
                         </div>
                     `;
                 }
 
                 const briefLines = [
-                    `Halo Tim *Digitra — Web & AI Solutions*! 👋`,
+                    `Halo Tim *Digitra — Web & AI Solutions*! `,
                     `Berikut Brief Pemesanan & Materi Website UMKM kami:`,
                     `----------------------------------`,
-                    `🏢 *Nama Usaha:* ${this.bizName}`,
-                    `📱 *WA Admin:* ${this.waPhone}`,
-                    `💬 *Slogan Hero:* ${this.slogan}`,
-                    `📍 *Alamat Peta:* ${this.address}`,
-                    `🕒 *Jam Buka:* ${this.hours}`,
+                    `*Nama Usaha:* ${this.bizName}`,
+                    `*WA Admin:* ${this.waPhone}`,
+                    `*Slogan Hero:* ${this.slogan}`,
+                    `*Alamat Peta:* ${this.address}`,
+                    `*Jam Buka:* ${this.hours}`,
                     `----------------------------------`,
-                    `🎯 *Basis Desain:* ${dMeta.label}`,
-                    `📦 *Paket Template:* ${tierNames[this.tier]}`,
-                    `🛠️ *Tingkat Kustomisasi:* ${modeNames[this.mode]}`,
-                    `🎨 *Warna & Font (Gratis):* ${this.palette} • ${this.fontStyle}`,
-                    `🖼️ *Materi Foto:* Logo (${this.logoName || 'Menyusul'}), Banner (${this.bannerName || 'Menyusul'}), ${this.products.length} Sampel Produk`,
-                    this.gdriveUrl ? `📂 *Link GDrive Foto:* ${this.gdriveUrl}` : null,
-                    `📝 *Catatan:* ${this.extraNotes || '-'}`,
+                    `*Basis Desain:* ${dMeta.label}`,
+                    `*Paket & Mode:* ${tierNames[this.tier]} (${modeNames[this.mode]})`,
+                    proChosen.length ? `*Paket Pro:* ${proChosen.map(o => `${o.name} (+${this.formatRp(o.price)})`).join('; ')}` : null,
+                    chosenAddons.length ? `*Add-on:* ${chosenAddons.map(a => `${a.name} (+${this.formatRp(a.price)})`).join('; ')}` : null,
+                    `*Warna & Font:* ${this.palette} • ${this.fontStyle}`,
+                    `*Domain:* ${pkg.domain}`,
+                    showSvc ? `*Mode Layanan:* ${activeSvc.length ? activeSvc.join(' / ') : '-'}` : null,
+                    `*Fisik Dikirim:* ${pkg.physical}`,
+                    `*Penerima:* ${this.shipName || '-'} — ${this.shipAddr || '-'}`,
+                    `*Materi Foto:* Logo (${this.logoName || 'Menyusul'}), Banner (${this.bannerName || 'Menyusul'}), ${this.products.length} Sampel Produk`,
+                    this.gdriveUrl ? `*Link GDrive Foto:* ${this.gdriveUrl}` : null,
+                    `*Catatan:* ${this.extraNotes || '-'}`,
                     `----------------------------------`,
-                    `💰 *Total Biaya:* ${this.formatRp(total)}`,
-                    `💳 *Pembayaran (${this.payTerm === 'dp50' ? 'DP 50%' : 'Lunas'}):* ${this.payChannel.toUpperCase()} (${this.formatRp(payNow)}) — ${this.payVerified ? 'SUDAH DIBAYAR ✅' : 'Siap Diproses'}`
+                    `*Total Biaya:* ${this.formatRp(total)}`,
+                    `*Tahun ke-2:* ${this.formatRp(DIGITRA.renewalFee)}/tahun (domain + maintenance)`,
+                    `*Pembayaran (${this.payTerm === 'dp50' ? 'DP 50%' : 'Lunas'}):* ${this.payChannel.toUpperCase()} (${this.formatRp(payNow)}) — ${this.payVerified ? 'SUDAH DIBAYAR ' : 'Siap Diproses'}`
                 ].filter(Boolean).join('\n');
 
                 document.getElementById('waBriefPreview').innerText = briefLines;
@@ -921,19 +1095,22 @@
             submitOrderWA() {
                 const nameEl = document.getElementById('clientBizName');
                 const waEl = document.getElementById('clientWaNumber');
-                if (!nameEl.checkValidity() || !waEl.checkValidity()) {
-                    nameEl.reportValidity();
-                    waEl.reportValidity();
+                const shipNameEl = document.getElementById('shipName');
+                const shipAddrEl = document.getElementById('shipAddr');
+                const fields = [nameEl, waEl, shipNameEl, shipAddrEl];
+                const bad = fields.find(el => !el.checkValidity());
+                if (bad) {
+                    bad.reportValidity();
                     return;
                 }
                 this.saveCustomPreviewToStorage();
                 const text = document.getElementById('waBriefPreview').innerText;
-                window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+                window.open(`https://wa.me/${DIGITRA.adminWa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
             }
         }
 
         const customApp = new KustomisasiOrderApp();
     </script>
+    <script src="site-i18n.js"></script>
 </body>
 </html>
-

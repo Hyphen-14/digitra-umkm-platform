@@ -253,18 +253,21 @@
 
                 <div id="tierCardsContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch"></div>
 
-                <!-- Transparent Info Banner About Step 3 Paket Pro Massive Customization -->
+                <!-- Transparent Info Banner About Step 3 Paket Pro & Add-ons (Bagian D) -->
                 <div class="max-w-5xl mx-auto rounded-2xl bg-gradient-to-r from-[#0B1020] via-[#131836] to-[#0B1020] border border-[#8B5CF6]/40 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
                     <div class="flex items-start gap-3.5">
-                        <span class="w-9 h-9 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/40 flex items-center justify-center text-base shrink-0">💡</span>
-                        <div class="space-y-0.5 text-xs">
-                            <div class="font-display font-bold text-white text-sm">Kustomisasi Minor GRATIS (Rp 0) &bull; Butuh Rombak Masif? Ada Paket Pro di Langkah 3!</div>
+                        <span class="w-9 h-9 rounded-xl bg-[#8B5CF6]/20 border border-[#8B5CF6]/40 flex items-center justify-center text-base shrink-0">👑</span>
+                        <div class="space-y-1 text-xs">
+                            <div class="font-display font-bold text-white text-sm">Kustomisasi Minor GRATIS (Rp 0) &bull; Paket Pro &amp; Add-on Dipilih Bebas di Langkah 3 (Bagian D)</div>
                             <p class="text-slate-300 leading-relaxed">
-                                Ganti warna brand, font, logo, dan foto produk sudah <strong>GRATIS</strong> di kedua paket di atas. Jika bisnis Anda membutuhkan perombakan layout besar-besaran &amp; gratis Domain Resmi <code class="text-[#00E5FF]">.com</code>, opsi <strong>👑 Upgrade Paket Pro (+Rp 590.000)</strong> tersedia secara opsional di Langkah 3.
+                                Ganti warna brand, font, logo, dan foto produk sudah <strong>GRATIS</strong> di kedua paket di atas. Di Langkah 3 (Bagian D), Anda juga bebas memilih opsi <strong>👑 Paket Pro — Kustom Web (+Rp 350.000)</strong>, <strong>👑 Paket Pro — Kustom Domain <code class="text-[#00E5FF]">.com</code> (+Rp 200.000)</strong>, maupun add-on <strong>Kustom Field Pop-Up (+Rp 150.000)</strong> &amp; <strong>Multi-Cabang WA (+Rp 200.000)</strong> sesuai kebutuhan.
                             </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Package Footnotes (Lead Time, Payment Terms, Year-2 Renewal) -->
+                <div id="packageFootnotes" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-400 leading-relaxed"></div>
             </div>
 
         </div>
@@ -280,6 +283,7 @@
     <!-- =======================================================================
          4. JAVASCRIPT: DATA & INTERACTIVE LOGIC
     ======================================================================== -->
+    <script src="digitra-config.js"></script>
     <script>
         const DESIGN_META = {
             harth: {
@@ -512,6 +516,11 @@
                 const listEl = document.getElementById('inspectorHighlightsList');
                 const switchBtn = document.getElementById('inspectorSwitchTierBtn');
 
+                const P = window.DIGITRA ? DIGITRA.packages : {
+                    starter: { price: 499000, domain: 'Domain .my.id', physical: '1 Stiker QR' },
+                    complete: { price: 899000, domain: 'Domain .my.id', physical: 'Papan Akrilik QR Meja (Mewah)' }
+                };
+
                 if (this.tier === 'starter') {
                     proceedLabel.textContent = 'Lanjut dengan Paket Starter (Rp 499rb)';
                     if (badgeEl) {
@@ -522,19 +531,20 @@
                     if (titleEl) titleEl.textContent = 'Landing Page & Katalog';
                     if (priceEl) priceEl.textContent = 'Rp 499.000';
                     if (descEl) {
-                        descEl.innerHTML = `Tampilan butik berkarakter sesuai tema <strong>${meta.title}</strong> dengan katalog foto HD &amp; tombol pesan WA manual.`;
+                        descEl.innerHTML = `Tampilan butik berkarakter sesuai tema <strong>${meta.title}</strong> dengan katalog foto HD, tombol pesan WA manual, <strong>${P.starter.domain}</strong> &amp; <strong>${P.starter.physical}</strong>.`;
                     }
                     if (listEl) {
                         listEl.innerHTML = `
                             <li class="flex items-start gap-2 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Split-Hero &amp; Katalog Foto HD Estetik (Statis)</span></li>
                             <li class="flex items-start gap-2 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Tombol Chat Pesanan WA Manual</span></li>
+                            <li class="flex items-start gap-2 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Gratis <strong>${P.starter.domain}</strong> + <strong>${P.starter.physical}</strong></span></li>
                             <li class="flex items-start gap-2 text-emerald-300 font-semibold"><span class="text-emerald-400 font-bold">✓</span> <span>Gratis Kustomisasi Minor (Rp 0)</span></li>
                             <li class="flex items-start gap-2 text-slate-500 line-through pt-1 border-t border-white/5"><span class="text-rose-500">✕</span> <span>Tanpa ${meta.soulTitle}</span></li>
                             <li class="flex items-start gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> <span>Tanpa ${meta.popupShortName}, QRIS &amp; 5 Efek Motion</span></li>
                         `;
                     }
                     if (switchBtn) {
-                        switchBtn.innerHTML = '✨ Coba Paket Complete All-In (Rp 899rb) &rarr;';
+                        switchBtn.innerHTML = '✨ Coba Paket Complete All-In (Rp 899rb — Best Seller) &rarr;';
                     }
                 } else {
                     proceedLabel.textContent = 'Lanjut dengan Paket Complete All-In (Rp 899rb)';
@@ -542,18 +552,19 @@
                         badgeEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40';
                         badgeEl.textContent = '✨ 2. Paket Complete All-In';
                     }
-                    if (popEl) popEl.textContent = 'Jiwa Kategori Hidup';
+                    if (popEl) popEl.textContent = 'Best Seller • Jiwa Kategori Hidup';
                     if (titleEl) titleEl.textContent = meta.soulTitle;
                     if (priceEl) priceEl.textContent = 'Rp 899.000';
                     if (descEl) {
-                        descEl.innerHTML = `Membuka <strong>jiwa interaktif khas ${meta.categoryBadge}</strong> + seluruh sistem transaksi &amp; motion engine pada <strong>${meta.title}</strong>.`;
+                        descEl.innerHTML = `Membuka <strong>jiwa interaktif khas ${meta.categoryBadge}</strong> + seluruh sistem kasir WA/QRIS, <strong>${P.complete.domain}</strong> &amp; <strong>${P.complete.physical}</strong>.`;
                     }
                     if (listEl) {
                         listEl.innerHTML = `
                             <li class="flex items-start gap-2 text-[#00E5FF] font-bold"><span>🔥</span> <span><strong>Khas Kategori:</strong> ${meta.soulHighlight}</span></li>
                             <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span><strong>3D Magnetic Card Tilt</strong> + CSS Scroll-Driven Reveal</span></li>
-                            <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span><strong>Partikel Kanvas Hidup</strong> + Saklar Mood Siang/Malam</span></li>
-                            <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>${meta.popupShortName} + Keranjang + QRIS + Standee #07</span></li>
+                            <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span><strong>Partikel Kanvas Hidup</strong> + Toast Khas Kategori</span></li>
+                            <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>${meta.popupShortName} + Keranjang + QRIS + Google Sheets</span></li>
+                            <li class="flex items-start gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Gratis <strong>${P.complete.domain}</strong> + <strong>${P.complete.physical}</strong></span></li>
                             <li class="flex items-start gap-2 text-emerald-300 font-semibold"><span class="text-emerald-400 font-bold">✓</span> <span>Gratis Kustomisasi Minor (Rp 0)</span></li>
                         `;
                     }
@@ -566,6 +577,10 @@
             renderAll() {
                 const meta = DESIGN_META[this.design];
                 this.updateLiveFrameAndButtons();
+                const P = window.DIGITRA ? DIGITRA.packages : {
+                    starter: { price: 499000, domain: 'Domain .my.id', physical: '1 Stiker QR' },
+                    complete: { price: 899000, domain: 'Domain .my.id', physical: 'Papan Akrilik QR Meja (Mewah)' }
+                };
 
                 const container = document.getElementById('tierCardsContainer');
                 container.innerHTML = `
@@ -583,11 +598,12 @@
                                 <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Desain Hero &amp; Katalog Estetik (Statis) sesuai tema <strong>${meta.title}</strong></span></li>
                                 <li class="flex items-start gap-2.5 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Galeri Katalog Produk Foto HD + Harga &amp; Deskripsi</span></li>
                                 <li class="flex items-start gap-2.5 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Tombol Chat Pesanan WhatsApp Manual per Produk</span></li>
+                                <li class="flex items-start gap-2.5 text-slate-200"><span class="text-[#00E5FF] font-bold">✓</span> <span>Termasuk <strong>${P.starter.domain}</strong> (gratis tahun pertama) &amp; <strong>${P.starter.physical}</strong></span></li>
                                 <li class="flex items-start gap-2.5 text-emerald-300 font-semibold"><span class="text-emerald-400 font-bold">✓</span> <span><strong>GRATIS Kustomisasi Minor</strong> (Warna Brand, Font, Logo &amp; Foto Usaha)</span></li>
                                 <li class="flex items-start gap-2.5 text-slate-500 line-through pt-1 border-t border-white/5"><span class="text-rose-500">✕</span> <span>Tanpa <strong>${meta.soulTitle}</strong> (${meta.proEffect})</span></li>
                                 <li class="flex items-start gap-2.5 text-slate-500 line-through"><span class="text-rose-500">✕</span> <span>Tanpa ${meta.popupLabel}</span></li>
                                 <li class="flex items-start gap-2.5 text-slate-500 line-through"><span class="text-rose-500">✕</span> <span>Tanpa Keranjang Pintar, Kode Voucher &amp; Checkout QRIS</span></li>
-                                <li class="flex items-start gap-2.5 text-slate-500 line-through"><span class="text-rose-500">✕</span> <span>Tanpa ${meta.mapLabel}, Standee #07 &amp; Google Sheets Sync</span></li>
+                                <li class="flex items-start gap-2.5 text-slate-500 line-through"><span class="text-rose-500">✕</span> <span>Tanpa ${meta.mapLabel}, Papan Akrilik Meja &amp; Google Sheets Sync</span></li>
                             </ul>
                         </div>
                         <div class="mt-7 pt-4 border-t border-white/10 space-y-2">
@@ -602,7 +618,7 @@
                     <!-- Card 2: Paket Complete All-In (Rp 899.000) -->
                     <div class="rounded-3xl bg-gradient-to-b from-[#111A36] to-[#0B1020] border-2 border-[#00E5FF] p-7 flex flex-col justify-between card-glow shadow-2xl shadow-[#00E5FF]/15 relative">
                         <span class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-gradient-digitra text-[#05070F] text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
-                            ✨ Jiwa Kategori Hidup &bull; 100% Fitur &amp; Ritual Interaktif
+                            ✨ Best Seller &bull; Jiwa Kategori Hidup &amp; Sistem Kasir Lengkap
                         </span>
                         <div>
                             <div class="flex items-center justify-between">
@@ -610,14 +626,15 @@
                                 <span class="text-xs font-bold text-[#00E5FF]">${meta.soulTitle}</span>
                             </div>
                             <div class="font-display font-bold text-3xl sm:text-4xl text-[#00E5FF] mt-4">Rp 899.000</div>
-                            <p class="text-xs text-slate-200 mt-1">Satu kali bayar &bull; Ritual interaktif khas kategori ${meta.categoryBadge}, QRIS, Standee Meja &amp; Motion Engine</p>
+                            <p class="text-xs text-slate-200 mt-1">Satu kali bayar &bull; Ritual interaktif khas kategori ${meta.categoryBadge}, QRIS, Papan Akrilik QR Meja &amp; Motion Engine</p>
 
                             <ul class="mt-6 pt-5 border-t border-white/10 space-y-3 text-xs">
                                 <li class="flex items-start gap-2.5 text-[#00E5FF] font-bold"><span>🔥</span> <span><strong>Jiwa Khas ${meta.categoryBadge}:</strong> ${meta.soulHighlight}</span></li>
-                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span><strong>5 Mesin Motion &amp; Modern Web API</strong> (View Transitions API, CSS Scroll-Driven Reveal, 3D Magnetic Tilt + Glare, Saklar Mood &amp; Live Order Toast)</span></li>
-                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>${meta.popupLabel}</span></li>
-                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Keranjang Multi-Item Pintar + Mesin Kode Voucher Diskon</span></li>
-                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Simulasi Pembayaran QRIS Dinamis &amp; Generator Standee QR Meja #07</span></li>
+                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span><strong>5 Mesin Motion &amp; Modern Web API</strong> (View Transitions API, CSS Scroll-Driven Reveal, 3D Magnetic Tilt + Glare, Saklar Mood &amp; Toast Khas Kategori)</span></li>
+                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>${meta.popupLabel} + Mode Makan di Tempat / Ambil / Antar</span></li>
+                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Keranjang Multi-Item Pintar + Struk WA Otomatis + Mesin Voucher Diskon</span></li>
+                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Pembayaran QRIS &amp; Transfer Bank + 2 Bahasa (ID/EN)</span></li>
+                                <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>Termasuk <strong>${P.complete.domain}</strong> &amp; <strong>${P.complete.physical}</strong></span></li>
                                 <li class="flex items-start gap-2.5 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> <span>${meta.mapLabel} &amp; Sinkronisasi Database Google Sheets</span></li>
                                 <li class="flex items-start gap-2.5 text-emerald-300 font-semibold"><span class="text-emerald-400 font-bold">✓</span> <span><strong>GRATIS Kustomisasi Minor</strong> (Warna Brand, Font, Logo &amp; Foto Usaha)</span></li>
                             </ul>
@@ -630,10 +647,20 @@
                         </div>
                     </div>
                 `;
+
+                const fnEl = document.getElementById('packageFootnotes');
+                if (fnEl && window.DIGITRA) {
+                    fnEl.innerHTML = `
+                        <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5">⏱️ Pengerjaan</strong>Website siap dalam ${DIGITRA.leadTime} setelah deal.</div>
+                        <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5">💳 Pembayaran</strong>${DIGITRA.payNote}</div>
+                        <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5">🔄 Biaya Tahun ke-2</strong>${DIGITRA.renewalNote}</div>
+                    `;
+                }
             }
         }
 
         const paketApp = new PilihPaketApp();
     </script>
+    <script src="site-i18n.js"></script>
 </body>
 </html>

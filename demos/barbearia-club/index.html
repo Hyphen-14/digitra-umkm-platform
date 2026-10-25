@@ -621,6 +621,7 @@
     <!-- =====================================================================
          CORE ENGINE: 4 BESPOKE ARCHITECTURES + CANVAS PARTICLES + PARALLAX
     ====================================================================== -->
+    <script src="../../demo-i18n-en.js"></script>
     <script>
         // 1. Modern Web Guidance Mandatory Fallback for <dialog closedby="any">
         document.querySelectorAll('dialog[closedby="any"]').forEach((dialog) => {
@@ -792,7 +793,17 @@
 
                 const first = this.getStore().items[0];
                 this.cart = [{ item: first, variant: this.getStore().variants[0], extra: this.getDefaultExtra(), note: '', qty: 1 }];
+                try {
+                    const savedLang = localStorage.getItem('digitra_lang');
+                    if (savedLang === 'en' || savedLang === 'id') {
+                        this.lang = savedLang;
+                        const lb = document.getElementById('langBtn');
+                        if (lb) lb.innerText = this.lang === 'id' ? '🇮🇩 ID' : '🇬🇧 EN';
+                    }
+                } catch (e) {}
                 this.renderTheme();
+                this.setupLangObserver();
+                if (this.lang === 'en') this.applyLang();
                 this.setupScrollParallax();
 
                 if (params.get('modal') === 'qr' || hash === 'qr') {
@@ -1013,6 +1024,56 @@
                 this.lang = this.lang === 'id' ? 'en' : 'id';
                 document.getElementById('langBtn').innerText = this.lang === 'id' ? '🇮🇩 ID' : '🇬🇧 EN';
                 this.renderTheme();
+                this.applyLang();
+                try { localStorage.setItem('digitra_lang', this.lang); } catch (e) {}
+            }
+
+            applyLang() {
+                const dict = window.DIGITRA_I18N_EN;
+                if (!dict) return;
+                const en = this.lang === 'en';
+                if (this._langObs) this._langObs.disconnect();
+                document.documentElement.lang = en ? 'en' : 'id';
+
+                const skip = 'script,style,textarea,#waTicketPreview';
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                    acceptNode: (n) => (n.parentElement && !n.parentElement.closest(skip)) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT
+                });
+                const nodes = [];
+                while (walker.nextNode()) nodes.push(walker.currentNode);
+                nodes.forEach((n) => {
+                    const orig = (n.__en !== undefined && n.nodeValue === n.__en) ? n.__id : n.nodeValue;
+                    const out = en ? dict.translate(orig) : orig;
+                    n.__id = orig;
+                    n.__en = out;
+                    if (n.nodeValue !== out) n.nodeValue = out;
+                });
+
+                document.querySelectorAll('[placeholder],[title],[aria-label]').forEach((el) => {
+                    if (el.closest('#waTicketPreview')) return;
+                    ['placeholder', 'title', 'aria-label'].forEach((attr) => {
+                        if (!el.hasAttribute(attr)) return;
+                        const k = '__id_' + attr, kEn = '__en_' + attr;
+                        const cur = el.getAttribute(attr);
+                        const orig = (el[kEn] !== undefined && cur === el[kEn]) ? el[k] : cur;
+                        const out = en ? dict.translate(orig) : orig;
+                        el[k] = orig;
+                        el[kEn] = out;
+                        if (cur !== out) el.setAttribute(attr, out);
+                    });
+                });
+
+                if (this._langObs) this._langObs.observe(document.body, { childList: true, subtree: true });
+            }
+
+            setupLangObserver() {
+                let queued = false;
+                this._langObs = new MutationObserver(() => {
+                    if (this.lang !== 'en' || queued) return;
+                    queued = true;
+                    requestAnimationFrame(() => { queued = false; this.applyLang(); });
+                });
+                this._langObs.observe(document.body, { childList: true, subtree: true });
             }
 
             applyCustomClientDOMOverrides() {
