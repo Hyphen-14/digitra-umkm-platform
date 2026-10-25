@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if (window.top && window.top !== window.self) {
+            try { window.top.location.href = window.location.href; } catch (e) {}
+        }
+    </script>
     <title>Langkah 2: Pilih Paket &amp; Cek Live Demo — Digitra Web &amp; AI Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -360,6 +365,8 @@
                 window.addEventListener('message', (event) => {
                     if (event.data && event.data.type === 'DIGITRA_DEMO_READY') {
                         this.sendTierToIframe();
+                    } else if (event.data && event.data.type === 'DIGITRA_NAVIGATE' && event.data.url) {
+                        window.location.href = event.data.url;
                     }
                 });
 

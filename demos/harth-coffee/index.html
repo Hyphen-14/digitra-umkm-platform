@@ -947,26 +947,51 @@
                 }
             }
 
+            closeAllModals(exceptId = null) {
+                ['itemModal', 'checkoutModal', 'qrStandeeModal', 'sheetModal'].forEach(id => {
+                    if (id === exceptId) return;
+                    const dlg = document.getElementById(id);
+                    if (dlg && dlg.open) {
+                        try { dlg.close(); } catch (e) {}
+                    }
+                });
+            }
+
+            navigateTopOrSelf(targetUrl) {
+                try {
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ type: 'DIGITRA_NAVIGATE', url: targetUrl }, '*');
+                    }
+                } catch (e) {}
+                try {
+                    if (window.top && window.top !== window.self) {
+                        window.top.location.href = targetUrl;
+                        return;
+                    }
+                } catch (e) {}
+                window.location.href = targetUrl;
+            }
+
             goBackToDigitra() {
                 const path = window.location.pathname.toLowerCase();
+                let targetUrl = `pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
                 if (path.includes('/demos/') || path.includes('\\demos\\')) {
-                    window.location.href = `../../pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
-                } else if (path.includes('digitra_official_web')) {
-                    window.location.href = `pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
-                } else {
-                    window.location.href = `../Digitra_Official_Web/pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
+                    targetUrl = `../../pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
+                } else if (!path.includes('digitra_official_web')) {
+                    targetUrl = `../Digitra_Official_Web/pilih-paket.html?design=${this.theme}&tier=${this.tier}`;
                 }
+                this.navigateTopOrSelf(targetUrl);
             }
 
             orderThisDesign() {
                 const path = window.location.pathname.toLowerCase();
+                let targetUrl = `kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
                 if (path.includes('/demos/') || path.includes('\\demos\\')) {
-                    window.location.href = `../../kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
-                } else if (path.includes('digitra_official_web')) {
-                    window.location.href = `kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
-                } else {
-                    window.location.href = `../Digitra_Official_Web/kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
+                    targetUrl = `../../kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
+                } else if (!path.includes('digitra_official_web')) {
+                    targetUrl = `../Digitra_Official_Web/kustomisasi.html?design=${this.theme}&tier=${this.tier}`;
                 }
+                this.navigateTopOrSelf(targetUrl);
             }
 
             formatRp(n) {
@@ -978,6 +1003,7 @@
             }
 
             switchTier(newTier) {
+                this.closeAllModals();
                 const normalized = (newTier === 'pro') ? 'complete' : newTier;
                 if (this.tier === normalized) return;
                 const applyTier = () => {
@@ -993,6 +1019,7 @@
             }
 
             switchTheme(newTheme) {
+                this.closeAllModals();
                 if (this.theme === newTheme) return;
                 const applySwitch = () => {
                     this.theme = newTheme;
@@ -2772,6 +2799,7 @@
             }
 
             toggleHeroMood() {
+                this.closeAllModals();
                 this.heroMood = this.heroMood === 'day' ? 'night' : 'day';
                 this.rerenderWithViewTransition();
             }
@@ -3154,6 +3182,7 @@
                QR TABLE STANDEE & SMART WA CHECKOUT LOGIC
             ================================================================== */
             openQRStandeeModal() {
+                this.closeAllModals('qrStandeeModal');
                 const store = this.getStore();
                 document.getElementById('standeeStoreTitle').innerText = store.storeTitle;
                 document.getElementById('standeeTableBadge').innerText = this.tableNumber.toUpperCase();
@@ -3190,6 +3219,7 @@
                4 BESPOKE CATEGORY-SPECIFIC ITEM / BOOKING POP-UPS
             ================================================================== */
             openItemModal(itemId) {
+                this.closeAllModals('itemModal');
                 const store = this.getStore();
                 const item = store.items.find(i => i.id === itemId);
                 if (!item || !item.available) return;
@@ -3577,6 +3607,7 @@
                4 BESPOKE CATEGORY CHECKOUT MODALS + QRIS & BANK SIMULATOR
             ================================================================== */
             openCheckoutModal() {
+                this.closeAllModals('checkoutModal');
                 this.renderCheckoutModalContent();
                 document.getElementById('checkoutModal').showModal();
             }
@@ -3883,6 +3914,7 @@
                LIVE GOOGLE SHEETS CMS SIMULATOR
             ================================================================== */
             openSheetModal() {
+                this.closeAllModals('sheetModal');
                 this.renderSheetRows();
                 document.getElementById('sheetModal').showModal();
             }

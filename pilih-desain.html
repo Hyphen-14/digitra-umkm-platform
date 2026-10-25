@@ -410,6 +410,7 @@
 
         // Close on backdrop click
         document.getElementById('previewModal').addEventListener('click', (e) => {
+            if (e.target !== document.getElementById('previewModal')) return;
             const rect = e.target.getBoundingClientRect();
             if (
                 e.clientX < rect.left ||
@@ -418,6 +419,12 @@
                 e.clientY > rect.bottom
             ) {
                 closePreviewModal();
+            }
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'DIGITRA_NAVIGATE' && event.data.url) {
+                window.location.href = event.data.url;
             }
         });
 
