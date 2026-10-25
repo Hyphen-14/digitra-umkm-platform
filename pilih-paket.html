@@ -38,9 +38,12 @@
         .bg-gradient-digitra {
             background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
         }
+    svg.di{margin-right:.28em;display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+        svg.di:only-child{margin-right:0}
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol><symbol id="i-chef-hat" viewBox="0 0 24 24"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><path d="M6 17h12"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol><symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol><symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/></symbol></svg>
 
     <!-- =======================================================================
          1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
@@ -93,17 +96,17 @@
                         Pilih Paket untuk <span id="selectedDesignTitle" class="text-gradient-digitra">Harth Specialty Coffee</span>
                     </h1>
                     <p class="text-sm text-slate-400 mt-1 max-w-2xl">
-                        Gunakan tombol di bawah untuk menguji langsung perbedaan tampilan <strong class="text-slate-200">Starter (Rp 499rb)</strong>, <strong class="text-[#00E5FF]">Complete (Rp 899rb)</strong>, dan <strong class="text-purple-300">Pro Bespoke (Rp 1,49jt)</strong> pada desain pilihan Anda.
+                        Gunakan tombol di bawah untuk menguji langsung perbedaan tampilan <strong class="text-slate-200">Starter (Rp 499rb)</strong> dan <strong class="text-purple-300">Complete (Rp 899rb &mdash; Best Seller)</strong> pada desain pilihan Anda.
                     </p>
                 </div>
 
                 <!-- Quick Design Switcher in case user wants to check another template -->
                 <div class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-2xl border border-white/10 self-start lg:self-auto">
                     <span class="text-[11px] text-slate-400 px-2 font-semibold">Desain:</span>
-                    <button type="button" onclick="paketApp.setDesign('harth')" data-d="harth" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold">☕ Cafe</button>
-                    <button type="button" onclick="paketApp.setDesign('hush')" data-d="hush" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold">🍣 Resto</button>
-                    <button type="button" onclick="paketApp.setDesign('cedar')" data-d="cedar" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold">🥾 Retail</button>
-                    <button type="button" onclick="paketApp.setDesign('barbearia')" data-d="barbearia" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold">💈 Barber</button>
+                    <button type="button" onclick="paketApp.setDesign('harth')" data-d="harth" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Cafe</button>
+                    <button type="button" onclick="paketApp.setDesign('hush')" data-d="hush" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Resto</button>
+                    <button type="button" onclick="paketApp.setDesign('cedar')" data-d="cedar" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Retail</button>
+                    <button type="button" onclick="paketApp.setDesign('barbearia')" data-d="barbearia" class="design-pill px-2.5 py-1.5 rounded-xl text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Barber</button>
                 </div>
             </div>
 
@@ -117,20 +120,16 @@
                         <span class="text-xs font-bold text-slate-400 mr-1">Klik untuk Bandingkan Live Demo:</span>
                         <button type="button" onclick="paketApp.setPreviewTier('starter')" id="btnTierStarter"
                             class="px-3.5 py-2 rounded-xl text-xs font-display font-bold transition-all">
-                            1. Starter (Rp 499rb — Standar Kaku)
+                            1. Starter (Rp 499rb — Katalog + WA)
                         </button>
                         <button type="button" onclick="paketApp.setPreviewTier('complete')" id="btnTierComplete"
                             class="px-3.5 py-2 rounded-xl text-xs font-display font-bold transition-all">
-                            2. Complete (Rp 899rb — +Pop-Up &amp; QRIS)
-                        </button>
-                        <button type="button" onclick="paketApp.setPreviewTier('pro')" id="btnTierPro"
-                            class="px-4 py-2 rounded-xl text-xs font-display font-bold transition-all">
-                            👑 3. Pro Bespoke (Rp 1,49jt — Full Efek &amp; Fitur)
+                            <svg class="di" aria-hidden="true"><use href="#i-star"/></svg> 2. Complete (Rp 899rb — Kasir Digital Lengkap)
                         </button>
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <a id="openFullTabBtn" href="demos/harth-coffee/index.html?tier=pro" target="_blank" rel="noopener"
+                        <a id="openFullTabBtn" href="demos/harth-coffee/index.html?tier=complete" target="_blank" rel="noopener"
                             class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-[#00E5FF]">
                             ↗ Buka Layar Penuh di Tab Baru
                         </a>
@@ -146,7 +145,7 @@
 
                 <!-- Clean Embedded Live Demo Frame (with ?embed=1 so zero inner dock is shown!) -->
                 <div class="h-[520px] sm:h-[580px] w-full bg-black relative">
-                    <iframe id="liveDemoFrame" src="demos/harth-coffee/index.html?tier=pro&embed=1" title="Live Demo Perbandingan Paket" class="w-full h-full border-0"></iframe>
+                    <iframe id="liveDemoFrame" src="demos/harth-coffee/index.html?tier=complete&embed=1" title="Live Demo Perbandingan Paket" class="w-full h-full border-0"></iframe>
                 </div>
             </div>
 
@@ -163,7 +162,8 @@
                     </p>
                 </div>
 
-                <div id="tierCardsContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"></div>
+                <div id="tierCardsContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto"></div>
+                <div id="packageFootnotes" class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-400 leading-relaxed"></div>
             </div>
 
         </div>
@@ -176,35 +176,32 @@
         Digitra — Web &amp; AI Solutions &bull; Langkah 2 dari 3: Pemilihan Paket &amp; Perbandingan Demo
     </footer>
 
+    <script src="digitra-config.js"></script>
     <script>
         const DESIGN_META = {
             harth: {
                 title: 'Harth Specialty Coffee',
                 folder: 'harth-coffee',
                 popupLabel: 'Pop-Up Struk Barista (Pilih Biji Kopi, Oat Milk, Gula & Es)',
-                mapLabel: 'Peta Roastery + Indikator Kursi WFC & Wi-Fi',
-                proEffect: 'Animasi Partikel Uap Kopi Hangat + Generator Standee QR Meja'
+                mapLabel: 'Peta Roastery + Indikator Kursi WFC & Wi-Fi'
             },
             hush: {
                 title: 'Hush Modern Izakaya & Grill',
                 folder: 'hush-resto',
                 popupLabel: 'Pop-Up Tiket Dapur Chef (Urutan Saji Hidangan & Filter Alergi)',
-                mapLabel: 'Peta Resto + Valet VIP & Radius Kurir Kemasan Termal',
-                proEffect: 'Animasi Partikel Bara Api (Ember Glow) + Standee QR per Nomor Meja'
+                mapLabel: 'Peta Resto + Valet VIP & Radius Kurir Kemasan Termal'
             },
             cedar: {
                 title: 'Cedar Heritage Footwear',
                 folder: 'cedar-shoes',
                 popupLabel: 'Pop-Up Spesifikasi Sepatu (Tabel Ukuran EU ke CM & Pilihan Sol)',
-                mapLabel: 'Peta Studio Fitting Bandung & Pengiriman Kurir Nasional',
-                proEffect: 'Fitur Gratis Ukir Inisial Nama (Monogram) + Kalkulator Ongkir JNE/J&T/SiCepat'
+                mapLabel: 'Peta Studio Fitting Bandung & Pengiriman Kurir Nasional'
             },
             barbearia: {
                 title: 'Barbearia Gentlemen’s Club',
                 folder: 'barbearia-club',
                 popupLabel: 'Pop-Up VIP Appointment Pass (Pilih Master Barber & Jam)',
-                mapLabel: 'Peta Gentlemen Lounge + Info Parkir VIP & Slot Kursi Kosong',
-                proEffect: 'Elemen 3D Parallax Klasik + Pilihan Minuman Lounge & Voucher Member'
+                mapLabel: 'Peta Gentlemen Lounge + Info Parkir VIP & Slot Kursi Kosong'
             }
         };
 
@@ -214,7 +211,7 @@
                 const dParam = params.get('design');
                 const tParam = params.get('tier');
                 this.design = (dParam && DESIGN_META[dParam]) ? dParam : 'harth';
-                this.tier = (tParam && ['starter', 'complete', 'pro'].includes(tParam)) ? tParam : 'pro';
+                this.tier = (tParam && ['starter', 'complete'].includes(tParam)) ? tParam : 'complete';
                 this.init();
             }
 
@@ -255,7 +252,6 @@
                 // Update tier switcher buttons
                 const sBtn = document.getElementById('btnTierStarter');
                 const cBtn = document.getElementById('btnTierComplete');
-                const pBtn = document.getElementById('btnTierPro');
 
                 sBtn.className = this.tier === 'starter'
                     ? 'px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-white text-[#05070F] shadow'
@@ -263,36 +259,24 @@
                 cBtn.className = this.tier === 'complete'
                     ? 'px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-[#8B5CF6] text-white shadow'
                     : 'px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-white/5 text-slate-400 hover:text-white';
-                pBtn.className = this.tier === 'pro'
-                    ? 'px-4 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] shadow-lg'
-                    : 'px-4 py-2 rounded-xl text-xs font-display font-bold bg-white/5 text-slate-400 hover:text-white';
 
                 // Explanation bar
+                const P = DIGITRA.packages;
                 const expBar = document.getElementById('liveTierExplanationBar');
                 if (this.tier === 'starter') {
                     expBar.innerHTML = `
                         <div class="text-slate-300">
-                            ⚠️ <strong class="text-white">Sedang Menampilkan Paket Starter (Rp 499.000):</strong> Hanya katalog 1 halaman datar &amp; chat WA manual. Tanpa desain berkarakter, tanpa pop-up kustom, dan tanpa QRIS.
+                            <svg class="di" aria-hidden="true"><use href="#i-alert"/></svg> <strong class="text-white">Sedang Menampilkan Paket Starter (Rp 499.000):</strong> Katalog 1 halaman &amp; tombol chat WA manual, ${P.starter.domain} + ${P.starter.physical}. Tanpa sistem pesanan, QRIS, voucher, dan Google Sheets.
                         </div>
-                        <button type="button" onclick="paketApp.setPreviewTier('pro')" class="text-[#00E5FF] font-bold underline">
-                            Lihat Jauh Lebih Bagus di Paket Pro Bespoke &rarr;
+                        <button type="button" onclick="paketApp.setPreviewTier('complete')" class="text-purple-300 font-bold underline">
+                            Lihat Paket Complete (Best Seller) &rarr;
                         </button>
                     `;
                 } else if (this.tier === 'complete') {
                     expBar.innerHTML = `
                         <div class="text-slate-200">
-                            ✨ <strong class="text-purple-300">Sedang Menampilkan Paket Complete (Rp 899.000):</strong> Dilengkapi ${meta.popupLabel}, pembayaran QRIS &amp; Transfer Bank, serta ${meta.mapLabel}.
+                            <svg class="di" aria-hidden="true"><use href="#i-star"/></svg> <strong class="text-purple-300">Sedang Menampilkan Paket Complete (Rp 899.000 — Best Seller):</strong> Website kasir digital: ${meta.popupLabel}, mode Makan di Tempat / Ambil / Antar, struk WA otomatis, QRIS &amp; Transfer, voucher diskon, menu via Google Sheets, ${P.complete.domain} &amp; ${P.complete.physical}.
                         </div>
-                        <button type="button" onclick="paketApp.setPreviewTier('pro')" class="text-[#00E5FF] font-bold underline">
-                            Coba Efek Penuh di Paket Pro &rarr;
-                        </button>
-                    `;
-                } else {
-                    expBar.innerHTML = `
-                        <div class="text-slate-200">
-                            👑 <strong class="text-[#00E5FF]">Sedang Menampilkan Paket Pro Bespoke (Rp 1.490.000 — Kualitas Terbaik):</strong> Seluruh fitur Complete + <strong>${meta.proEffect}</strong> + Gratis Domain Resmi <code>.com</code>!
-                        </div>
-                        <span class="px-2.5 py-0.5 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] font-bold">85% Klien Memilih Paket Ini</span>
                     `;
                 }
             }
@@ -309,30 +293,36 @@
                 this.updateLiveFrameAndButtons();
 
                 const container = document.getElementById('tierCardsContainer');
+                const P = DIGITRA.packages;
+                const li = (txt, cls = 'text-white font-semibold') => `<li class="flex items-start gap-2 ${cls}"><span class="text-[#00E5FF] font-bold">✓</span> <span>${txt}</span></li>`;
+                const no = (txt) => `<li class="flex items-start gap-2 text-slate-500 line-through"><span class="text-rose-500 no-underline">✕</span> <span>${txt}</span></li>`;
+                const rp = (n) => 'Rp ' + n.toLocaleString('id-ID');
+
                 container.innerHTML = `
                     <!-- Card 1: Starter -->
-                    <div class="rounded-3xl bg-[#05070F]/80 border border-white/10 p-6 flex flex-col justify-between opacity-85 hover:opacity-100 transition-all">
+                    <div class="rounded-3xl bg-[#05070F]/80 border border-white/10 p-6 flex flex-col justify-between opacity-90 hover:opacity-100 transition-all">
                         <div>
                             <div class="flex items-center justify-between">
                                 <span class="px-3 py-1 rounded-full bg-white/10 text-slate-300 text-xs font-bold">Paket Starter</span>
                                 <span class="text-xs text-slate-400">Katalog Dasar</span>
                             </div>
-                            <div class="font-display font-bold text-3xl text-white mt-4">Rp 499.000</div>
-                            <p class="text-xs text-slate-400 mt-1">Sekali bayar &bull; Tampilan grid standar</p>
+                            <div class="font-display font-bold text-3xl text-white mt-4">${rp(P.starter.price)}</div>
+                            <p class="text-xs text-slate-400 mt-1">${P.starter.target}</p>
 
                             <ul class="mt-5 pt-4 border-t border-white/10 space-y-2.5 text-xs">
-                                <li class="flex items-center gap-2 text-slate-300"><span class="text-[#00E5FF] font-bold">✓</span> 1 Halaman Daftar Menu/Produk Polos</li>
-                                <li class="flex items-center gap-2 text-slate-300"><span class="text-[#00E5FF] font-bold">✓</span> Tombol Chat WhatsApp Manual</li>
-                                <li class="flex items-center gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> Tanpa ${meta.popupLabel}</li>
-                                <li class="flex items-center gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> Tanpa Pembayaran QRIS &amp; Rekening Bank</li>
-                                <li class="flex items-center gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> Tanpa ${meta.mapLabel}</li>
-                                <li class="flex items-center gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> Tanpa ${meta.proEffect}</li>
+                                ${li('Katalog 1 halaman (foto, nama &amp; harga produk)', 'text-slate-300')}
+                                ${li('Tombol Chat WhatsApp manual', 'text-slate-300')}
+                                ${li(`${P.starter.domain} (gratis tahun pertama)`, 'text-slate-300')}
+                                ${li(`${P.starter.physical} untuk meja kasir`, 'text-slate-300')}
+                                ${no('Tanpa sistem pesanan &amp; keranjang')}
+                                ${no('Tanpa QRIS &amp; struk WA otomatis')}
+                                ${no('Tanpa voucher diskon &amp; Google Sheets')}
                             </ul>
                         </div>
                         <div class="mt-6 pt-4 border-t border-white/10 space-y-2">
                             <button type="button" onclick="paketApp.setPreviewTier('starter'); window.scrollTo({top: 120, behavior: 'smooth'})"
                                 class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold">
-                                👁️ Lihat Tampilan Starter di Atas
+                                <svg class="di" aria-hidden="true"><use href="#i-eye"/></svg> Lihat Tampilan Starter di Atas
                             </button>
                             <button type="button" onclick="paketApp.selectTierAndContinue('starter')"
                                 class="w-full py-3 rounded-xl border border-white/15 hover:bg-white/10 text-white text-xs font-display font-bold">
@@ -341,76 +331,56 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: Complete -->
-                    <div class="rounded-3xl bg-[#05070F] border-2 border-[#8B5CF6]/60 p-6 flex flex-col justify-between shadow-xl">
+                    <!-- Card 2: Complete (BEST SELLER — fokus jualan) -->
+                    <div class="rounded-3xl bg-gradient-to-b from-[#1A1438] to-[#05070F] border-2 border-[#8B5CF6] p-6 flex flex-col justify-between shadow-2xl shadow-[#8B5CF6]/25 relative">
+                        <span class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#00E5FF] text-white text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
+                            <svg class="di" aria-hidden="true"><use href="#i-star"/></svg> Best Seller &bull; Paling Banyak Dipilih UMKM F&amp;B
+                        </span>
                         <div>
                             <div class="flex items-center justify-between">
                                 <span class="px-3 py-1 rounded-full bg-[#8B5CF6]/20 text-purple-300 border border-[#8B5CF6]/40 text-xs font-bold">Paket Complete</span>
-                                <span class="text-xs font-bold text-purple-300">Populer untuk UMKM</span>
+                                <span class="text-xs font-bold text-purple-300">Kasir Digital Anti-Ribet</span>
                             </div>
-                            <div class="font-display font-bold text-3xl text-white mt-4">Rp 899.000</div>
-                            <p class="text-xs text-slate-300 mt-1">Sekali bayar &bull; Desain berkarakter &amp; interaktif</p>
+                            <div class="font-display font-bold text-4xl text-white mt-4">${rp(P.complete.price)}</div>
+                            <p class="text-xs text-slate-300 mt-1">${P.complete.target}</p>
 
                             <ul class="mt-5 pt-4 border-t border-white/10 space-y-2.5 text-xs">
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Desain penuh sesuai tema <strong>${meta.title}</strong></li>
-                                <li class="flex items-center gap-2 text-[#00E5FF] font-semibold"><span class="font-bold">✓</span> ${meta.popupLabel}</li>
-                                <li class="flex items-center gap-2 text-[#00E5FF] font-semibold"><span class="font-bold">✓</span> Simulasi Pembayaran QRIS &amp; Salin Rek Bank</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> ${meta.mapLabel}</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Terhubung Database Google Sheets Gratis</li>
-                                <li class="flex items-center gap-2 text-slate-500 line-through"><span class="text-rose-500">✕</span> Tanpa ${meta.proEffect} &amp; Domain .com</li>
+                                ${li(`Desain penuh tema <strong>${meta.title}</strong>`)}
+                                ${li(meta.popupLabel, 'text-[#00E5FF] font-semibold')}
+                                ${li('Mode pesanan: Makan di Tempat / Ambil Sendiri / Antar')}
+                                ${li('Struk WhatsApp otomatis (total, varian &amp; ongkir)')}
+                                ${li('Pembayaran QRIS &amp; Transfer Bank')}
+                                ${li('Mesin voucher diskon (mis. HEMAT20)')}
+                                ${li('Ganti harga &amp; menu lewat Google Sheets dari HP')}
+                                ${li('Tombol bahasa Indonesia / English')}
+                                ${li(`${P.complete.domain} + ${P.complete.physical}`)}
+                                ${li('Setup menu &amp; hubungkan Google Sheets oleh tim Digitra')}
                             </ul>
                         </div>
                         <div class="mt-6 pt-4 border-t border-white/10 space-y-2">
                             <button type="button" onclick="paketApp.setPreviewTier('complete'); window.scrollTo({top: 120, behavior: 'smooth'})"
                                 class="w-full py-2.5 rounded-xl bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 text-purple-300 text-xs font-semibold">
-                                👁️ Lihat Tampilan Complete di Atas
+                                <svg class="di" aria-hidden="true"><use href="#i-eye"/></svg> Lihat Tampilan Complete di Atas
                             </button>
                             <button type="button" onclick="paketApp.selectTierAndContinue('complete')"
-                                class="w-full py-3 rounded-xl bg-[#8B5CF6] hover:bg-[#7c4deb] text-white text-xs font-display font-bold shadow-lg">
-                                Pilih Paket Complete &amp; Lanjut &rarr;
+                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#00E5FF] text-white text-xs font-display font-bold uppercase tracking-wider shadow-xl shadow-[#8B5CF6]/30 hover:opacity-95 transition-all">
+                                <svg class="di" aria-hidden="true"><use href="#i-star"/></svg> Pilih Paket Complete &amp; Lanjut &rarr;
                             </button>
                         </div>
                     </div>
+                `;
 
-                    <!-- Card 3: Pro Bespoke -->
-                    <div class="rounded-3xl bg-gradient-to-b from-[#111A36] to-[#05070F] border-2 border-[#00E5FF] p-6 flex flex-col justify-between shadow-2xl shadow-[#00E5FF]/15 relative">
-                        <span class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full bg-gradient-digitra text-[#05070F] text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
-                            👑 Terbaik &bull; Kualitas Paling Unggul
-                        </span>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <span class="px-3 py-1 rounded-full bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40 text-xs font-bold">👑 Paket Pro Bespoke</span>
-                                <span class="text-xs font-bold text-[#00E5FF]">Terima Beres</span>
-                            </div>
-                            <div class="font-display font-bold text-4xl text-[#00E5FF] mt-4">Rp 1.490.000</div>
-                            <p class="text-xs text-slate-200 mt-1">Sekali bayar &bull; Termasuk Domain Resmi (.com)</p>
-
-                            <ul class="mt-5 pt-4 border-t border-white/10 space-y-2.5 text-xs">
-                                <li class="flex items-center gap-2 text-[#00E5FF] font-bold"><span>🔥</span> Semua Fitur Paket Complete + Kustomisasi Penuh</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> ${meta.proEffect}</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Sistem Klaim Kode Voucher Diskon Otomatis</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Gratis Domain Resmi (.com / .id) Selama 1 Tahun</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Gratis Bantuan Input 30 Menu/Produk Pertama</li>
-                                <li class="flex items-center gap-2 text-white font-semibold"><span class="text-[#00E5FF] font-bold">✓</span> Prioritas Pengerjaan Cepat &amp; Garansi Penuh</li>
-                            </ul>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-white/10 space-y-2">
-                            <button type="button" onclick="paketApp.setPreviewTier('pro'); window.scrollTo({top: 120, behavior: 'smooth'})"
-                                class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-[#00E5FF] text-xs font-semibold">
-                                🔥 Lihat Tampilan Pro Bespoke di Atas
-                            </button>
-                            <button type="button" onclick="paketApp.selectTierAndContinue('pro')"
-                                class="w-full py-3.5 rounded-xl bg-gradient-digitra text-[#05070F] text-xs font-display font-bold uppercase tracking-wider shadow-xl shadow-[#00E5FF]/20 hover:opacity-95 transition-all">
-                                👑 Pilih Paket Pro &amp; Lanjut Kustomisasi &rarr;
-                            </button>
-                        </div>
-                    </div>
+                document.getElementById('packageFootnotes').innerHTML = `
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5"><svg class="di" aria-hidden="true"><use href="#i-clock"/></svg> Pengerjaan</strong>Website siap dalam ${DIGITRA.leadTime} setelah deal.</div>
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5"><svg class="di" aria-hidden="true"><use href="#i-credit-card"/></svg> Pembayaran</strong>${DIGITRA.payNote}</div>
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><strong class="text-white block mb-0.5"><svg class="di" aria-hidden="true"><use href="#i-repeat"/></svg> Biaya Tahun ke-2</strong>${DIGITRA.renewalNote}</div>
                 `;
             }
         }
 
         const paketApp = new PilihPaketApp();
     </script>
+    <script src="site-i18n.js"></script>
 </body>
 </html>
 

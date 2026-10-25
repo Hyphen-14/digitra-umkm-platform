@@ -38,9 +38,12 @@
         .bg-gradient-digitra {
             background: linear-gradient(135deg, #00E5FF 0%, #8B5CF6 100%);
         }
+    svg.di{margin-right:.28em;display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+        svg.di:only-child{margin-right:0}
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol><symbol id="i-chef-hat" viewBox="0 0 24 24"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><path d="M6 17h12"/></symbol><symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></symbol><symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></symbol></svg>
 
     <!-- =======================================================================
          1. GUIDED FUNNEL HEADER WITH 3-STEP PROGRESS BAR
@@ -99,19 +102,19 @@
                 <!-- Category Filter Buttons -->
                 <div class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-2xl border border-white/10 shrink-0 overflow-x-auto">
                     <button type="button" onclick="filterDesigns('all')" data-cat="all" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold bg-gradient-digitra text-[#05070F] whitespace-nowrap">
-                        ✨ Semua (4)
+                        <svg class="di" aria-hidden="true"><use href="#i-sparkles"/></svg> Semua (4)
                     </button>
                     <button type="button" onclick="filterDesigns('harth')" data-cat="harth" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
-                        ☕ Cafe &amp; Bakery
+                        <svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Cafe &amp; Bakery
                     </button>
                     <button type="button" onclick="filterDesigns('hush')" data-cat="hush" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
-                        🍣 Resto &amp; Kuliner
+                        <svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Resto &amp; Kuliner
                     </button>
                     <button type="button" onclick="filterDesigns('cedar')" data-cat="cedar" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
-                        🥾 Retail &amp; Sepatu
+                        <svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Retail &amp; Sepatu
                     </button>
                     <button type="button" onclick="filterDesigns('barbearia')" data-cat="barbearia" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-display font-bold text-slate-400 hover:text-white whitespace-nowrap">
-                        💈 Barbershop &amp; Jasa
+                        <svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Barbershop &amp; Jasa
                     </button>
                 </div>
             </div>
@@ -123,7 +126,7 @@
             <div class="mt-10 rounded-3xl bg-gradient-to-r from-[#05070F] via-[#131129] to-[#05070F] border-2 border-[#8B5CF6]/50 p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-2xl">
                 <div class="space-y-2 max-w-2xl">
                     <span class="inline-block px-3 py-1 rounded-full bg-[#8B5CF6]/20 text-purple-300 border border-[#8B5CF6]/40 text-xs font-bold">
-                        🎨 Opsi Full Custom (Desain Baru dari Awal)
+                        <svg class="di" aria-hidden="true"><use href="#i-palette"/></svg> Opsi Full Custom (Desain Baru dari Awal)
                     </span>
                     <h2 class="font-display font-bold text-xl sm:text-2xl text-white">
                         Punya Referensi Desain Sendiri atau Kategori Usaha Unik?
@@ -133,7 +136,7 @@
                     </p>
                 </div>
                 <div class="shrink-0">
-                    <a href="kustomisasi.html?design=harth&tier=pro&mode=scratch"
+                    <a href="kustomisasi.html?design=harth&tier=complete&mode=scratch"
                         class="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-[#8B5CF6] hover:bg-[#7c4deb] text-white font-display font-bold text-xs shadow-xl transition-all">
                         <span>Request Desain Baru dari Nol</span>
                         <span>&rarr;</span>
@@ -154,7 +157,7 @@
         const DESIGNS = [
             {
                 id: 'harth',
-                categoryBadge: '☕ Cafe, Roastery & Artisan Bakery',
+                categoryBadge: '<svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Cafe, Roastery & Artisan Bakery',
                 title: 'Harth Specialty Coffee',
                 vibe: 'Warm Kinfolk Editorial & Animasi Uap Kopi',
                 desc: 'Cocok untuk coffee shop, toko roti, dan tempat nongkrong WFC. Dilengkapi struk pesanan meja barista dan indikator kursi/colokan.',
@@ -165,7 +168,7 @@
             },
             {
                 id: 'hush',
-                categoryBadge: '🍣 Restoran, Sushi Bar & Kuliner',
+                categoryBadge: '<svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Restoran, Sushi Bar & Kuliner',
                 title: 'Hush Modern Izakaya & Grill',
                 vibe: 'Dark Culinary & Efek Bara Api Panggangan',
                 desc: 'Cocok untuk restoran keluarga, sushi bar, steakhouse, maupun bisnis kuliner dengan layanan makan di tempat dan kurir instan.',
@@ -176,7 +179,7 @@
             },
             {
                 id: 'cedar',
-                categoryBadge: '🥾 Retail Sepatu, Fashion & Kerajinan',
+                categoryBadge: '<svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Retail Sepatu, Fashion & Kerajinan',
                 title: 'Cedar Heritage Footwear',
                 vibe: 'Stitched Leather Lookbook & Panduan Size CM',
                 desc: 'Cocok untuk brand sepatu lokal, pakaian, tas kulit, dan kerajinan tangan yang dikirim ke seluruh Indonesia.',
@@ -187,7 +190,7 @@
             },
             {
                 id: 'barbearia',
-                categoryBadge: '💈 Barbershop, Salon, Klinik & Jasa VIP',
+                categoryBadge: '<svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Barbershop, Salon, Klinik & Jasa VIP',
                 title: 'Barbearia Gentlemen’s Club',
                 vibe: 'Obsidian Gold Luxury & Sistem Booking Kursi',
                 desc: 'Khusus bisnis jasa yang menggunakan sistem jadwal jam kedatangan dan pemilihan kapster/terapis tanpa antre.',
@@ -213,7 +216,7 @@
                             </span>
                             <a href="${d.demoUrl}" target="_blank" rel="noopener"
                                 class="absolute bottom-3 right-3 px-3.5 py-1.5 rounded-xl bg-[#05070F]/90 hover:bg-black text-white border border-white/20 text-xs font-semibold">
-                                👁️ Lihat Live Demo &nearr;
+                                <svg class="di" aria-hidden="true"><use href="#i-eye"/></svg> Lihat Live Demo &nearr;
                             </a>
                         </div>
 
@@ -224,11 +227,11 @@
 
                             <div class="pt-2 space-y-2 text-xs">
                                 <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
-                                    <strong class="text-[#00E5FF] block">✨ Pop-Up Pemesanan Khas:</strong>
+                                    <strong class="text-[#00E5FF] block"><svg class="di" aria-hidden="true"><use href="#i-sparkles"/></svg> Pop-Up Pemesanan Khas:</strong>
                                     <span class="text-slate-300">${d.popupFeature}</span>
                                 </div>
                                 <div class="p-3 rounded-xl bg-[#0B1020] border border-white/10">
-                                    <strong class="text-purple-300 block">📍 Peta Lokasi Khas:</strong>
+                                    <strong class="text-purple-300 block"><svg class="di" aria-hidden="true"><use href="#i-map-pin"/></svg> Peta Lokasi Khas:</strong>
                                     <span class="text-slate-300">${d.mapFeature}</span>
                                 </div>
                             </div>
@@ -261,6 +264,7 @@
 
         renderDesigns('all');
     </script>
+    <script src="site-i18n.js"></script>
 </body>
 </html>
 
