@@ -602,9 +602,9 @@
                 this.logoName = '';
                 this.bannerDataUrl = '';
                 this.bannerName = '';
-                this.products = [
-                    { name: 'Menu / Produk Unggulan 1', price: 32000, desc: 'Produk favorit pelanggan kami', imgDataUrl: '' }
-                ];
+                this.products = [1, 2, 3, 4].map(n => ({
+                    name: 'Menu / Produk Unggulan ' + n, price: 32000 + ((n - 1) * 5000), desc: 'Produk favorit pelanggan kami', imgDataUrl: ''
+                }));
                 this.gdriveUrl = '';
 
                 // Business Info State
@@ -836,16 +836,15 @@
             handleProductPhotosUpload(input) {
                 const files = Array.from(input.files || []).slice(0, 4);
                 if (!files.length) return;
-                this.products = [];
                 files.forEach((file, idx) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        this.products.push({
+                        this.products[idx] = {
                             name: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
                             price: 35000 + (idx * 5000),
                             desc: 'Produk unggulan ' + this.bizName,
                             imgDataUrl: e.target.result
-                        });
+                        };
                         this.renderProductsList();
                         this.renderSummary();
                     };
