@@ -189,9 +189,12 @@
         .qris-laser-line {
             animation: qrisLaser 2.1s ease-in-out infinite;
         }
+    svg.di{margin-right:.28em;display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+        svg.di:only-child{margin-right:0}
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-[#00E5FF] selection:text-[#05070F] min-h-screen flex flex-col justify-between">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol><symbol id="i-chef-hat" viewBox="0 0 24 24"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><path d="M6 17h12"/></symbol><symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></symbol><symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></symbol></svg>
 
     <!-- =======================================================================
          1. UNIFIED NAVBAR (MERGED SEAMLESSLY WITH TOP OF HERO SECTION)
@@ -287,7 +290,7 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-mono font-bold">● WFC: 14 Kursi Kosong</span>
-                                <span class="px-3.5 py-1.5 rounded-full bg-amber-500 text-stone-950 text-xs font-bold">☕ Meja #08 (QR Aktif)</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-amber-500 text-stone-950 text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Meja #08 (QR Aktif)</span>
                             </div>
                         </div>
 
@@ -369,8 +372,8 @@
                                 <span>VIP Private Room</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="px-3 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-mono font-bold">🔥 Kurir Termal &lt; 5 KM</span>
-                                <span class="px-3.5 py-1.5 rounded-full bg-rose-500 text-white text-xs font-bold">🍣 Tiket Dapur Chef</span>
+                                <span class="px-3 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-mono font-bold"><svg class="di" aria-hidden="true"><use href="#i-flame"/></svg> Kurir Termal &lt; 5 KM</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-rose-500 text-white text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Tiket Dapur Chef</span>
                             </div>
                         </div>
 
@@ -452,8 +455,8 @@
                                 <span>Grafir Monogram</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-mono font-bold">📏 Garansi Tukar Size 14 Hari</span>
-                                <span class="px-3.5 py-1.5 rounded-full bg-orange-500 text-stone-950 text-xs font-bold">🥾 Cek Ongkir Kurir</span>
+                                <span class="px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-400/40 text-orange-300 text-xs font-mono font-bold"><svg class="di" aria-hidden="true"><use href="#i-ruler"/></svg> Garansi Tukar Size 14 Hari</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-orange-500 text-stone-950 text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Cek Ongkir Kurir</span>
                             </div>
                         </div>
 
@@ -522,7 +525,7 @@
                         <!-- Barbearia Website Top Navbar -->
                         <div class="rounded-t-2xl bg-[#140E24]/95 border border-purple-500/35 px-6 py-4 flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 font-serif font-bold">💈</span>
+                                <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 font-serif font-bold"><svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg></span>
                                 <div>
                                     <div class="font-serif font-bold text-lg tracking-wider text-purple-100">BARBEARIA GENTLEMEN CLUB</div>
                                     <div class="text-[10px] font-mono uppercase tracking-widest text-purple-400/80">Executive Grooming &amp; Private Lounge</div>
@@ -535,8 +538,8 @@
                                 <span>Complimentary Bar</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="px-3 py-1.5 rounded-full bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-mono font-bold">💈 Kursi VIP #2 Tersedia</span>
-                                <span class="px-3.5 py-1.5 rounded-full bg-purple-500 text-white text-xs font-bold">🎫 Booking Tanpa Antre</span>
+                                <span class="px-3 py-1.5 rounded-full bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-mono font-bold"><svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Kursi VIP #2 Tersedia</span>
+                                <span class="px-3.5 py-1.5 rounded-full bg-purple-500 text-white text-xs font-bold"><svg class="di" aria-hidden="true"><use href="#i-ticket"/></svg> Booking Tanpa Antre</span>
                             </div>
                         </div>
 
@@ -630,7 +633,7 @@
                 <div class="mt-9 flex items-center justify-center">
                     <a href="pilih-desain.html" id="chameleonPrimaryCta"
                         class="cta-shimmer px-8 py-4 rounded-2xl bg-gradient-chameleon text-[#05070F] font-display font-extrabold text-sm sm:text-base hover:scale-[1.03] active:scale-[0.99] transition-all">
-                        🚀 Mulai Buat Website Anda (3 Langkah Mudah) &rarr;
+                        <svg class="di" aria-hidden="true"><use href="#i-send"/></svg> Mulai Buat Website Anda (3 Langkah Mudah) &rarr;
                     </a>
                 </div>
             </div>
@@ -660,19 +663,19 @@
                         <nav aria-label="Pilih kategori karya website" class="flex items-center gap-1.5 bg-[#05070F] p-1.5 rounded-xl border border-white/15">
                             <button type="button" onclick="showcaseGallery.scrollToItem(0)" data-gallery-idx="0" aria-current="true"
                                 class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold bg-gradient-digitra text-[#05070F] transition-all">
-                                ☕ Cafe &amp; Roastery
+                                <svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Cafe &amp; Roastery
                             </button>
                             <button type="button" onclick="showcaseGallery.scrollToItem(1)" data-gallery-idx="1"
                                 class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
-                                🍣 Resto &amp; Kuliner
+                                <svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Resto &amp; Kuliner
                             </button>
                             <button type="button" onclick="showcaseGallery.scrollToItem(2)" data-gallery-idx="2"
                                 class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
-                                🥾 Retail &amp; Fashion
+                                <svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Retail &amp; Fashion
                             </button>
                             <button type="button" onclick="showcaseGallery.scrollToItem(3)" data-gallery-idx="3"
                                 class="gallery-pill px-3.5 py-2 rounded-lg text-xs font-display font-bold text-slate-300 hover:text-white transition-all">
-                                💈 Barbershop &amp; Jasa
+                                <svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Barbershop &amp; Jasa
                             </button>
                         </nav>
 
@@ -697,10 +700,10 @@
                             <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=85" alt="Harth Specialty Coffee" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
                             <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
-                                ☕ Karya 01 &bull; Cafe, Roastery &amp; Bakery
+                                <svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Karya 01 &bull; Cafe, Roastery &amp; Bakery
                             </span>
                             <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
-                                <span class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-lg">☕</span>
+                                <span class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-lg"><svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg></span>
                                 <div class="text-xs">
                                     <div class="font-display font-bold text-white">Efek Partikel Uap Kopi + QR Meja</div>
                                     <div class="text-slate-400">Klik tombol di samping untuk mencoba langsung</div>
@@ -743,10 +746,10 @@
                             <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1400&q=85" alt="Hush Modern Restaurant" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
                             <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
-                                🍣 Karya 02 &bull; Restoran, Sushi &amp; Kuliner
+                                <svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Karya 02 &bull; Restoran, Sushi &amp; Kuliner
                             </span>
                             <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
-                                <span class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-lg">🔥</span>
+                                <span class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-lg"><svg class="di" aria-hidden="true"><use href="#i-flame"/></svg></span>
                                 <div class="text-xs">
                                     <div class="font-display font-bold text-white">Efek Bara Panggangan + Tiket Dapur Chef</div>
                                     <div class="text-slate-400">Lengkap dengan filter alergi &amp; urutan sajian</div>
@@ -789,10 +792,10 @@
                             <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=1400&q=85" alt="Cedar Shoe Co." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
                             <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
-                                🥾 Karya 03 &bull; Retail Sepatu, Fashion &amp; Craft
+                                <svg class="di" aria-hidden="true"><use href="#i-bag"/></svg> Karya 03 &bull; Retail Sepatu, Fashion &amp; Craft
                             </span>
                             <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
-                                <span class="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-lg">📏</span>
+                                <span class="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-lg"><svg class="di" aria-hidden="true"><use href="#i-ruler"/></svg></span>
                                 <div class="text-xs">
                                     <div class="font-display font-bold text-white">Konversi Ukuran EU-ke-CM + Grafir Nama</div>
                                     <div class="text-slate-400">Mencegah retur salah ukuran &amp; hitung ongkir otomatis</div>
@@ -835,10 +838,10 @@
                             <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1400&q=85" alt="Barbearia Club" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#05070F] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#05070F]"></div>
                             <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-[#05070F]/90 border border-[#00E5FF]/40 text-xs font-bold text-[#00E5FF]">
-                                💈 Karya 04 &bull; Barbershop, Salon &amp; Jasa VIP
+                                <svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg> Karya 04 &bull; Barbershop, Salon &amp; Jasa VIP
                             </span>
                             <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-[#05070F]/90 backdrop-blur-md border border-white/15 rounded-2xl p-3 flex items-center gap-3">
-                                <span class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg">💈</span>
+                                <span class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-lg"><svg class="di" aria-hidden="true"><use href="#i-scissors"/></svg></span>
                                 <div class="text-xs">
                                     <div class="font-display font-bold text-white">VIP Boarding Pass + Pilih Master Barber</div>
                                     <div class="text-slate-400">Reservasi jam kedatangan tanpa perlu antre</div>
@@ -885,7 +888,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/15 border border-purple-400/30 text-xs font-bold uppercase tracking-[0.18em] text-purple-300">
-                        <span>🎮 Bukti Kualitas Engineering Digitra</span>
+                        <span><svg class="di" aria-hidden="true"><use href="#i-gauge"/></svg> Bukti Kualitas Engineering Digitra</span>
                     </div>
                     <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-3">
                         Sentuh &amp; Uji Sendiri Komponen Interaktif Kami
@@ -916,11 +919,11 @@
                                 <div class="grid grid-cols-2 gap-2">
                                     <button type="button" onclick="sandboxApp.setMenu('Oat Flat White', 38000)" id="sbMenu0"
                                         class="px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#00E5FF]/20 border border-[#00E5FF] text-white text-left transition-all">
-                                        ☕ Oat Flat White <span class="block text-[10px] font-mono text-[#00E5FF]">Rp 38.000</span>
+                                        <svg class="di" aria-hidden="true"><use href="#i-coffee"/></svg> Oat Flat White <span class="block text-[10px] font-mono text-[#00E5FF]">Rp 38.000</span>
                                     </button>
                                     <button type="button" onclick="sandboxApp.setMenu('Wagyu Truffle Don', 68000)" id="sbMenu1"
                                         class="px-3 py-2 rounded-xl text-xs font-display font-bold bg-[#05070F] border border-white/10 text-slate-300 hover:text-white text-left transition-all">
-                                        🍣 Wagyu Truffle <span class="block text-[10px] font-mono text-slate-400">Rp 68.000</span>
+                                        <svg class="di" aria-hidden="true"><use href="#i-chef-hat"/></svg> Wagyu Truffle <span class="block text-[10px] font-mono text-slate-400">Rp 68.000</span>
                                     </button>
                                 </div>
 
@@ -1007,7 +1010,7 @@
                         <div class="mt-5 pt-4 border-t border-white/10 relative z-10">
                             <button type="button" onclick="sandboxApp.simulateQrisScan()" id="qrisSimBtn"
                                 class="w-full py-3 px-4 rounded-xl bg-gradient-digitra text-[#05070F] font-display font-extrabold text-xs shadow-lg hover:opacity-95 transition-all">
-                                ⚡ Klik untuk Simulasi Scan QRIS Lunas
+                                <svg class="di" aria-hidden="true"><use href="#i-zap"/></svg> Klik untuk Simulasi Scan QRIS Lunas
                             </button>
                         </div>
                     </div>
@@ -1112,19 +1115,19 @@
                 <!-- 4 Brand Values Strip -->
                 <div id="keunggulan" class="mt-14 pt-12 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-on-scroll">
                     <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
-                        <div class="font-display font-bold text-sm text-[#00E5FF]">⚡ Praktis Tanpa Coding</div>
+                        <div class="font-display font-bold text-sm text-[#00E5FF]"><svg class="di" aria-hidden="true"><use href="#i-zap"/></svg> Praktis Tanpa Coding</div>
                         <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Update harga &amp; stok produk kapan saja cukup lewat Google Sheets dari HP Anda.</p>
                     </div>
                     <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
-                        <div class="font-display font-bold text-sm text-purple-300">🛡️ Tanpa Komisi, Tanpa Sewa Server</div>
+                        <div class="font-display font-bold text-sm text-purple-300"><svg class="di" aria-hidden="true"><use href="#i-shield"/></svg> Tanpa Komisi, Tanpa Sewa Server</div>
                         <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Server gratis selamanya (Cloudflare) &amp; 0% potongan komisi per transaksi. Mulai tahun ke-2 hanya Rp 350rb/tahun untuk perpanjangan domain &amp; maintenance.</p>
                     </div>
                     <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
-                        <div class="font-display font-bold text-sm text-[#00E5FF]">✨ Inovatif &amp; Berkarakter</div>
+                        <div class="font-display font-bold text-sm text-[#00E5FF]"><svg class="di" aria-hidden="true"><use href="#i-sparkles"/></svg> Inovatif &amp; Berkarakter</div>
                         <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Dilengkapi QRIS, struk WA otomatis, voucher diskon, peta interaktif &amp; Papan Akrilik QR meja fisik.</p>
                     </div>
                     <div class="p-5 rounded-2xl bg-[#05070F]/70 border border-white/10">
-                        <div class="font-display font-bold text-sm text-purple-300">🤝 Pendampingan Penuh</div>
+                        <div class="font-display font-bold text-sm text-purple-300"><svg class="di" aria-hidden="true"><use href="#i-users"/></svg> Pendampingan Penuh</div>
                         <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Tim Digitra mendampingi mulai dari input foto menu hingga website siap menerima pesanan.</p>
                     </div>
                 </div>
@@ -1171,7 +1174,7 @@
         const HERO_STAGE_DATA = [
             {
                 key: 'harth',
-                badgeText: '☕ Harth Specialty Coffee (Efek Uap Kopi & Struk Barista)',
+                badgeText: 'Harth Specialty Coffee (Efek Uap Kopi & Struk Barista)',
                 accentHex: '#FBBF24',
                 glowRgba: 'rgba(245, 158, 11, 0.30)',
                 borderRgba: 'rgba(251, 191, 36, 0.45)',
@@ -1181,7 +1184,7 @@
             },
             {
                 key: 'hush',
-                badgeText: '🍣 Hush Modern Izakaya (Bara Api Panggangan & Tiket Chef)',
+                badgeText: 'Hush Modern Izakaya (Bara Api Panggangan & Tiket Chef)',
                 accentHex: '#FB7185',
                 glowRgba: 'rgba(244, 63, 94, 0.32)',
                 borderRgba: 'rgba(251, 113, 133, 0.45)',
@@ -1191,7 +1194,7 @@
             },
             {
                 key: 'cedar',
-                badgeText: '🥾 Cedar Heritage Footwear (Konversi Ukuran EU-CM & Ongkir)',
+                badgeText: 'Cedar Heritage Footwear (Konversi Ukuran EU-CM & Ongkir)',
                 accentHex: '#FB923C',
                 glowRgba: 'rgba(249, 115, 22, 0.30)',
                 borderRgba: 'rgba(251, 146, 60, 0.45)',
@@ -1201,7 +1204,7 @@
             },
             {
                 key: 'barbearia',
-                badgeText: '💈 Barbearia Gentlemen’s Club (VIP Boarding Pass & Booking Jam)',
+                badgeText: 'Barbearia Gentlemen’s Club (VIP Boarding Pass & Booking Jam)',
                 accentHex: '#C084FC',
                 glowRgba: 'rgba(139, 92, 246, 0.35)',
                 borderRgba: 'rgba(192, 132, 252, 0.45)',
